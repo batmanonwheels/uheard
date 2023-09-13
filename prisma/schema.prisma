@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String   @id
+  name               String
+  email              String   @unique
+  picture            String?
+  spotifyUser        Boolean  @default(true)
+  spotifyProfileLink String
+  spotifyUri         String
+  accessToken        String
+  tokenExpiresIn     Int
+  refreshToken       String
+  createdAt          DateTime @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime @updatedAt
+
+  recommendations Recommendation[]
+  likes           Like[]
+  session         Session[]
+}
+
+model Session {
+  id String @id @unique
+
+  active_expires BigInt
+  idle_expires   BigInt
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([user_id])
+}
+
+model Track {
+  id         String @id
+  title      String
+  artist     String
+  url        String
+  previewUrl String
+  popularity Int
+  ISRC       String
+
+  recommendations Recommendation[]
+}
+
+model Recommendation {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  trackId String
+  track   Track  @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  likes Like[]
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  recommendationId Int
+  recommendation   Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
