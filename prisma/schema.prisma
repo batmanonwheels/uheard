@@ -41,27 +41,20 @@ model Session {
   @@index([user_id])
 }
 
-model Track {
-  id         String @id
-  title      String
-  artist     String
-  url        String
-  previewUrl String
-  popularity Int
-  ISRC       String
-
-  recommendations Recommendation[]
-}
-
 model Recommendation {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @db.Timestamp(6)
+  id Int @id @default(autoincrement())
 
-  trackId String
-  track   Track  @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  trackId         String
+  trackTitle      String
+  trackArtist     String[]
+  trackUrl        String
+  trackPreviewUrl String
+  trackISRC       String
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now()) @db.Timestamp(6)
 
   likes Like[]
 }

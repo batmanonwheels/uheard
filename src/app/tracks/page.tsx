@@ -3,89 +3,151 @@
 import Link from "next/link";
 import { auth } from "@/lib/lucia";
 import { cookies } from "next/headers";
-import {
-  SpotifyArtist,
-  SpotifyTrack,
-  SpotifyTrackResponse,
-} from "@/types/spotify";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import SavedTracks from "@/components/SavedTracks";
+import RecentTracks from "@/components/RecentTracks";
+import CurrentTrack from "@/components/CurrentTrack";
+import SearchTracks from "@/components/SearchTracks";
 
 interface TrackPageProps {
   searchParams: {
-    show?: number | undefined;
+    type: string;
+    limit: string;
+    query: string;
   };
 }
 
-const fetchRecentTracks = async (show: number | undefined) => {
+const getSession = async () => {
   const authRequest = auth.handleRequest({
     request: null,
     cookies,
   });
-
   const session = await authRequest.validate();
+
+  return session;
+};
+
+const refreshAccessToken = async () => {
+  const session = await getSession();
 
   if (!session) return null;
 
-  const items = await fetch(
-    `https://api.spotify.com/v1/me/player/recently-played?limit=${
-      show === undefined ? 10 : show
-    }`,
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+  });
+
+  if (!user) return null;
+
+  const clientBTOA = btoa(
+    process.env.SPOTIFY_CLIENT_ID + ":" + process.env.SPOTIFY_CLIENT_SECRET,
+  );
+
+  const { access_token: newAccessToken } = await fetch(
+    "https://accounts.spotify.com/api/token",
     {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: "Bearer " + session.user.accessToken,
+        Authorization: `Basic ` + clientBTOA,
+        "Content-Type": "application/x-www-form-urlencoded",
       },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: user?.refreshToken,
+      }),
     },
   ).then((res) => res.json());
 
-  if (items.ok === false) return null;
+  if (!newAccessToken) return false;
 
-  return items;
+  const accessToken = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      accessToken: newAccessToken,
+    },
+  });
+
+  if (!accessToken) return false;
 };
 
 const TrackPage = async ({ searchParams }: TrackPageProps) => {
-  let show = searchParams.show;
+  const limit = parseInt(searchParams.limit);
+  const type = searchParams.type;
 
-  if (show === undefined) {
-    show = 10;
-  }
+  if (!type && !limit) redirect("/tracks?type=recent&limit=10");
 
-  const {
-    items: recentTracks,
-    cursors,
-    limit,
-    next,
-    href,
-  }: SpotifyTrackResponse = await fetchRecentTracks(show);
-
-  const loadMoreTracks = () => {
-    if (show! >= 50) return `/tracks?show=50`;
-
-    show = parseInt(show) + 10;
-
-    const url = `/tracks?show=${show}`;
-
-    return url;
+  const loadMoreTracks = (limit: number) => {
+    if (limit! >= 50) return `/tracks?type=${type}&limit=50`;
+    return `/tracks?type=${type}&limit=${limit + 10}`;
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 text-center">
-      <h2>Your Recently Played Tracks:</h2>
-      {!recentTracks && <p>Loading..</p>}
-      {recentTracks && (
-        <>
-          <ul>
-            {recentTracks.map((song: SpotifyTrack, t: number) => (
-              <li key={t}>{`${song.track.name} by ${song.track.artists
-                .map((artist: SpotifyArtist) => artist.name)
-                .join(" & ")}`}</li>
-            ))}
-          </ul>
+    <main className="min-w-screen flex min-h-screen flex-col items-center p-4 text-center">
+      <Link href={`/`} className={`p-4 text-green-400`}>
+        Uheard
+      </Link>
+      <CurrentTrack
+        getSession={getSession}
+        refreshAccessToken={refreshAccessToken}
+      />
 
-          {show! < 50 ? (
-            <Link href={loadMoreTracks()} scroll={false}>
-              Load More
-            </Link>
-          ) : null}
+      <div className="flex w-full flex-row justify-evenly">
+        <Link
+          href={`/tracks?type=search&limit=50&query=`}
+          scroll={false}
+          className={`${type === "search" && "text-green-500"}`}
+          replace
+        >
+          Search
+        </Link>
+        <Link
+          href={`/tracks?type=recent&limit=${limit}`}
+          scroll={false}
+          className={`${type === "recent" && "text-green-500"}`}
+          replace
+        >
+          Recently Played
+        </Link>
+        <Link
+          href={`/tracks?type=saved&limit=${limit}`}
+          className={`${type === "saved" && "text-green-500"}`}
+          scroll={false}
+          replace
+        >
+          Liked
+        </Link>
+      </div>
+
+      {type === "search" && (
+        <>
+          {/* <h2 className="my-2 px-1 text-xl font-semibold">Search</h2> */}
+          <SearchTracks searchParams={searchParams} />
+        </>
+      )}
+      {type === "recent" && (
+        <>
+          {/* <h2 className="my-2 px-1 text-xl font-semibold">Recently Played</h2> */}
+          <RecentTracks
+            getSession={getSession}
+            loadMoreTracks={loadMoreTracks}
+            refreshAccessToken={refreshAccessToken}
+            searchParams={searchParams}
+          />
+        </>
+      )}
+      {type === "saved" && (
+        <>
+          {/* <h2 className="my-2 px-1 text-xl font-semibold">Liked</h2> */}
+          <SavedTracks
+            getSession={getSession}
+            loadMoreTracks={loadMoreTracks}
+            refreshAccessToken={refreshAccessToken}
+            searchParams={searchParams}
+          />
         </>
       )}
     </main>

@@ -17,7 +17,7 @@ const LoginPage = async ({}: LoginPageProps) => {
   if (session) redirect("/");
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 text-center">
+    <main className="min-w-screen flex min-h-screen flex-col items-center p-4 text-center">
       <SpotifyLoginButton />
     </main>
   );
