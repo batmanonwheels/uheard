@@ -1,4 +1,5 @@
 export type SpotifyTrackResponse = {
+  error?: { status: number; message: string };
   item: SpotifyTrack;
   cursors: { before: number; after: number };
   limit: number;
@@ -7,6 +8,7 @@ export type SpotifyTrackResponse = {
 };
 
 export type SpotifyTracksResponse = {
+  error?: { status: number; message: string };
   items: SpotifyTracks[];
   cursors: { before: number; after: number };
   limit: number;
@@ -25,7 +27,44 @@ export type SpotifyArtist = {
   uri: string;
 };
 export type SpotifyTrack = {
-  album?: [Object];
+  error?: { status: number; message: string };
+  album: {
+    album_type: string;
+    total_tracks: number;
+    available_markets: string[];
+    external_urls: {
+      spotify: string;
+    };
+    href: string;
+    id: string;
+    images: [
+      {
+        url: string;
+        height: number;
+        width: number;
+      },
+    ];
+    name: string;
+    release_date: string;
+    release_date_precision: string;
+    restrictions?: {
+      reason: string;
+    };
+    type: string;
+    uri: string;
+    artists: [
+      {
+        external_urls: {
+          spotify: string;
+        };
+        href: string;
+        id: string;
+        name: string;
+        type: string;
+        uri: string;
+      },
+    ];
+  };
   artists: SpotifyArtist[];
   available_markets: string[];
   disc_number: number;
@@ -51,8 +90,45 @@ export type SpotifyTrack = {
 };
 
 export type SpotifyTracks = {
+  error?: { status: number; message: string };
   track: {
-    album?: [Object];
+    album: {
+      album_type: string;
+      total_tracks: number;
+      available_markets: string[];
+      external_urls: {
+        spotify: string;
+      };
+      href: string;
+      id: string;
+      images: [
+        {
+          url: string;
+          height: number;
+          width: number;
+        },
+      ];
+      name: string;
+      release_date: string;
+      release_date_precision: string;
+      restrictions?: {
+        reason: string;
+      };
+      type: string;
+      uri: string;
+      artists: [
+        {
+          external_urls: {
+            spotify: string;
+          };
+          href: string;
+          id: string;
+          name: string;
+          type: string;
+          uri: string;
+        },
+      ];
+    };
     artists: SpotifyArtist[];
     available_markets: string[];
     disc_number: number;

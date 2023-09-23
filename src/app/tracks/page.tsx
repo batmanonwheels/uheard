@@ -9,6 +9,7 @@ import SavedTracks from "@/components/SavedTracks";
 import RecentTracks from "@/components/RecentTracks";
 import CurrentTrack from "@/components/CurrentTrack";
 import SearchTracks from "@/components/SearchTracks";
+import type { Metadata } from "next";
 
 interface TrackPageProps {
   searchParams: {
@@ -17,7 +18,6 @@ interface TrackPageProps {
     query: string;
   };
 }
-
 const getSession = async () => {
   const authRequest = auth.handleRequest({
     request: null,
@@ -26,6 +26,29 @@ const getSession = async () => {
   const session = await authRequest.validate();
 
   return session;
+};
+
+export const generateMetadata = async ({
+  searchParams,
+}: TrackPageProps): Promise<Metadata> => {
+  const session = await getSession();
+  const type = searchParams.type;
+
+  if (!session) return { title: "Your Spotify Tracks - uheard" };
+
+  if (type === "search")
+    return {
+      title: `Search - uheard`,
+    };
+
+  if (type === "saved")
+    return {
+      title: `${session.user.name.split(" ")[0]}'s Saved Tracks - uheard`,
+    };
+
+  return {
+    title: `${session.user.name.split(" ")[0]}'s Recent Tracks - uheard`,
+  };
 };
 
 const refreshAccessToken = async () => {
@@ -86,16 +109,13 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
   };
 
   return (
-    <main className="min-w-screen flex min-h-screen flex-col items-center p-4 text-center">
-      <Link href={`/`} className={`p-4 text-green-400`}>
-        Uheard
-      </Link>
+    <main className="flex w-full flex-1 flex-col items-center p-4 text-center">
       <CurrentTrack
         getSession={getSession}
         refreshAccessToken={refreshAccessToken}
       />
 
-      <div className="flex w-full flex-row justify-evenly">
+      <div className="flex w-full flex-row justify-evenly pb-4">
         <Link
           href={`/tracks?type=search&limit=50&query=`}
           scroll={false}
@@ -113,43 +133,33 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
           Recently Played
         </Link>
         <Link
-          href={`/tracks?type=saved&limit=${limit}`}
-          className={`${type === "saved" && "text-green-500"}`}
+          href={`/tracks?type=liked&limit=${limit}`}
+          className={`${type === "liked" && "text-green-500"}`}
           scroll={false}
           replace
         >
           Liked
         </Link>
       </div>
-
-      {type === "search" && (
-        <>
-          {/* <h2 className="my-2 px-1 text-xl font-semibold">Search</h2> */}
-          <SearchTracks searchParams={searchParams} />
-        </>
-      )}
-      {type === "recent" && (
-        <>
-          {/* <h2 className="my-2 px-1 text-xl font-semibold">Recently Played</h2> */}
+      <ul className="w-full">
+        {type === "search" && <SearchTracks searchParams={searchParams} />}
+        {type === "recent" && (
           <RecentTracks
             getSession={getSession}
             loadMoreTracks={loadMoreTracks}
             refreshAccessToken={refreshAccessToken}
             searchParams={searchParams}
           />
-        </>
-      )}
-      {type === "saved" && (
-        <>
-          {/* <h2 className="my-2 px-1 text-xl font-semibold">Liked</h2> */}
+        )}
+        {type === "liked" && (
           <SavedTracks
             getSession={getSession}
             loadMoreTracks={loadMoreTracks}
             refreshAccessToken={refreshAccessToken}
             searchParams={searchParams}
           />
-        </>
-      )}
+        )}
+      </ul>
     </main>
   );
 };

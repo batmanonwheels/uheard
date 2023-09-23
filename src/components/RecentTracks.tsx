@@ -3,14 +3,13 @@
 import { Session } from "lucia";
 import {
   SpotifyArtist,
-  SpotifyTrack,
   SpotifyTracks,
   SpotifyTracksResponse,
 } from "@/types/spotify";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import RecommendButton from "./RecommendButton";
+import RecommendLink from "./RecommendLink";
+import Image from "next/image";
 
 interface RecentTracksProps {
   getSession: () => Promise<Session | null>;
@@ -59,48 +58,42 @@ const RecentTracks = async ({
   const { items: recentTracks }: SpotifyTracksResponse =
     await fetchRecentTracks(limit);
 
-  const handleRecommendation = async (track: SpotifyTrack) => {
-    if (!session) return null;
-    try {
-      const recommendation = await prisma.recommendation.create({
-        data: {
-          userId: session.user.id,
-          trackId: track.id,
-          trackTitle: track.name,
-          trackArtist: track.artists.map((artist) => artist.name),
-          trackPreviewUrl: track.preview_url,
-          trackUrl: track.href,
-          trackISRC: track.external_ids.isrc,
-        },
-        include: {
-          user: true,
-        },
-      });
-      console.log(recommendation);
-    } catch (error: any) {
-      return new Error(error.message);
-    }
-  };
-
   return (
     <>
       {recentTracks ? (
         <>
-          <ul>
+          <ul className="w-full">
             {recentTracks.map((song: SpotifyTracks, t: number) => (
               <li
                 key={t}
-                className="flex flex-row justify-between p-2 text-left"
+                className="flex max-w-full flex-row gap-2 py-2 text-left"
               >
-                <Link href={song.track.uri}>
-                  <h3 className="text-zinc-200">{song.track.name}</h3>
-                  <p className="text-zinc-500">
+                <Image
+                  height={song.track.album.images[0].height}
+                  width={song.track.album.images[0].width}
+                  src={song.track.album.images[0].url}
+                  alt={`${song.track.name} cover art`}
+                  className="rounded-xs my-auto h-full w-3/12 items-center"
+                />
+                <Link
+                  href={song.track.uri}
+                  className="my-auto flex flex-1 flex-col"
+                >
+                  <h3 className="text-zinc-200 ">
+                    {song.track.name.split(" - ")[0]}
+                  </h3>
+                  <p className="text-sm  text-zinc-400">
                     {song.track.artists
                       .map((artist: SpotifyArtist) => artist.name)
                       .join(", ")}
                   </p>
+                  {song.track.album.total_tracks > 1 && (
+                    <p className=" overflow-ellipsis text-xs text-zinc-500">
+                      {song.track.album.name}
+                    </p>
+                  )}
                 </Link>
-                <RecommendButton trackId={song.track.id} />
+                <RecommendLink trackId={song.track.id} />
               </li>
             ))}
           </ul>
