@@ -38,42 +38,36 @@ const CurrentTrack = async ({
   };
 
   //current track
-  const { item: currentTrack }: SpotifyTrackResponse =
-    await fetchCurrentTrack();
+  const { item: track }: SpotifyTrackResponse = await fetchCurrentTrack();
 
   return (
     <>
-      {currentTrack && (
+      {track && (
         <div className="flex max-w-full flex-row gap-2 pb-3 text-left">
           <Image
-            height={currentTrack.album.images[0].height}
-            width={currentTrack.album.images[0].width}
-            src={currentTrack.album.images[0].url}
-            alt={`${currentTrack.name} cover art`}
-            className="rounded-xs my-auto w-3/12 items-center"
+            height={track.album.images[0].height}
+            width={track.album.images[0].width}
+            src={track.album.images[0].url}
+            alt={`${track.name} cover art`}
+            className="my-auto w-3/12 items-center rounded-sm"
           />
-          <Link
-            href={currentTrack.uri}
-            className="my-auto flex flex-1 flex-col"
-          >
+          <Link href={track.uri} className="my-auto flex flex-1 flex-col">
             <h2 className="text-xs text-green-400 text-opacity-75">
               {"Currently Playing"}
             </h2>
-            <h3 className="text-zinc-200 ">
-              {currentTrack.name.split(" - ")[0]}
-            </h3>
+            <h3 className="text-zinc-200 ">{track.name.split(" - ")[0]}</h3>
             <p className="text-sm  text-zinc-400">
-              {currentTrack.artists
+              {track.artists
                 .map((artist: SpotifyArtist) => artist.name)
                 .join(", ")}
             </p>
-            {currentTrack.album.total_tracks > 1 && (
+            {track.album.total_tracks > 1 && (
               <p className=" overflow-ellipsis text-xs text-zinc-500">
-                {currentTrack.album.name}
+                {track.album.name}
               </p>
             )}
           </Link>
-          <RecommendLink trackId={currentTrack.id} />
+          <RecommendLink trackId={track.id} />
         </div>
       )}
     </>

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import RecommendLink from "./RecommendLink";
 import Image from "next/image";
+import TrackListCard from "./TrackListCard";
 
 interface RecentTracksProps {
   getSession: () => Promise<Session | null>;
@@ -62,42 +63,11 @@ const RecentTracks = async ({
     <>
       {recentTracks ? (
         <>
-          <ul className="w-full">
-            {recentTracks.map((song: SpotifyTracks, t: number) => (
-              <li
-                key={t}
-                className="flex max-w-full flex-row gap-2 py-2 text-left"
-              >
-                <Image
-                  height={song.track.album.images[0].height}
-                  width={song.track.album.images[0].width}
-                  src={song.track.album.images[0].url}
-                  alt={`${song.track.name} cover art`}
-                  className="rounded-xs my-auto h-full w-3/12 items-center"
-                />
-                <Link
-                  href={song.track.uri}
-                  className="my-auto flex flex-1 flex-col"
-                >
-                  <h3 className="text-zinc-200 ">
-                    {song.track.name.split(" - ")[0]}
-                  </h3>
-                  <p className="text-sm  text-zinc-400">
-                    {song.track.artists
-                      .map((artist: SpotifyArtist) => artist.name)
-                      .join(", ")}
-                  </p>
-                  {song.track.album.total_tracks > 1 && (
-                    <p className=" overflow-ellipsis text-xs text-zinc-500">
-                      {song.track.album.name}
-                    </p>
-                  )}
-                </Link>
-                <RecommendLink trackId={song.track.id} />
-              </li>
+          <ul className="sm:w-12/12 w-full gap-1 sm:flex sm:flex-row sm:flex-wrap sm:justify-center sm:gap-2">
+            {recentTracks.map((track: SpotifyTracks, t: number) => (
+              <TrackListCard track={track.track} key={t} />
             ))}
           </ul>
-
           {limit < 50 || limit === undefined ? (
             <Link
               href={loadMoreTracks(limit ? limit : 10)}

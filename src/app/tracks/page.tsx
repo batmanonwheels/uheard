@@ -141,25 +141,24 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
           Liked
         </Link>
       </div>
-      <ul className="w-full">
-        {type === "search" && <SearchTracks searchParams={searchParams} />}
-        {type === "recent" && (
-          <RecentTracks
-            getSession={getSession}
-            loadMoreTracks={loadMoreTracks}
-            refreshAccessToken={refreshAccessToken}
-            searchParams={searchParams}
-          />
-        )}
-        {type === "liked" && (
-          <SavedTracks
-            getSession={getSession}
-            loadMoreTracks={loadMoreTracks}
-            refreshAccessToken={refreshAccessToken}
-            searchParams={searchParams}
-          />
-        )}
-      </ul>
+
+      {type === "search" && <SearchTracks searchParams={searchParams} />}
+      {type === "recent" && (
+        <RecentTracks
+          getSession={getSession}
+          loadMoreTracks={loadMoreTracks}
+          refreshAccessToken={refreshAccessToken}
+          searchParams={searchParams}
+        />
+      )}
+      {type === "liked" && (
+        <SavedTracks
+          getSession={getSession}
+          loadMoreTracks={loadMoreTracks}
+          refreshAccessToken={refreshAccessToken}
+          searchParams={searchParams}
+        />
+      )}
     </main>
   );
 };

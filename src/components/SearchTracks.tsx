@@ -1,11 +1,9 @@
 "use client";
 
-import { SpotifyArtist, SpotifyTrack } from "@/types/spotify";
-import Link from "next/link";
+import { SpotifyTrack } from "@/types/spotify";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import RecommendLink from "./RecommendLink";
-import Image from "next/image";
+import TrackListCard from "./TrackListCard";
 
 interface SearchTracksProps {
   searchParams: {
@@ -59,8 +57,8 @@ const SearchTracks = ({ searchParams }: SearchTracksProps) => {
   };
 
   return (
-    <div className="h-full w-full flex-col gap-6">
-      <section className="relative flex h-10 w-full flex-col">
+    <div className="h-full w-full flex-col gap-6 ">
+      <section className="relative mx-auto flex h-10 w-full flex-col sm:w-10/12">
         <input
           placeholder={"What song do you wanna share?"}
           className="h-10 w-full flex-1 p-3 pr-8 text-base text-gray-900"
@@ -81,32 +79,9 @@ const SearchTracks = ({ searchParams }: SearchTracksProps) => {
             Showing results for <span className="italic">{searchQuery}</span>
           </p>
           {searchResults.length >= 1 && (
-            <ul className="w-full">
-              {searchResults.map((song: SpotifyTrack, t: number) => (
-                <li key={t} className="flex flex-row gap-2 py-2 text-left">
-                  <Image
-                    height={song.album.images[0].height}
-                    width={song.album.images[0].width}
-                    src={song.album.images[0].url}
-                    alt={`${song.name} cover art`}
-                    className="rounded-xs my-auto h-full w-3/12 items-center"
-                  />
-                  <Link
-                    href={song.uri}
-                    className="my-auto flex flex-1 flex-col"
-                  >
-                    <h3 className="text-zinc-200">{song.name}</h3>
-                    <p className="text-sm  text-zinc-400">
-                      {song.artists
-                        .map((artist: SpotifyArtist) => artist.name)
-                        .join(", ")}
-                    </p>
-                    {song.album.total_tracks > 1 && (
-                      <p className="text-xs text-zinc-500">{song.album.name}</p>
-                    )}
-                  </Link>
-                  <RecommendLink trackId={song.id} />
-                </li>
+            <ul className="sm:w-12/12 w-full gap-1 sm:flex sm:flex-row sm:flex-wrap sm:justify-center sm:gap-2">
+              {searchResults.map((track: SpotifyTrack, t: number) => (
+                <TrackListCard track={track} key={t} />
               ))}
             </ul>
           )}
