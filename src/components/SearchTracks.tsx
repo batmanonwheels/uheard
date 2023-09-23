@@ -2,9 +2,10 @@
 
 import { SpotifyArtist, SpotifyTrack } from "@/types/spotify";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import RecommendButton from "./RecommendButton";
+import RecommendLink from "./RecommendLink";
+import Image from "next/image";
 
 interface SearchTracksProps {
   searchParams: {
@@ -75,26 +76,36 @@ const SearchTracks = ({ searchParams }: SearchTracksProps) => {
         </button>
       </section>
       {searchQuery && (
-        <section className="flex flex-1 flex-col gap-4 ">
+        <section className="flex flex-1 flex-col gap-4 pt-3">
           <p>
             Showing results for <span className="italic">{searchQuery}</span>
           </p>
           {searchResults.length >= 1 && (
-            <ul>
+            <ul className="w-full">
               {searchResults.map((song: SpotifyTrack, t: number) => (
-                <li
-                  key={t}
-                  className="flex flex-row justify-between p-2 text-left"
-                >
-                  <Link href={song.uri} className="flex-1">
+                <li key={t} className="flex flex-row gap-2 py-2 text-left">
+                  <Image
+                    height={song.album.images[0].height}
+                    width={song.album.images[0].width}
+                    src={song.album.images[0].url}
+                    alt={`${song.name} cover art`}
+                    className="rounded-xs my-auto h-full w-3/12 items-center"
+                  />
+                  <Link
+                    href={song.uri}
+                    className="my-auto flex flex-1 flex-col"
+                  >
                     <h3 className="text-zinc-200">{song.name}</h3>
-                    <p className="text-zinc-500">
+                    <p className="text-sm  text-zinc-400">
                       {song.artists
                         .map((artist: SpotifyArtist) => artist.name)
                         .join(", ")}
                     </p>
+                    {song.album.total_tracks > 1 && (
+                      <p className="text-xs text-zinc-500">{song.album.name}</p>
+                    )}
                   </Link>
-                  <RecommendButton trackId={song.id} />
+                  <RecommendLink trackId={song.id} />
                 </li>
               ))}
             </ul>

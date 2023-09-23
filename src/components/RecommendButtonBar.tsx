@@ -1,0 +1,49 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+//import
+
+interface RecommendButtonBarProps {
+  trackId: string;
+}
+
+const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
+  const [isRecommended, setIsRecommended] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const handleReturn = () => {
+    router.back();
+  };
+
+  const handleRecommendation = async (trackId: string) => {
+    const { ok } = await fetch(
+      "api/tracks/recommend?" +
+        new URLSearchParams({
+          track: trackId,
+        }),
+      {
+        method: "POST",
+      },
+    );
+
+    if (!ok) return;
+
+    setIsRecommended(true);
+    router.push(`/tracks`);
+    return;
+  };
+
+  return (
+    <div className="flex w-full justify-evenly py-3">
+      <button onClick={() => handleReturn()}>Return</button>
+      <button onClick={() => handleRecommendation(trackId)}>
+        {isRecommended ? "Done!" : "Share"}
+      </button>
+    </div>
+  );
+};
+
+export default RecommendButtonBar;

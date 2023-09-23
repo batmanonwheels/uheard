@@ -1,15 +1,10 @@
 //'use client'
 
 import { Session } from "lucia";
-import {
-  SpotifyArtist,
-  SpotifyTrackResponse,
-  SpotifyTracks,
-  SpotifyTracksResponse,
-} from "@/types/spotify";
+import { SpotifyArtist, SpotifyTrackResponse } from "@/types/spotify";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import RecommendButton from "./RecommendButton";
+import RecommendLink from "./RecommendLink";
+import Image from "next/image";
 
 interface CurrentTrackProps {
   getSession: () => Promise<Session | null>;
@@ -49,17 +44,36 @@ const CurrentTrack = async ({
   return (
     <>
       {currentTrack && (
-        <div className="flex flex-col p-2">
-          <h2 className="pb-2">{"Currently Playing"}</h2>
-          <Link href={currentTrack.uri}>
-            <h3 className="text-zinc-200">{currentTrack.name}</h3>
-            <p className="text-zinc-500">
+        <div className="flex max-w-full flex-row gap-2 pb-3 text-left">
+          <Image
+            height={currentTrack.album.images[0].height}
+            width={currentTrack.album.images[0].width}
+            src={currentTrack.album.images[0].url}
+            alt={`${currentTrack.name} cover art`}
+            className="rounded-xs my-auto w-3/12 items-center"
+          />
+          <Link
+            href={currentTrack.uri}
+            className="my-auto flex flex-1 flex-col"
+          >
+            <h2 className="text-xs text-green-400 text-opacity-75">
+              {"Currently Playing"}
+            </h2>
+            <h3 className="text-zinc-200 ">
+              {currentTrack.name.split(" - ")[0]}
+            </h3>
+            <p className="text-sm  text-zinc-400">
               {currentTrack.artists
                 .map((artist: SpotifyArtist) => artist.name)
                 .join(", ")}
             </p>
+            {currentTrack.album.total_tracks > 1 && (
+              <p className=" overflow-ellipsis text-xs text-zinc-500">
+                {currentTrack.album.name}
+              </p>
+            )}
           </Link>
-          <RecommendButton trackId={currentTrack.id} />
+          <RecommendLink trackId={currentTrack.id} />
         </div>
       )}
     </>

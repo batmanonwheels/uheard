@@ -1,15 +1,14 @@
 import { Session } from "lucia";
 import {
   SpotifyArtist,
-  SpotifyTrack,
   SpotifyTracks,
   SpotifyTracksResponse,
 } from "@/types/spotify";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import RecommendButton from "./RecommendButton";
+import RecommendLink from "./RecommendLink";
+import Image from "next/image";
 
-interface SavedTracksProps {
+interface LikedTracksProps {
   getSession: () => Promise<Session | null>;
   refreshAccessToken: () => Promise<false | null | undefined>;
   loadMoreTracks: (limit: number) => string;
@@ -19,21 +18,21 @@ interface SavedTracksProps {
   };
 }
 
-const SavedTracks = async ({
+const LikedTracks = async ({
   getSession,
   refreshAccessToken,
   loadMoreTracks,
   searchParams,
-}: SavedTracksProps) => {
+}: LikedTracksProps) => {
   const session = await getSession();
 
   const limit = parseInt(searchParams.limit);
   const type = searchParams.type;
 
-  const fetchSavedTracks = async (limit: number) => {
+  const fetchLikedTracks = async (limit: number) => {
     if (!session) return null;
 
-    const savedTracks = await fetch(
+    const likedTracks = await fetch(
       `https://api.spotify.com/v1/me/tracks?limit=${limit + ""}`,
       {
         method: "GET",
@@ -43,60 +42,48 @@ const SavedTracks = async ({
       },
     ).then((res) => res.json());
 
-    if (savedTracks.error) {
+    if (likedTracks.error) {
       const newToken = await refreshAccessToken();
-      if (newToken) fetchSavedTracks(limit);
-      // if (newToken) redirect(`/tracks?type=${type}&limit=10`);
+      if (newToken) fetchLikedTracks(limit);
     }
 
-    return savedTracks;
+    return likedTracks;
   };
 
-  const { items: savedTracks }: SpotifyTracksResponse =
-    await fetchSavedTracks(limit);
-
-  const handleRecommendation = async (track: SpotifyTrack) => {
-    if (!session) return null;
-    try {
-      const recommendation = await prisma.recommendation.create({
-        data: {
-          userId: session.user.id,
-          trackId: track.id,
-          trackTitle: track.name,
-          trackArtist: track.artists.map((artist) => artist.name),
-          trackPreviewUrl: track.preview_url,
-          trackUrl: track.href,
-          trackISRC: track.external_ids.isrc,
-        },
-        include: {
-          user: true,
-        },
-      });
-      console.log(recommendation);
-    } catch (error: any) {
-      return new Error(error.message);
-    }
-  };
+  const { items: likedTracks }: SpotifyTracksResponse =
+    await fetchLikedTracks(limit);
 
   return (
     <>
-      {savedTracks ? (
+      {likedTracks ? (
         <>
-          <ul>
-            {savedTracks.map((song: SpotifyTracks, t: number) => (
-              <li
-                key={t}
-                className="flex flex-row justify-between p-2 text-left"
-              >
-                <Link href={song.track.uri}>
+          <ul className="w-full">
+            {likedTracks.map((song: SpotifyTracks, t: number) => (
+              <li key={t} className="flex flex-row gap-2 py-2 text-left">
+                <Image
+                  height={song.track.album.images[0].height}
+                  width={song.track.album.images[0].width}
+                  src={song.track.album.images[0].url}
+                  alt={`${song.track.name} cover art`}
+                  className="rounded-xs my-auto h-full w-3/12 items-center"
+                />
+                <Link
+                  href={song.track.uri}
+                  className="my-auto flex flex-1 flex-col"
+                >
                   <h3 className="text-zinc-200">{song.track.name}</h3>
-                  <p className="text-zinc-500">
+                  <p className="text-sm  text-zinc-400">
                     {song.track.artists
                       .map((artist: SpotifyArtist) => artist.name)
                       .join(", ")}
                   </p>
+                  {song.track.album.total_tracks > 1 && (
+                    <p className="text-xs text-zinc-500">
+                      {song.track.album.name}
+                    </p>
+                  )}
                 </Link>
-                <RecommendButton trackId={song.track.id} />
+                <RecommendLink trackId={song.track.id} />
               </li>
             ))}
           </ul>
@@ -119,4 +106,4 @@ const SavedTracks = async ({
   );
 };
 
-export default SavedTracks;
+export default LikedTracks;

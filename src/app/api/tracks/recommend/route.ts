@@ -30,6 +30,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     },
   ).then((res) => res.json());
 
+  console.log(track);
+
   if (!track) return null;
 
   try {
@@ -44,7 +46,9 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         trackISRC: track.external_ids.isrc,
       },
     });
-    return NextResponse.json(recommendation);
+
+    console.log(recommendation);
+    return NextResponse.json({ recommendation, ok: true });
   } catch (error: any) {
     return new NextResponse(error.message, { status: error.status });
   }
