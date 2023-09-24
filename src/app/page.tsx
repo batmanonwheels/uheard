@@ -30,12 +30,7 @@ export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
 };
 
 const Home = async () => {
-  const authRequest = auth.handleRequest({
-    request: null,
-    cookies,
-  });
-
-  const session = await authRequest.validate();
+  const session = await getSession();
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-around p-4 text-center">

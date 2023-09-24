@@ -17,7 +17,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const params = req.nextUrl.searchParams;
 
   const session = await getSession(req);
-  if (!session) return null;
+  if (!session) throw new Error("User is not signed in ");
 
   try {
     const { tracks, error } = await fetch(

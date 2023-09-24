@@ -18,7 +18,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const trackId: string = req.nextUrl.searchParams.get("trackId")!;
   try {
     const session = await getSession(req);
-    if (!session) return null;
+    if (!session) throw new Error("User is not signed in.");
 
     const track: SpotifyTrack = await fetch(
       `https://api.spotify.com/v1/tracks/${trackId}`,
@@ -30,7 +30,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       },
     ).then((res) => res.json());
 
-    if (!track) return null;
+    if (!track) throw new Error("Track does not exist.");
 
     return NextResponse.json(track);
   } catch (error: any) {
