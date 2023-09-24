@@ -18,7 +18,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const trackId: string = req.nextUrl.searchParams.get("track")!;
 
   const session = await getSession(req);
-  if (!session) return null;
+  if (!session)
+    throw new Error("User is either not signed in or does not exist.");
 
   const track: SpotifyTrack = await fetch(
     `https://api.spotify.com/v1/tracks/${trackId}`,
@@ -30,7 +31,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     },
   ).then((res) => res.json());
 
-  if (!track) return null;
+  if (!track) throw new Error("Track does not exist.");
 
   try {
     const recommendation = await prisma.recommendation.create({
