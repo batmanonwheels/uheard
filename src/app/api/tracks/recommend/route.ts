@@ -30,8 +30,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     },
   ).then((res) => res.json());
 
-  console.log(track);
-
   if (!track) return null;
 
   try {
@@ -40,14 +38,15 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         userId: session.user.id,
         trackId: track.id,
         trackTitle: track.name,
+        trackAlbum: track.album.name,
         trackArtist: track.artists.map((artist) => artist.name),
+        trackImage: track.album.images[0].url,
         trackPreviewUrl: track.preview_url,
         trackUrl: track.href,
         trackISRC: track.external_ids.isrc,
       },
     });
 
-    console.log(recommendation);
     return NextResponse.json({ recommendation, ok: true });
   } catch (error: any) {
     return new NextResponse(error.message, { status: error.status });

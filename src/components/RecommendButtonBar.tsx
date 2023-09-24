@@ -20,7 +20,7 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
 
   const handleRecommendation = async (trackId: string) => {
     const { ok } = await fetch(
-      "api/tracks/recommend?" +
+      "/api/tracks/recommend?" +
         new URLSearchParams({
           track: trackId,
         }),
