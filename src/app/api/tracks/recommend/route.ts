@@ -18,8 +18,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const trackId: string = req.nextUrl.searchParams.get("track")!;
 
   const session = await getSession(req);
-  if (!session)
-    throw new Error("User is either not signed in or does not exist.");
+  if (!session) throw new Error("User is not signed in ");
 
   const track: SpotifyTrack = await fetch(
     `https://api.spotify.com/v1/tracks/${trackId}`,
