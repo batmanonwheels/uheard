@@ -47,6 +47,8 @@ model Recommendation {
   trackId         String
   trackTitle      String
   trackArtist     String[]
+  trackAlbum      String
+  trackImage      String
   trackUrl        String
   trackPreviewUrl String
   trackISRC       String
