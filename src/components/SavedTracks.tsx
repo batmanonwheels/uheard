@@ -50,7 +50,7 @@ const LikedTracks = async ({
 
   return (
     <>
-      {likedTracks ? (
+      {likedTracks && (
         <>
           <ul className="sm:w-12/12 w-full gap-1 sm:flex sm:flex-row sm:flex-wrap sm:justify-center sm:gap-2">
             {likedTracks.map((track: SpotifyTracks, t: number) => (
@@ -68,8 +68,6 @@ const LikedTracks = async ({
             </Link>
           ) : null}
         </>
-      ) : (
-        <p>Loading..</p>
       )}
     </>
   );

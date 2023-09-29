@@ -61,7 +61,7 @@ const RecentTracks = async ({
 
   return (
     <>
-      {recentTracks ? (
+      {recentTracks && (
         <>
           <ul className="sm:w-12/12 w-full gap-1 sm:flex sm:flex-row sm:flex-wrap sm:justify-center sm:gap-2">
             {recentTracks.map((track: SpotifyTracks, t: number) => (
@@ -79,8 +79,6 @@ const RecentTracks = async ({
             </Link>
           ) : null}
         </>
-      ) : (
-        <p>Loading..</p>
       )}
     </>
   );

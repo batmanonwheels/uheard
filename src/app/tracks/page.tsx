@@ -98,6 +98,9 @@ const refreshAccessToken = async () => {
 };
 
 const TrackPage = async ({ searchParams }: TrackPageProps) => {
+  const session = getSession();
+  if (!session) redirect("/login");
+
   const limit = parseInt(searchParams.limit);
   const type = searchParams.type;
 
@@ -114,8 +117,7 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
         getSession={getSession}
         refreshAccessToken={refreshAccessToken}
       />
-
-      <div className="flex w-full flex-row justify-evenly pb-4">
+      <div className="sticky top-12 flex w-full flex-row justify-evenly bg-black pb-4">
         <Link
           href={`/tracks?type=search&limit=50&query=`}
           scroll={false}
