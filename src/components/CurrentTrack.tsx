@@ -1,77 +1,22 @@
-//'use client'
+import { SpotifyTrack } from '@/types/spotify';
+import TrackCard from './TrackCard';
+import { fetchCurrentTrack } from '@/utils/fetch-current-track';
 
-import { Session } from "lucia";
-import { SpotifyArtist, SpotifyTrackResponse } from "@/types/spotify";
-import Link from "next/link";
-import RecommendLink from "./RecommendLink";
-import Image from "next/image";
+interface CurrentTrackProps {}
 
-interface CurrentTrackProps {
-  getSession: () => Promise<Session | null>;
-  refreshAccessToken: () => Promise<false | null | undefined>;
-}
+const CurrentTrack = async ({}: CurrentTrackProps) => {
+	//current track
+	const track: SpotifyTrack | null | undefined = await fetchCurrentTrack();
 
-const CurrentTrack = async ({
-  getSession,
-  refreshAccessToken,
-}: CurrentTrackProps) => {
-  const fetchCurrentTrack = async () => {
-    const session = await getSession();
-
-    if (!session) return null;
-
-    const currentTrack = await fetch(
-      `https://api.spotify.com/v1/me/player/currently-playing`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + session.user.accessToken,
-        },
-      },
-    )
-      .then((res) => (res === null ? null : res.json()))
-      .catch((res) => res);
-
-    if (currentTrack === null) return null;
-
-    return currentTrack;
-  };
-
-  //current track
-  const { item: track }: SpotifyTrackResponse = await fetchCurrentTrack();
-
-  return (
-    <>
-      {track && (
-        <div className="flex max-w-full flex-row gap-2 pb-3 text-left">
-          <Image
-            height={track.album.images[0].height}
-            width={track.album.images[0].width}
-            src={track.album.images[0].url}
-            alt={`${track.name} cover art`}
-            className="my-auto w-3/12 items-center rounded-sm"
-          />
-          <Link href={track.uri} className="my-auto flex flex-1 flex-col">
-            <h2 className="text-xs text-green-400 text-opacity-75">
-              {"Currently Playing"}
-            </h2>
-            <h3 className="text-zinc-200 ">{track.name.split(" - ")[0]}</h3>
-            <p className="text-sm  text-zinc-400">
-              {track.artists
-                .map((artist: SpotifyArtist) => artist.name)
-                .join(", ")}
-            </p>
-            {track.album.total_tracks > 1 && (
-              <p className=" overflow-ellipsis text-xs text-zinc-500">
-                {track.album.name}
-              </p>
-            )}
-          </Link>
-          <RecommendLink trackId={track.id} />
-        </div>
-      )}
-    </>
-  );
+	return (
+		track && (
+			<div
+				className={`border flex w-full flex-row gap-3 rounded-md border-green-400 p-2 text-left sm:max-h-40 sm:w-8/12 md:w-7/12`}
+			>
+				<TrackCard track={track} current={true} />
+			</div>
+		)
+	);
 };
 
 export default CurrentTrack;

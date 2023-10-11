@@ -1,168 +1,106 @@
-//'use client'
-
-import Link from "next/link";
-import { auth } from "@/lib/lucia";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import SavedTracks from "@/components/SavedTracks";
-import RecentTracks from "@/components/RecentTracks";
-import CurrentTrack from "@/components/CurrentTrack";
-import SearchTracks from "@/components/SearchTracks";
-import type { Metadata } from "next";
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import CurrentTrack from '@/components/CurrentTrack';
+import type { Metadata } from 'next';
+import TrackList from '@/components/TrackList';
+import TrackListSearch from '@/components/TrackListSearch';
+import { getSession } from '@/utils/get-session';
 
 interface TrackPageProps {
-  searchParams: {
-    type: string;
-    limit: string;
-    query: string;
-  };
+	searchParams: {
+		t: string;
+		l: string;
+		q: string;
+	};
 }
-const getSession = async () => {
-  const authRequest = auth.handleRequest({
-    request: null,
-    cookies,
-  });
-  const session = await authRequest.validate();
 
-  return session;
-};
+export const dynamic = 'force-dynamic';
 
 export const generateMetadata = async ({
-  searchParams,
+	searchParams,
 }: TrackPageProps): Promise<Metadata> => {
-  const session = await getSession();
-  const type = searchParams.type;
+	const session = await getSession();
+	const { t: type } = searchParams;
 
-  if (!session) return { title: "Your Spotify Tracks - uheard" };
+	if (!session) return { title: 'Your Spotify Tracks - uheard' };
 
-  if (type === "search")
-    return {
-      title: `Search - uheard`,
-    };
-
-  if (type === "saved")
-    return {
-      title: `${session.user.name.split(" ")[0]}'s Saved Tracks - uheard`,
-    };
-
-  return {
-    title: `${session.user.name.split(" ")[0]}'s Recent Tracks - uheard`,
-  };
-};
-
-const refreshAccessToken = async () => {
-  const session = await getSession();
-
-  if (!session) return null;
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-  });
-
-  if (!user) return null;
-
-  const clientBTOA = btoa(
-    process.env.SPOTIFY_CLIENT_ID + ":" + process.env.SPOTIFY_CLIENT_SECRET,
-  );
-
-  const { access_token: newAccessToken } = await fetch(
-    "https://accounts.spotify.com/api/token",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ` + clientBTOA,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        grant_type: "refresh_token",
-        refresh_token: user?.refreshToken,
-      }),
-    },
-  ).then((res) => res.json());
-
-  if (!newAccessToken) return false;
-
-  const accessToken = await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      accessToken: newAccessToken,
-    },
-  });
-
-  if (!accessToken) return false;
+	switch (type) {
+		case 'search':
+			return {
+				title: `Search - uheard`,
+			};
+		case 'liked':
+			return {
+				title: `${session.user.name.split(' ')[0]}'s Liked Tracks - uheard`,
+			};
+		default:
+			return {
+				title: `${session.user.name.split(' ')[0]}'s Recent Tracks - uheard`,
+			};
+	}
 };
 
 const TrackPage = async ({ searchParams }: TrackPageProps) => {
-  const session = getSession();
-  if (!session) redirect("/login");
+	const session = await getSession();
+	if (!session) redirect('/login');
 
-  const limit = parseInt(searchParams.limit);
-  const type = searchParams.type;
+	const limit = parseInt(searchParams.l);
+	const type = searchParams.t;
 
-  if (!type && !limit) redirect("/tracks?type=recent&limit=10");
+	if (!limit)
+		redirect('/tracks?' + new URLSearchParams({ t: type, l: 10 + '' }));
 
-  const loadMoreTracks = (limit: number) => {
-    if (limit! >= 50) return `/tracks?type=${type}&limit=50`;
-    return `/tracks?type=${type}&limit=${limit + 10}`;
-  };
+	const trackListTypes: string[] = ['search', 'recent', 'liked'];
 
-  return (
-    <main className="flex w-full flex-1 flex-col items-center p-4 text-center">
-      <CurrentTrack
-        getSession={getSession}
-        refreshAccessToken={refreshAccessToken}
-      />
-      <div className="sticky top-12 flex w-full flex-row justify-evenly bg-black pb-4">
-        <Link
-          href={`/tracks?type=search&limit=50&query=`}
-          scroll={false}
-          className={`${type === "search" && "text-green-500"}`}
-          replace
-        >
-          Search
-        </Link>
-        <Link
-          href={`/tracks?type=recent&limit=${limit}`}
-          scroll={false}
-          className={`${type === "recent" && "text-green-500"}`}
-          replace
-        >
-          Recently Played
-        </Link>
-        <Link
-          href={`/tracks?type=liked&limit=${limit}`}
-          className={`${type === "liked" && "text-green-500"}`}
-          scroll={false}
-          replace
-        >
-          Liked
-        </Link>
-      </div>
+	return (
+		<main className='relative flex flex-col items-center flex-1 w-full p-4 text-center pt'>
+			<CurrentTrack />
+			<div className='sticky z-0 flex flex-row w-full py-2 bg-black top-12 justify-evenly md:pt-0 md:z-10 md:top-3 md:w-5/6 md:bg-transparent'>
+				{trackListTypes.map((trackListType, i) => (
+					<div key={i}>
+						<Link
+							href={`/tracks?t=${trackListType}&l=${limit}&q=`}
+							scroll={false}
+							className={`text-left text-sm ${
+								type === `${trackListType}` ? 'text-green-500' : 'text-zinc-400'
+							}`}
+							key={i}
+						>
+							{trackListType.toUpperCase()}
+						</Link>
+						{type === `${trackListType}` && (
+							<hr className='w-full mt-1 border-green-500 rounded-xl' />
+						)}
+					</div>
+				))}
+			</div>
 
-      {type === "search" && <SearchTracks searchParams={searchParams} />}
-      {type === "recent" && (
-        <RecentTracks
-          getSession={getSession}
-          loadMoreTracks={loadMoreTracks}
-          refreshAccessToken={refreshAccessToken}
-          searchParams={searchParams}
-        />
-      )}
-      {type === "liked" && (
-        <SavedTracks
-          getSession={getSession}
-          loadMoreTracks={loadMoreTracks}
-          refreshAccessToken={refreshAccessToken}
-          searchParams={searchParams}
-        />
-      )}
-    </main>
-  );
+			{/* <div className='sticky z-0 flex flex-col w-full py-2 bg-black top-12 justify-evenly md:pt-0 md:z-10 md:top-3 md:w-5/6 md:bg-transparent'>
+				<div className='flex justify-between w-full'>
+					{trackListTypes.map((trackListType, i) => (
+						<Link
+							href={`/tracks?t=${trackListType}&l=${limit}&q=`}
+							scroll={false}
+							className={`text-left text-sm ${
+								type === `${trackListType}` ? 'text-green-500' : 'text-zinc-400'
+							}`}
+							replace
+							key={i}
+						>
+							{trackListType.toUpperCase()}
+						</Link>
+					))}
+				</div>
+				<hr className='w-full mx-auto my-2 border-green-500' />
+			</div> */}
+
+			{type === 'liked' || type === 'recent' ? (
+				<TrackList searchParams={searchParams} />
+			) : (
+				<TrackListSearch searchParams={searchParams} />
+			)}
+		</main>
+	);
 };
 
 export default TrackPage;

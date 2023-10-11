@@ -1,7 +1,6 @@
 import { lucia } from "lucia";
 import { prisma } from "@lucia-auth/adapter-prisma";
 import { prisma as client } from "./prisma";
-import { PrismaClient } from "@prisma/client";
 import { spotify } from "@lucia-auth/oauth/providers";
 import { nextjs } from "lucia/middleware";
 
