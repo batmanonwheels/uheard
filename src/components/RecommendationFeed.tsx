@@ -14,7 +14,7 @@ const RecommendationFeed = async ({}: RecommendationFeedProps) => {
 				</h2>
 				<hr className='w-full mx-auto my-2 border-green-500' />
 			</div>
-			<ul>
+			<ul className='flex flex-col items-center w-full gap-1 rounded-lg md:flex-row md:flex-wrap md:justify-center md:gap-6'>
 				{recommendations.map(
 					(recommendation: RecommendationWithUser, i: number) => (
 						<RecommendationCard
