@@ -5,6 +5,20 @@ export type SpotifyTrackResponse = {
   limit: number;
   next: string;
   href: string;
+  progress_ms: number;
+};
+
+export type SpotifySearchResponse = {
+  error?: { status: number; message: string };
+  tracks: {
+    href: string;
+    items: SpotifyTrack[];
+    limit: number;
+    next: string;
+    offset: number;
+    previous?: null;
+    total: number;
+  };
 };
 
 export type SpotifyTracksResponse = {
@@ -69,6 +83,9 @@ export type SpotifyTrack = {
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
+  progress_ms: number;
+  current_time_ms: number;
+  percent_complete: string;
   explicit: boolean;
   external_ids: {
     isrc: string;

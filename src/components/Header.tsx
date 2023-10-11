@@ -1,17 +1,43 @@
-//'use client'
-
-import Link from "next/link";
-
-//import
+/* eslint-disable @next/next/no-img-element */
+import { getSession } from '@/utils/get-session';
+import Link from 'next/link';
 
 interface HeaderProps {}
 
-const Header = ({}: HeaderProps) => {
-  return (
-    <header className={`sticky top-0 bg-black p-4 text-center text-green-500`}>
-      <Link href={`/`}>uheard</Link>
-    </header>
-  );
+const Header = async ({}: HeaderProps) => {
+	const session = await getSession();
+
+	return (
+		<header className={`sticky top-0 z-10 bg-black`}>
+			<div className='flex items-center justify-between h-12 p-4 my-auto text-center md:text-left'>
+				<Link href={`/`} className='text-xl text-green-500'>
+					UHEARD
+				</Link>
+				{session && (
+					<Link
+						href={'/profile'}
+						className='flex items-center gap-2 justify-evenly'
+					>
+						<img
+							src={session.user.picture}
+							alt={`${session.user.name}'s profile picture`}
+							className='w-auto h-8 rounded-sm '
+						/>
+						<p className='text-sm text-green-50'>{session.user.name} </p>
+					</Link>
+				)}
+				{!session && (
+					<Link
+						href={'/api/login/spotify'}
+						className='flex items-center gap-2 justify-evenly'
+					>
+						<p className='text-sm text-green-400'>LOGIN </p>
+					</Link>
+				)}
+			</div>
+			<hr className='w-11/12 m-auto border-green-500 rounded-xl md:w-full' />
+		</header>
+	);
 };
 
 export default Header;

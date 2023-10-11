@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-//import
-
 interface RecommendButtonBarProps {
   trackId: string;
 }
@@ -37,7 +35,7 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
   };
 
   return (
-    <div className="flex w-full justify-evenly py-3">
+    <div className="flex w-full py-3 justify-evenly">
       <button onClick={() => handleReturn()}>Return</button>
       <button onClick={() => handleRecommendation(trackId)}>
         {isRecommended ? "Done!" : "Share"}

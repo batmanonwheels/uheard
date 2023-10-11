@@ -2,8 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-//import
-
 interface RecommendLinkProps {
   trackId: string;
 }
@@ -15,7 +13,7 @@ const RecommendLink = ({ trackId }: RecommendLinkProps) => {
     router.push(`tracks/recommend/${trackId}`);
   };
 
-  return <button onClick={() => handleLink(trackId)}>Share</button>;
+  return <button className={'text-green-500'} onClick={() => handleLink(trackId)}>Share</button>;
 };
 
 export default RecommendLink;
