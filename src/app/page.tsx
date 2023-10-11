@@ -52,10 +52,10 @@ const Home = async () => {
 								href={'/tracks?t=recent'}
 								className='text-sm text-green-500'
 							>
-								<p>CREATE RECOMMENDATION</p>
+								<p>BROWSE TRACKS</p>
 							</Link>
 							<Link href={'/profile'} className='text-sm text-green-500'>
-								<p>PROFILE</p>
+								<p> VIEW PROFILE</p>
 							</Link>
 							<Form action='/api/logout'>
 								<input

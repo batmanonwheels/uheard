@@ -30,48 +30,41 @@ const RecommendationCard = ({
 }: RecommendationCardProps) => {
 	return (
 		<li
-			className={`flex w-full flex-col  rounded-md py-2 text-left md:max-h-44 md:w-5/12`}
+			className={`flex w-full relative flex-row  gap-3 rounded-md py-2 text-left md:max-h-44 md:w-5/12`}
 		>
-			<div
-				className={`flex w-full flex-row gap-3 rounded-md text-left md:max-h-44 md:w-5/12`}
-			>
+			<Link href={url} className='w-3/12 h-full my-auto max-h-36 sm:w-auto '>
+				<Image
+					height={300}
+					width={300}
+					src={image}
+					alt={`${name} cover art`}
+					className={`w-full h-full my-auto max-h-36 sm:w-auto items-center rounded-md sm:h-full `}
+				/>
+			</Link>
+			<div className='flex flex-col items-stretch justify-between flex-1 my-auto'>
 				<Link
-					href={url}
-					className='items-center w-3/12 h-full my-auto rounded-md max-h-36 sm:w-auto '
+					href={`/recommendation/${id}`}
+					className='flex flex-col flex-1 my-auto '
 				>
-					<Image
-						height={300}
-						width={300}
-						src={image}
-						alt={`${name} cover art`}
-						className={`my-auto h-full w-full  items-center rounded-md sm:w-auto `}
-					/>
+					<h3 className='text-zinc-200 sm:text-lg'>{name}</h3>
+					<p className='text-sm text-zinc-400 sm:text-lg'>
+						{artists.join(', ')}
+					</p>
+					<p className='text-xs text-zinc-500 sm:text-base'>{album}</p>
 				</Link>
-				<div className='flex flex-col flex-1 my-auto '>
+				<div className='absolute flex gap-1 px-2 bottom-1 right-1 '>
+					<p className='text-xs '>Recommended by</p>
 					<Link
-						href={`/recommendation/${id}`}
-						className='flex flex-col flex-1 my-auto '
+						href={user.spotifyUri}
+						className='flex items-center gap-1 justify-evenly'
 					>
-						<h3 className='text-zinc-200 sm:text-lg'>{name}</h3>
-						<p className='text-sm text-zinc-400 sm:text-lg'>
-							{artists.join(', ')}
-						</p>
-						<p className='text-xs text-zinc-500 sm:text-base'>{album}</p>
+						<img
+							src={user.picture}
+							alt={`${user.name}'s profile picture`}
+							className='w-auto h-4 rounded-sm '
+						/>
+						<p className='text-xs text-green-400'>{user.name} </p>
 					</Link>
-					<div className='flex justify-end gap-1 px-2'>
-						<p className='text-xs '>Recommended by</p>
-						<Link
-							href={user.spotifyUri}
-							className='flex items-center gap-1 justify-evenly'
-						>
-							<img
-								src={user.picture}
-								alt={`${user.name}'s profile picture`}
-								className='w-auto h-4 rounded-sm '
-							/>
-							<p className='text-xs text-green-400'>{user.name} </p>
-						</Link>
-					</div>
 				</div>
 			</div>
 		</li>
