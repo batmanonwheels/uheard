@@ -18,6 +18,7 @@ export const GET = async (request: NextRequest) => {
 			status: 400,
 		});
 	}
+
 	try {
 		const { getExistingUser, spotifyUser, createUser, spotifyTokens } =
 			await spotifyAuth.validateCallback(code);
@@ -49,9 +50,10 @@ export const GET = async (request: NextRequest) => {
 					id: spotifyUser.id,
 					name: spotifyUser.display_name!,
 					email: spotifyUser.email!,
-					picture: spotifyUser.images[spotifyUser.images.length - 1].url
-						? spotifyUser.images[spotifyUser.images.length - 1].url
-						: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg',
+					picture:
+						spotifyUser.images.length > 0
+							? spotifyUser.images[spotifyUser.images.length - 1].url
+							: 'https://www.nicepng.com/png/full/933-9332131_profile-picture-default-png.png',
 					spotifyProfileLink: spotifyUser.href,
 					spotifyUri: spotifyUser.uri,
 					accessToken: spotifyTokens.accessToken,
@@ -59,6 +61,7 @@ export const GET = async (request: NextRequest) => {
 					refreshToken: spotifyTokens.refreshToken,
 				},
 			});
+
 			return user;
 		};
 
