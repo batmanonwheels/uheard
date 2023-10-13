@@ -42,19 +42,19 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 	];
 
 	return (
-		<main className='flex justify-center flex-1 w-full p-4 text-center'>
+		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center'>
 			{track && (
 				<>
-					<div className='flex flex-col p-2 m-auto'>
+					<div className='flex flex-col w-full'>
 						<Image
 							height={track.album.images[0].height}
 							width={track.album.images[0].width}
 							src={track.album.images[0].url}
 							alt={`${track.name} cover art`}
-							className='w-full pb-2 rounded-xs'
+							className='w-full h-auto rounded-md'
 						/>
 						<Link href={track.uri}>
-							<h3 className='text-2xl text-zinc-200'>{track.name}</h3>
+							<h3 className='pt-2 text-2xl text-zinc-200'>{track.name}</h3>
 							<p className='text-lg text-zinc-400'>
 								{track.artists
 									.map((artist: SpotifyArtist) => artist.name)
