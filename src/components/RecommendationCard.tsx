@@ -53,7 +53,7 @@ const RecommendationCard = ({
 					<p className='text-xs text-zinc-500 sm:text-base'>{album}</p>
 				</Link>
 				<div className='absolute flex gap-1 px-2 bottom-1 right-1 '>
-					<p className='text-xs '>Recommended by</p>
+					<p className='text-xs '>Heard by</p>
 					<Link
 						href={user.spotifyUri}
 						className='flex items-center gap-1 justify-evenly'
