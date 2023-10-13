@@ -8,7 +8,7 @@ const Header = async ({}: HeaderProps) => {
 	const session = await getSession();
 
 	return (
-		<header className={`sticky top-0 z-10 bg-black`}>
+		<header className={`sticky top-0 z-20 bg-black`}>
 			<div className='flex items-center justify-between h-12 p-4 my-auto text-center md:text-left'>
 				<Link href={`/`} className='text-xl text-green-500'>
 					UHEARD
