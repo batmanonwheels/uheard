@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import RecommendButtonBar from '@/components/RecommendButtonBar';
 import { fetchTrack } from '@/utils/fetch-track';
+import { getDate } from '@/utils/get-date';
 
 interface RecommendPageProps {
 	params: { trackId: string };
@@ -25,21 +26,6 @@ export const generateMetadata = async ({
 const RecommendPage = async ({ params }: RecommendPageProps) => {
 	const { trackId } = params;
 	const track: SpotifyTrack | null = await fetchTrack(trackId);
-
-	const months: string[] = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
-	];
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center'>
@@ -64,11 +50,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<p className='text-lg text-zinc-500'>{track.album.name}</p>
 							)}
 							<p className='text-sm text-zinc-500'>
-								{`Released on ${
-									months[parseInt(track.album.release_date.split('-')[1]) - 1]
-								} ${parseInt(track.album.release_date.split('-')[2])}, ${
-									track.album.release_date.split('-')[0]
-								}`}
+								{`Released on ${getDate(track.album.release_date)}`}
 							</p>
 						</Link>
 						<RecommendButtonBar trackId={trackId} />

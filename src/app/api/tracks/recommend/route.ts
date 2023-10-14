@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { SpotifyTrack } from '@/types/spotify';
 import { fetchTrack } from '@/utils/fetch-track';
 import { getServerSession } from '@/utils/get-server-session';
+import { addTrackToPlaylist } from '@/utils/add-track-to-playlist';
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
 	const trackId: string = req.nextUrl.searchParams.get('track')!;
@@ -28,6 +29,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 				trackISRC: track.external_ids.isrc,
 			},
 		});
+
+		await addTrackToPlaylist(track.uri);
 
 		return NextResponse.json({ recommendation, ok: true });
 	} catch (error: any) {

@@ -55,14 +55,16 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
 	return (
 		<main className='relative flex flex-col items-center flex-1 w-full p-4 pt-3 text-center '>
 			<CurrentTrack />
-			<div className='sticky z-0 flex flex-row w-full py-2  bg-black top-12 justify-evenly md:pt-0 md:z-10 md:top-3 md:w-5/6 md:bg-transparent'>
+			<div className='sticky z-0 flex flex-row w-full py-2  bg-black top-12 justify-evenly md:pt-0 md:z-20 md:top-3 md:w-5/6 md:bg-transparent'>
 				{trackListTypes.map((trackListType, i) => (
 					<div key={i}>
 						<Link
 							href={`/tracks?t=${trackListType}&l=${limit}&q=`}
 							scroll={false}
-							className={`text-left text-sm  font-vcr ${
-								type === `${trackListType}` ? 'text-green-500' : 'text-zinc-400'
+							className={`text-left text-sm  font-vcr z-20 ${
+								type === `${trackListType}`
+									? 'text-green-500'
+									: 'text-zinc-400 '
 							}`}
 							key={i}
 						>

@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { fetchRecommendation } from '@/utils/fetch-recommendation';
-import { Recommendation } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
+import TrackCard from '@/components/TrackCard';
+import { SpotifyTrack } from '@/types/spotify';
+import { getSession } from '@/utils/get-session';
+import { fetchRecommendationDetails } from '@/utils/fetch-recommendation-details';
 
 interface RecommendPageProps {
 	params: { recommendationId: string };
@@ -12,7 +15,7 @@ export const generateMetadata = async ({
 	params,
 }: RecommendPageProps): Promise<Metadata> => {
 	const { recommendationId } = params;
-	const recommendation: RecommendationWithUser | null =
+	const { recommendation }: RecommendationWithUser | null =
 		await fetchRecommendation(recommendationId);
 
 	if (!recommendation) return { title: 'Recommendation - UHEARD' };
@@ -23,9 +26,14 @@ export const generateMetadata = async ({
 };
 
 const RecommendPage = async ({ params }: RecommendPageProps) => {
+	const session = await getSession();
 	const { recommendationId } = params;
-	const recommendation: Recommendation | null =
-		await fetchRecommendation(recommendationId);
+
+	const recommendation = await fetchRecommendation(recommendationId);
+
+	// const relatedTracks = await fetchRecommendationDetails(
+	// 	recommendation.trackId
+	// );
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center'>
@@ -48,7 +56,6 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								.join(', ')}
 						</p>
 						<p className='text-lg text-zinc-500'>{recommendation.trackAlbum}</p>
-
 						<div className='z-10 flex flex-col w-full pt-2 bg-black'>
 							<h2 className='text-sm text-left text-green-500 font-vcr'>
 								LISTEN
@@ -66,6 +73,27 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								</span>
 							</Link>
 						</div>
+
+						{/* {relatedTracks.length > 0 && session && (
+							<>
+								<div className='z-10 flex flex-col w-full pt-2 bg-black'>
+									<h2 className='text-sm text-left text-green-500 font-vcr'>
+										RELATED TRACKS
+									</h2>
+									<hr className='w-full mx-auto mt-2 border-green-500' />
+								</div>
+								<ul className='flex flex-col items-center w-full rounded-lg gap-1 md:flex-row md:flex-wrap md:justify-center md:gap-6'>
+									{relatedTracks.map((track: SpotifyTrack, t: number) => (
+										<li
+											className={`flex w-full flex-row gap-3 rounded-md p-2 text-left max-w-full md:max-h-44 md:w-5/12`}
+											key={t}
+										>
+											<TrackCard track={track} current={false} />
+										</li>
+									))}
+								</ul>
+							</>
+						)} */}
 					</div>
 				</>
 			)}
