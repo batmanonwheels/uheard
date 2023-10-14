@@ -21,10 +21,10 @@ const Home = async () => {
 			{!session && (
 				<>
 					<h1 className='p-2 pb-3 text-xl'>
-						Welcome to <span className='text-green-500'>UHEARD</span>!
+						Welcome to <span className='text-green-500 font-vcr'>UHEARD</span>!
 					</h1>
 					<h1 className='p-2 pb-3 text-base'>
-						Connect with Spotify to show off your taste in music!
+						Connect with Spotify to show off your music taste!
 					</h1>
 				</>
 			)}
@@ -38,23 +38,13 @@ const Home = async () => {
 						/>
 						<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2 '>
 							<h1 className='text-xl'>
-								Welcome,{' '}
-								<Link href={session.user.spotifyUri}>
-									{session.user.name.split(' ')[0]}
-								</Link>
-								!
+								Welcome, {session.user.name.split(' ')[0]}!
 							</h1>
 							<Link
 								href={'/tracks?t=recent'}
 								className='py-1 text-sm text-green-500 font-vcr'
 							>
 								<p>BROWSE TRACKS</p>
-							</Link>
-							<Link
-								href={'/profile'}
-								className='py-1 text-sm text-green-500 font-vcr'
-							>
-								<p> VIEW PROFILE</p>
 							</Link>
 							<Form action='/api/logout'>
 								<input
