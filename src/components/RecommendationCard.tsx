@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import Link from 'next/link';
+import DeleteButton from './DeleteButton';
 
 interface RecommendationCardProps {
 	id: number;
@@ -16,6 +17,7 @@ interface RecommendationCardProps {
 		picture: string;
 		spotifyUri: string;
 	};
+	profile: boolean;
 }
 
 const RecommendationCard = ({
@@ -27,6 +29,7 @@ const RecommendationCard = ({
 	url,
 	preview,
 	user,
+	profile,
 }: RecommendationCardProps) => {
 	return (
 		<li
@@ -41,7 +44,7 @@ const RecommendationCard = ({
 					className={`w-full h-full my-auto max-h-36 sm:w-auto items-center rounded-md sm:h-full `}
 				/>
 			</Link>
-			<div className='flex flex-col items-stretch justify-between flex-1 my-auto'>
+			<div className='flex flex-row items-stretch justify-between flex-1 my-auto'>
 				<Link
 					href={`/recommendation/${id}`}
 					className='flex flex-col flex-1 my-auto '
@@ -52,20 +55,25 @@ const RecommendationCard = ({
 					</p>
 					<p className='text-xs text-zinc-500 sm:text-base'>{album}</p>
 				</Link>
-				<div className='absolute flex gap-1 px-2 rounded-md bottom-1 right-1'>
-					<p className='text-xs '>Heard by</p>
-					<Link
-						href={user.spotifyUri}
-						className='flex items-center gap-1 justify-evenly'
-					>
-						<img
-							src={user.picture}
-							alt={`${user.name}'s profile picture`}
-							className='w-auto h-4 rounded-sm '
-						/>
-						<p className='text-xs text-green-400'>{user.name} </p>
-					</Link>
-				</div>
+
+				{profile ? (
+					<DeleteButton recommendationId={id} />
+				) : (
+					<div className='absolute flex gap-1 px-2 rounded-md -bottom-1 right-1'>
+						<p className='text-xs '>Heard by</p>
+						<Link
+							href={user.spotifyUri}
+							className='flex items-center gap-1 justify-evenly'
+						>
+							<img
+								src={user.picture}
+								alt={`${user.name}'s profile picture`}
+								className='w-auto h-4 rounded-sm '
+							/>
+							<p className='text-xs text-green-400'>{user.name} </p>
+						</Link>
+					</div>
+				)}
 			</div>
 		</li>
 	);

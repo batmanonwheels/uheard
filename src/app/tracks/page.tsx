@@ -22,27 +22,27 @@ export const generateMetadata = async ({
 	const session = await getSession();
 	const { t: type } = searchParams;
 
-	if (!session) return { title: 'Your Spotify Tracks - uheard' };
+	if (!session) return { title: 'Your Spotify Tracks - UHEARD' };
 
 	switch (type) {
 		case 'search':
 			return {
-				title: `Search - uheard`,
+				title: `Search - UHEARD`,
 			};
 		case 'liked':
 			return {
-				title: `${session.user.name.split(' ')[0]}'s Liked Tracks - uheard`,
+				title: `${session.user.name.split(' ')[0]}'s Liked Tracks - UHEARD`,
 			};
 		default:
 			return {
-				title: `${session.user.name.split(' ')[0]}'s Recent Tracks - uheard`,
+				title: `${session.user.name.split(' ')[0]}'s Recent Tracks - UHEARD`,
 			};
 	}
 };
 
 const TrackPage = async ({ searchParams }: TrackPageProps) => {
 	const session = await getSession();
-	if (!session) redirect('/login');
+	if (!session) redirect('/');
 
 	const limit = parseInt(searchParams.l);
 	const type = searchParams.t;
@@ -61,7 +61,7 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
 						<Link
 							href={`/tracks?t=${trackListType}&l=${limit}&q=`}
 							scroll={false}
-							className={`text-left text-sm ${
+							className={`text-left text-sm  font-vcr ${
 								type === `${trackListType}` ? 'text-green-500' : 'text-zinc-400'
 							}`}
 							key={i}

@@ -15,10 +15,10 @@ export const generateMetadata = async ({
 	const { trackId } = params;
 	const track: SpotifyTrack | null = await fetchTrack(trackId);
 
-	if (!track) return { title: 'Create Recommendation - uheard' };
+	if (!track) return { title: 'Create Recommendation - UHEARD' };
 
 	return {
-		title: `Share - ${track.name} by ${track.artists[0].name} - uheard`,
+		title: `Share - ${track.name} by ${track.artists[0].name} - UHEARD`,
 	};
 };
 
@@ -51,7 +51,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 							width={track.album.images[0].width}
 							src={track.album.images[0].url}
 							alt={`${track.name} cover art`}
-							className='w-full h-auto rounded-md'
+							className='w-full h-auto rounded-md sm:w-4/6 sm:m-auto md:w-1/2'
 						/>
 						<Link href={track.uri}>
 							<h3 className='pt-2 text-2xl text-zinc-200'>{track.name}</h3>

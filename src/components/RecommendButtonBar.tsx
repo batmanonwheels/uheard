@@ -35,10 +35,15 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
 	};
 
 	return (
-		<div className='flex w-full py-3 justify-evenly'>
-			<button onClick={() => handleReturn()}>Return</button>
-			<button onClick={() => handleRecommendation(trackId)}>
-				{isRecommended ? 'Done!' : 'Share'}
+		<div className='flex w-full py-3 justify-evenly font-vcr '>
+			<button onClick={() => handleReturn()} className='text-green-600'>
+				RETURN
+			</button>
+			<button
+				onClick={() => handleRecommendation(trackId)}
+				className='text-green-500'
+			>
+				{isRecommended ? 'DONE!' : 'SHARE'}
 			</button>
 		</div>
 	);

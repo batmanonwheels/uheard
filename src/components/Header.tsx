@@ -10,7 +10,7 @@ const Header = async ({}: HeaderProps) => {
 	return (
 		<header className={`sticky top-0 z-20 bg-black`}>
 			<div className='flex items-center justify-between h-12 p-4 my-auto text-center md:text-left'>
-				<Link href={`/`} className='text-xl text-green-500'>
+				<Link href={`/`} className='text-xl text-green-500 font-vcr'>
 					UHEARD
 				</Link>
 				{session && (
@@ -29,7 +29,7 @@ const Header = async ({}: HeaderProps) => {
 				{!session && (
 					<Link
 						href={'/api/login/spotify'}
-						className='flex items-center gap-2 justify-evenly'
+						className='flex items-center gap-2 justify-evenly font-vcr'
 					>
 						<p className='text-sm text-green-400'>LOGIN </p>
 					</Link>

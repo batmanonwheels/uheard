@@ -1,15 +1,26 @@
 import { fetchRecommendations } from '@/utils/fetch-recommendations';
 import RecommendationCard from './RecommendationCard';
+import { getSession } from '@/utils/get-session';
+import { Session } from 'lucia';
 
 interface RecommendationFeedProps {}
 
 const RecommendationFeed = async ({}: RecommendationFeedProps) => {
 	const recommendations = await fetchRecommendations();
+	const session = await getSession();
+
+	const checkIfOwned = (recUserId: string) => {
+		if (session === null) return false;
+
+		if (session.user.id === recUserId) return true;
+
+		return false;
+	};
 
 	return (
 		<>
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
-				<h2 className='text-sm text-left text-green-500 '>
+				<h2 className='text-sm text-left text-green-500 font-vcr'>
 					LATEST RECOMMENDATIONS
 				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
@@ -26,6 +37,7 @@ const RecommendationFeed = async ({}: RecommendationFeedProps) => {
 							url={recommendation.trackUrl}
 							preview={recommendation.trackPreviewUrl}
 							user={recommendation.user}
+							profile={false}
 							key={i}
 						/>
 					)

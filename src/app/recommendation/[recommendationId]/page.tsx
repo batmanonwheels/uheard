@@ -15,10 +15,10 @@ export const generateMetadata = async ({
 	const recommendation: RecommendationWithUser | null =
 		await fetchRecommendation(recommendationId);
 
-	if (!recommendation) return { title: 'Recommendation - uheard' };
+	if (!recommendation) return { title: 'Recommendation - UHEARD' };
 
 	return {
-		title: `${recommendation.trackTitle} - Recommended by ${recommendation.user.name} - uheard`,
+		title: `${recommendation.trackTitle} - Recommended by ${recommendation.user.name} - UHEARD`,
 	};
 };
 
@@ -37,7 +37,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 							width={300}
 							src={recommendation.trackImage}
 							alt={`${recommendation.trackTitle} cover art`}
-							className='w-full h-auto rounded-md'
+							className='w-full h-auto rounded-md sm:w-4/6 sm:m-auto md:w-1/2'
 						/>
 						<h3 className='pt-2 text-2xl text-zinc-200'>
 							{recommendation.trackTitle}
@@ -50,21 +50,19 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 						<p className='text-lg text-zinc-500'>{recommendation.trackAlbum}</p>
 
 						<div className='z-10 flex flex-col w-full pt-2 bg-black'>
-							<h2 className='text-sm text-left text-green-500 '>LISTEN</h2>
+							<h2 className='text-sm text-left text-green-500 font-vcr'>
+								LISTEN
+							</h2>
 							<hr className='w-full mx-auto mt-2 border-green-500' />
 						</div>
-						<div className='flex flex-row py-2 justify-evenly'>
-							<Link
-								className='pt-2 text-base text-zinc-200'
-								href={recommendation.trackUrl}
-							>
-								Spotify
+						<div className='flex flex-row py-2 justify-evenly font-vcr text-green-500'>
+							<Link className='pt-2 text-base' href={recommendation.trackUrl}>
+								SPOTIFY
 							</Link>
-							<Link className='pt-2 text-base text-zinc-200' href={''}>
-								Apple Music
-								<span className='text-sm text-zinc-500'>
-									{' '}
-									{'(Coming Soon!)'}
+							<Link className='pt-2 text-base' href={''}>
+								APPLE MUSIC
+								<span className=' text-sm text-zinc-500 font-sans my-auto'>
+									{' (Coming Soon!)'}
 								</span>
 							</Link>
 						</div>

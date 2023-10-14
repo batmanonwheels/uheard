@@ -14,7 +14,7 @@ interface TrackListProps {
 
 const TrackList = async ({ searchParams }: TrackListProps) => {
 	const session = await getSession();
-	if (!session) redirect('/login');
+	if (!session) redirect('/');
 
 	const limit = parseInt(searchParams.l);
 	const type = searchParams.t;
@@ -23,6 +23,12 @@ const TrackList = async ({ searchParams }: TrackListProps) => {
 
 	return (
 		<>
+			{/* <div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
+				<h2 className='text-sm text-left text-green-500 font-vcr'>
+					{`${type === 'recent' ? 'RECENT TRACKS' : 'LIKED TRACKS'}`}
+				</h2>
+				<hr className='w-full mx-auto mt-2 border-green-500' />
+			</div> */}
 			<ul className='flex flex-col items-center w-full rounded-lg gap-1 md:flex-row md:flex-wrap md:justify-center md:gap-6'>
 				{tracks &&
 					tracks.map((track: SpotifyTracks, t: number) => (

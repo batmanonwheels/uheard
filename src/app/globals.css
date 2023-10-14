@@ -16,6 +16,11 @@
 }
 /* } */
 
+@font-face {
+	font-family: 'VCR';
+	src: url('../../public/fonts/VCR OSD Mono/VCR_OSD_MONO_1.001.ttf');
+}
+
 body {
 	color: rgb(var(--foreground-rgb));
 	background: linear-gradient(

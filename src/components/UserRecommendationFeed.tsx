@@ -12,7 +12,7 @@ const RecommendationFeed = async ({ id }: RecommendationFeedProps) => {
 	return (
 		<>
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
-				<h2 className='text-sm text-left text-green-500 '>
+				<h2 className='text-sm text-left text-green-500 font-vcr'>
 					YOUR RECOMMENDATIONS
 				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
@@ -29,6 +29,7 @@ const RecommendationFeed = async ({ id }: RecommendationFeedProps) => {
 							url={recommendation.trackUrl}
 							preview={recommendation.trackPreviewUrl}
 							user={recommendation.user}
+							profile={true}
 							key={i}
 						/>
 					)
