@@ -50,7 +50,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<p className='text-lg text-zinc-500'>{track.album.name}</p>
 							)}
 							<p className='text-sm text-zinc-500'>
-								{`Released on ${getDate(track.album.release_date)}`}
+								{`Released on ${await getDate(track.album.release_date)}`}
 							</p>
 						</Link>
 						<RecommendButtonBar trackId={trackId} />
