@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'uheard',
+	title: 'UHEARD',
 	description: 'Share your favorite Spotify Tracks!',
 };
 

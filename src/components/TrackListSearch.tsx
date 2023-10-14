@@ -21,7 +21,7 @@ const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
 	return (
 		<>
 			<SearchBar searchParams={searchParams} />
-			<section className='flex flex-col flex-1 w-full gap-2 pt-3 '>
+			<section className='flex flex-col flex-1 w-full  pt-3 '>
 				{!tracks && (
 					<p className='items-center h-full p-1 m-auto text-lg bg-black text-zinc-500 sm:text-lg'>
 						Try searching for a track!
@@ -32,6 +32,13 @@ const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
 						<p className='sticky z-0 p-1 text-sm bg-black top-20 text-zinc-400 sm:text-base md:top-12 md:p-2'>
 							Showing results for <span className='italic'>{query}</span>
 						</p>
+						{/* <div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
+							<h2 className='text-sm text-left text-green-500 font-vcr'>
+								SEARCH RESULTS FOR{' '}
+								<span className='italic'>{query.toUpperCase()}</span>
+							</h2>
+							<hr className='w-full mx-auto mt-1 border-green-500' />
+						</div> */}
 						<ul className='flex flex-col items-center w-full gap-1 rounded-lg md:flex-row md:flex-wrap md:justify-center md:gap-6'>
 							{tracks.map((track: SpotifyTrack, t: number) => (
 								<li

@@ -8,12 +8,8 @@ import RecommendationFeed from '@/components/RecommendationFeed';
 interface HomeProps {}
 
 export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
-	const session = await getSession();
-
-	if (!session) return { title: 'Home - uheard' };
-
 	return {
-		title: `${session.user.name}'s Home - uheard`,
+		title: `Home - UHEARD`,
 	};
 };
 
@@ -34,13 +30,13 @@ const Home = async () => {
 			)}
 			{session && (
 				<>
-					<div className='flex justify-around gap-1 pb-2'>
+					<div className='flex justify-around gap-3 pb-2'>
 						<img
 							src={session.user.picture}
 							alt={`${session.user.name}'s profile picture`}
 							className='w-5/12 h-auto rounded-sm'
 						/>
-						<div className='flex flex-col items-start justify-around gap-1 m-auto text-left h-1/2'>
+						<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2 '>
 							<h1 className='text-xl'>
 								Welcome,{' '}
 								<Link href={session.user.spotifyUri}>
@@ -50,18 +46,21 @@ const Home = async () => {
 							</h1>
 							<Link
 								href={'/tracks?t=recent'}
-								className='text-sm text-green-500'
+								className='py-1 text-sm text-green-500 font-vcr'
 							>
 								<p>BROWSE TRACKS</p>
 							</Link>
-							<Link href={'/profile'} className='text-sm text-green-500'>
+							<Link
+								href={'/profile'}
+								className='py-1 text-sm text-green-500 font-vcr'
+							>
 								<p> VIEW PROFILE</p>
 							</Link>
 							<Form action='/api/logout'>
 								<input
 									type='submit'
 									value='SIGN OUT'
-									className='text-sm text-green-400'
+									className='text-sm text-green-600 font-vcr hover:cursor-pointer'
 								/>
 							</Form>
 						</div>

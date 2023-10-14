@@ -28,16 +28,16 @@ const SearchBar = ({ searchParams }: SearchBarProps) => {
 			<form>
 				<input
 					placeholder={'What song would you like to share?'}
-					className='flex-1 w-full h-full p-3 pr-8 text-base rounded-lg outline-none bg-zinc-950 text-zinc-300 focus:border-none focus:outline-green-500 '
+					className='flex-1 w-full h-full p-3 pr-8 text-base rounded-lg outline-none bg-zinc-950 text-zinc-300 focus:border-none focus:outline-green-500'
 					type='text'
 					value={searchQuery}
 					onChange={(e) => handleSearchQuery(e.target.value)}
 				/>
 				<button
-					className='absolute inset-y-0 right-1 m-auto grid h-[1.35rem] place-items-center pr-2 text-sm text-zinc-200'
+					className='absolute inset-y-0 right-1 m-auto grid h-[1.35rem] place-items-center pr-2 text-sm text-zinc-200 font-vcr'
 					onClick={(e) => handleSearchQuery('')}
 				>
-					Clear
+					CLEAR
 				</button>
 			</form>
 		</section>

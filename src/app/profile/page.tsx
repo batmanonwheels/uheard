@@ -24,25 +24,19 @@ const Profile = async ({}: ProfileProps) => {
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
-			{!session && (
-				<Link href='/login' className='m-auto'>
-					Login
-				</Link>
-			)}
 			{session && (
 				<>
-					<div className='flex justify-around gap-1 pb-2'>
+					<div className='flex justify-around gap-3 pb-2'>
 						<img
 							src={session.user.picture}
 							alt={`${session.user.name}'s profile picture`}
 							className='w-5/12 h-auto rounded-sm'
 						/>
-						<div className='flex flex-col items-start justify-around gap-1 m-auto text-left h-1/2'>
+						<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2'>
 							<h1 className='text-xl'>{session.user.name}</h1>
-							{/* <p className='text-sm '>JOINED IN 2023</p> */}
 							<Link
 								href={session.user.spotifyUri}
-								className='text-sm text-green-500'
+								className='py-1 text-sm text-green-500 font-vcr'
 							>
 								VIEW SPOTIFY PROFILE
 							</Link>
@@ -50,13 +44,17 @@ const Profile = async ({}: ProfileProps) => {
 								<input
 									type='submit'
 									value='SIGN OUT'
-									className='text-sm text-green-400'
+									className='text-sm text-green-600 font-vcr hover:cursor-pointer'
 								/>
 							</Form>
 						</div>
 					</div>
 				</>
 			)}
+			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12 font-vcr'>
+				<h2 className='text-sm text-left text-green-500 font'>PROFILE</h2>
+				<hr className='w-full mx-auto mt-2 border-green-500' />
+			</div>
 			<UserRecommendationFeed id={session.user.id} />
 		</main>
 	);

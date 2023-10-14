@@ -19,14 +19,14 @@ const TrackCard = ({ track, current }: TrackCardProps) => {
 				alt={`${track.name} cover art`}
 				className={`my-auto h-full max-h-32 w-3/12  items-center rounded-md  ${
 					current ? 'md:max-h-36' : 'md:max-h-32'
-				}  sm:w-auto `}
+				}  sm:w-auto sm:h-full `}
 				priority={!!current}
 			/>
 			<Link href={track.uri} className='flex flex-col flex-1 w-3/6 my-auto '>
 				{current && (
 					<>
-						<h2 className='text-xs text-green-400 text-opacity-75'>
-							{'Currently Playing'}
+						<h2 className='text-xs text-green-400 text-opacity-75 font-vcr py-1'>
+							{'CURRENTLY PLAYING'}
 						</h2>
 						<TrackProgressBar
 							percentComplete={track.percent_complete}

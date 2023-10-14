@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
 	if (!request.cookies.get('spotify_oauth_state'))
-		return NextResponse.redirect(new URL('/login', request.url));
+		return NextResponse.redirect(new URL('/', request.url));
 }
 
 export const config = {
