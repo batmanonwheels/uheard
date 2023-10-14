@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from '@/utils/get-server-session';
+import { removeTrackFromPlaylist } from '@/utils/remove-track-from-playlist';
 
 export const DELETE = async (req: NextRequest, res: NextResponse) => {
 	const id = req.nextUrl.searchParams.get('recommendation');
@@ -15,9 +16,9 @@ export const DELETE = async (req: NextRequest, res: NextResponse) => {
 			where: { id: parseInt(id) },
 		});
 
-		// if (!recommendation) throw new Error('Recommendation does not exist.');
+		if (!recommendation) throw new Error('Recommendation does not exist.');
 
-		console.log(recommendation);
+		await removeTrackFromPlaylist(recommendation.trackUrl);
 
 		return NextResponse.json({ recommendation, ok: true });
 	} catch (error: any) {
