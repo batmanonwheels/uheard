@@ -16,14 +16,14 @@ const Header = async ({}: HeaderProps) => {
 				{session && (
 					<Link
 						href={'/profile'}
-						className='flex items-center gap-2 justify-evenly'
+						className='flex items-center gap-2 justify-evenly font-vcr'
 					>
 						<img
 							src={session.user.picture}
 							alt={`${session.user.name}'s profile picture`}
 							className='w-auto h-8 rounded-sm '
 						/>
-						<p className='text-sm text-green-50'>{session.user.name} </p>
+						<p className='text-sm text-green-400'>PROFILE</p>
 					</Link>
 				)}
 				{!session && (

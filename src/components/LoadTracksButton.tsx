@@ -14,13 +14,9 @@ interface LoadTracksButtonProps {
 }
 
 const LoadTracksButton = ({ limit, type, query }: LoadTracksButtonProps) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
 	const router = useRouter();
 
 	const loadMoreTracks = (limit: number, query: string | undefined) => {
-		setIsLoading(true);
-
 		limit += 10;
 
 		if (limit > 50)
@@ -32,12 +28,11 @@ const LoadTracksButton = ({ limit, type, query }: LoadTracksButtonProps) => {
 			});
 
 		router.replace(`/tracks?t=${type}&l=${limit}`, { scroll: false });
-		setIsLoading(false);
 	};
 
 	return (
 		<>
-			{!isLoading && limit < 50 && (
+			{limit < 50 && (
 				<button
 					onClick={() => loadMoreTracks(limit ? limit! : 10, query)}
 					className='py-2 text-green-500  font-vcr'
@@ -45,7 +40,6 @@ const LoadTracksButton = ({ limit, type, query }: LoadTracksButtonProps) => {
 					LOAD MORE
 				</button>
 			)}
-			{isLoading && <p className='py-2 text-green-500  font-vcr'>LOADING...</p>}
 		</>
 	);
 };

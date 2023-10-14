@@ -38,7 +38,7 @@ const Profile = async ({}: ProfileProps) => {
 								href={session.user.spotifyUri}
 								className='py-1 text-sm text-green-500 font-vcr'
 							>
-								VIEW SPOTIFY PROFILE
+								SPOTIFY PROFILE
 							</Link>
 							<Form action='/api/logout'>
 								<input
