@@ -25,34 +25,37 @@ const Profile = async ({}: ProfileProps) => {
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
 			{session && (
-				<>
-					<div className='flex justify-around gap-3 pb-2'>
-						<img
-							src={session.user.picture}
-							alt={`${session.user.name}'s profile picture`}
-							className='w-5/12 h-auto rounded-sm'
-						/>
-						<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2'>
-							<h1 className='text-xl'>{session.user.name}</h1>
-							<Link
-								href={session.user.spotifyUri}
-								className='py-1 text-sm text-green-500 font-vcr'
-							>
-								SPOTIFY PROFILE
-							</Link>
-							<Form action='/api/logout'>
-								<input
-									type='submit'
-									value='SIGN OUT'
-									className='text-sm text-green-600 font-vcr hover:cursor-pointer'
-								/>
-							</Form>
-						</div>
+				<div className='flex justify-around gap-3 pb-2'>
+					<img
+						src={session.user.picture}
+						alt={`${session.user.name}'s profile picture`}
+						className='w-5/12 h-auto max-h-40 rounded-sm md:w-auto  md:max-h-52'
+					/>
+					<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2'>
+						<h1 className='text-xl'>{session.user.name}</h1>
+						<Link
+							href={session.user.spotifyUri}
+							className='py-1 text-sm text-green-500 font-vcr'
+						>
+							SPOTIFY PROFILE
+						</Link>
+						<Form action='/api/logout'>
+							<input
+								type='submit'
+								value='SIGN OUT'
+								className='text-sm text-green-600 font-vcr hover:cursor-pointer'
+							/>
+						</Form>
 					</div>
-				</>
+				</div>
 			)}
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12 font-vcr'>
-				<h2 className='text-sm text-left text-green-500 font'>PROFILE</h2>
+				<h2 className='text-sm text-left text-green-500 font'>
+					EDIT PROFILE
+					<span className=' text-sm text-zinc-500 font-sans my-auto'>
+						{' (Coming Soon!)'}
+					</span>
+				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
 			<UserRecommendationFeed id={session.user.id} />
