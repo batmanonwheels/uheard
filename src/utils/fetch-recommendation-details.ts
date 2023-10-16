@@ -5,7 +5,7 @@ export const fetchRecommendationDetails = async (id: string) => {
 
 	if (!session) return null;
 	try {
-		const { tracks: related, ok } = await fetch(
+		const res = await fetch(
 			'https://api.spotify.com/v1/recommendations?' +
 				new URLSearchParams({
 					limit: '6',
@@ -16,11 +16,12 @@ export const fetchRecommendationDetails = async (id: string) => {
 				headers: {
 					Authorization: 'Bearer ' + session.user.accessToken,
 				},
-				next: { revalidate: 3600 },
+				next: { revalidate: 86400 },
 			}
 		).then((res) => res.json());
 
-		if (!ok) return [];
+		if (!res) return [];
+		const { tracks: related, ok } = res;
 		return { related };
 	} catch (error: any) {
 		return error;

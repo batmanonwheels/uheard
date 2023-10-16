@@ -18,7 +18,7 @@ export const DELETE = async (req: NextRequest, res: NextResponse) => {
 
 		if (!recommendation) throw new Error('Recommendation does not exist.');
 
-		await removeTrackFromPlaylist(recommendation.trackUrl);
+		// await removeTrackFromPlaylist(recommendation.trackUrl);
 
 		return NextResponse.json({ recommendation, ok: true });
 	} catch (error: any) {

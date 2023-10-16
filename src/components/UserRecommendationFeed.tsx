@@ -1,4 +1,3 @@
-import { getSession } from '@/utils/get-session';
 import RecommendationCard from './RecommendationCard';
 import { fetchUserRecommendations } from '@/utils/fetch-user-recommendations';
 

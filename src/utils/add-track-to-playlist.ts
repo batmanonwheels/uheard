@@ -20,7 +20,6 @@ export const addTrackToPlaylist = async (uri: string) => {
 				cache: 'no-store',
 			}
 		).then((res) => res.json());
-		console.log(playlist);
 
 		if (playlist.error) throw new Error(playlist.error.message);
 

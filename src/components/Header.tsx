@@ -23,7 +23,7 @@ const Header = async ({}: HeaderProps) => {
 							alt={`${session.user.name}'s profile picture`}
 							className='w-auto h-8 rounded-sm '
 						/>
-						<p className='text-sm text-green-400'>PROFILE</p>
+						<p className='text-sm text-green-500'>PROFILE</p>
 					</Link>
 				)}
 				{!session && (
@@ -31,11 +31,11 @@ const Header = async ({}: HeaderProps) => {
 						href={'/api/login/spotify'}
 						className='flex items-center gap-2 justify-evenly font-vcr'
 					>
-						<p className='text-sm text-green-400'>LOGIN </p>
+						<p className='text-sm text-green-500'>LOGIN </p>
 					</Link>
 				)}
 			</div>
-			<hr className='w-11/12 m-auto border-green-500 rounded-xl md:w-full' />
+			<hr className='w-11/12 m-auto border-green-500 rounded-xl sm:w-full' />
 		</header>
 	);
 };

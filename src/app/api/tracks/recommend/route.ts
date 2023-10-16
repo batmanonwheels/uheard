@@ -30,26 +30,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 			},
 		});
 
-		await addTrackToPlaylist(track.uri);
-
-		return NextResponse.json({ recommendation, ok: true });
-	} catch (error: any) {
-		return new NextResponse(error.message, { status: error.status });
-	}
-};
-
-export const DELETE = async (req: NextRequest, res: NextResponse) => {
-	const id = 10;
-
-	const session = await getServerSession(req);
-	if (!session) throw new Error('User is not signed in ');
-
-	try {
-		const recommendation = await prisma.recommendation.delete({
-			where: { id },
-		});
-
-		if (!recommendation) throw new Error('Track does not exist.');
+		// await addTrackToPlaylist(track.uri);
 
 		return NextResponse.json({ recommendation, ok: true });
 	} catch (error: any) {
