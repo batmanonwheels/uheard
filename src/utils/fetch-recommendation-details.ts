@@ -1,11 +1,12 @@
 import { getSession } from './get-session';
+import { refreshAccessToken } from './refresh-access-token';
 
 export const fetchRecommendationDetails = async (id: string) => {
 	const session = await getSession();
 
 	if (!session) return null;
 	try {
-		const res = await fetch(
+		const { tracks: related, error } = await fetch(
 			'https://api.spotify.com/v1/recommendations?' +
 				new URLSearchParams({
 					limit: '6',
@@ -20,8 +21,15 @@ export const fetchRecommendationDetails = async (id: string) => {
 			}
 		).then((res) => res.json());
 
-		if (!res) return [];
-		const { tracks: related, ok } = res;
+		if (error) {
+			if (error.message === 'The access token expired') {
+				const updated = await refreshAccessToken();
+				if (updated) fetchRecommendationDetails(id);
+			} else {
+				throw new Error(error.message);
+			}
+		}
+
 		return { related };
 	} catch (error: any) {
 		return error;

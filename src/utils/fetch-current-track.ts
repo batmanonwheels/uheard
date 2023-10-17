@@ -23,7 +23,14 @@ export const fetchCurrentTrack = async () => {
 			.then((res) => (res === null ? null : res.json()))
 			.catch((res) => res);
 
-		if (error) throw new Error(error.message);
+		if (error) {
+			if (error.message === 'The access token expired') {
+				const updated = await refreshAccessToken();
+				if (updated) fetchCurrentTrack();
+			} else {
+				throw new Error(error.message);
+			}
+		}
 
 		if (!track) return null;
 
@@ -36,7 +43,6 @@ export const fetchCurrentTrack = async () => {
 
 		return track;
 	} catch (error: any) {
-		const updated = await refreshAccessToken();
-		if (updated) fetchCurrentTrack();
+		return error;
 	}
 };
