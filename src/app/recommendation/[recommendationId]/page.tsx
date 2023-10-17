@@ -80,15 +80,15 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 									</span>
 								</Link>
 							</div>
-							{relatedTracks.length > 0 && session && (
+							{relatedTracks && session && (
 								<>
-									<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
+									<div className='sticky z-10 flex flex-col w-full pt-2  bg-black top-12'>
 										<h2 className='text-sm text-left text-green-500 font-vcr'>
 											RELATED TRACKS
 										</h2>
 										<hr className='w-full mx-auto mt-2 border-green-500' />
 									</div>
-									<ul className='flex flex-col items-center w-full rounded-lg gap-1 md:flex-row md:flex-wrap md:justify-center md:gap-6 lg:flex-col'>
+									<ul className='flex flex-col items-center w-full rounded-lg gap-1 md:flex-row md:flex-wrap md:justify-center md:gap-6 lg:flex-col md:mt-1'>
 										{relatedTracks.map((track: SpotifyTrack, t: number) => (
 											<li
 												className={`flex w-full flex-row gap-3 rounded-md p-2 text-left max-w-full md:max-h-44 md:w-8/12 lg:max-h-24 lg:w-10/12`}

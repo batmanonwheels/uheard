@@ -13,7 +13,6 @@ export const fetchTrack = async (id: string) => {
 				headers: {
 					Authorization: 'Bearer ' + session.user.accessToken,
 				},
-				cache: 'no-store',
 				next: { revalidate: 86400 },
 			}
 		).then((res) => res.json());
