@@ -28,7 +28,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 	const track: SpotifyTrack | null = await fetchTrack(trackId);
 
 	return (
-		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center'>
+		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center h-full'>
 			{track && (
 				<>
 					<div className='flex flex-col w-full'>
@@ -37,7 +37,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 							width={track.album.images[0].width}
 							src={track.album.images[0].url}
 							alt={`${track.name} cover art`}
-							className='w-full h-auto rounded-md sm:w-4/6 sm:m-auto md:w-1/2'
+							className='w-full h-auto rounded-md  sm:m-auto sm:w-8/12 md:w-5/12 md:h-4/5'
 						/>
 						<Link href={track.uri}>
 							<h3 className='pt-2 text-2xl text-zinc-200'>{track.name}</h3>
