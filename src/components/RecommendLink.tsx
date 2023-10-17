@@ -10,7 +10,7 @@ const RecommendLink = ({ trackId }: RecommendLinkProps) => {
 	const router = useRouter();
 
 	const handleLink = async (trackId: string) => {
-		router.push(`tracks/recommend/${trackId}`);
+		router.push(`/tracks/recommend/${trackId}`);
 	};
 
 	return (

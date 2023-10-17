@@ -80,7 +80,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 									</span>
 								</Link>
 							</div>
-							{relatedTracks.length > 0 && session && (
+							{relatedTracks && session && (
 								<>
 									<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
 										<h2 className='text-sm text-left text-green-500 font-vcr'>
