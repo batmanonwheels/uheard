@@ -30,7 +30,8 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
 		if (!ok) return;
 
 		setIsRecommended(true);
-		router.back();
+		router.push('/');
+		router.refresh();
 		return;
 	};
 
