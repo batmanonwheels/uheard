@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import { fetchRecommendation } from '@/utils/fetch-recommendation';
 import Image from 'next/image';
@@ -37,9 +38,27 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 	);
 
 	return (
-		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center lg:max-h-full'>
+		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center lg:max-h-full relative'>
 			{recommendation && (
 				<>
+					<div className='z-10 flex w-full gap-1 lg:top-0 lg:left-0 lg:w-fit lg:p-4'>
+						<h2 className='text-sm text-left text-green-500 font-vcr'>
+							RECOMMENDED BY
+						</h2>
+						<Link
+							href={recommendation.user.spotifyUri}
+							className='flex items-center gap-1 justify-evenly'
+						>
+							<img
+								src={recommendation.user.picture}
+								alt={`${recommendation.user.name}'s profile picture`}
+								className='w-auto h-4 rounded-sm '
+							/>
+							<p className='text-sm text-green-400 font-vcr'>
+								{recommendation.user.name.toUpperCase()}{' '}
+							</p>
+						</Link>
+					</div>
 					<div className='flex flex-col w-full lg:h-full lg:flex-row relative lg:justify-center'>
 						<div className='flex flex-col w-full lg:justify-center lg:items-center lg:h-full lg:m-auto lg:sticky lg:top-[0%]'>
 							<Image
