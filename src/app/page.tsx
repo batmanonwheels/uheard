@@ -43,7 +43,7 @@ const Home = async () => {
 							Welcome, {session.user.name.split(' ')[0]}!
 						</h1>
 						<Link
-							href={'/tracks?t=recent'}
+							href={'/tracks?t=recent&l=10'}
 							className='py-1 text-sm text-green-500 font-vcr'
 						>
 							<p>BROWSE TRACKS</p>
