@@ -1,4 +1,4 @@
-export const getDate = async (timestamp: string) => {
+export const getDate = async (timestamp: string, precision: string) => {
 	const months: string[] = [
 		'January',
 		'February',
@@ -13,7 +13,14 @@ export const getDate = async (timestamp: string) => {
 		'November',
 		'December',
 	];
-	return `${months[parseInt(timestamp.split('-')[1]) - 1]} ${parseInt(
-		timestamp.split('-')[2]
-	)}, ${timestamp.split('-')[0]}`;
+	if (precision === 'year') return `Released in ${timestamp}`;
+
+	if (precision === 'month')
+		return `Released in ${months[parseInt(timestamp.split('-')[1]) - 1]} ${
+			timestamp.split('-')[0]
+		}`;
+
+	return `Released on ${
+		months[parseInt(timestamp.split('-')[1]) - 1]
+	} ${parseInt(timestamp.split('-')[2])}, ${timestamp.split('-')[0]}`;
 };

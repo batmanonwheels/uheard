@@ -5,6 +5,7 @@ import Image from 'next/image';
 import RecommendButtonBar from '@/components/RecommendButtonBar';
 import { fetchTrack } from '@/utils/fetch-track';
 import { getDate } from '@/utils/get-date';
+import Playbar from '@/components/Playbar';
 
 interface RecommendPageProps {
 	params: { trackId: string };
@@ -50,8 +51,12 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<p className='text-lg text-zinc-500'>{track.album.name}</p>
 							)}
 							<p className='text-sm text-zinc-500'>
-								{`Released on ${await getDate(track.album.release_date)}`}
+								{await getDate(
+									track.album.release_date,
+									track.album.release_date_precision
+								)}
 							</p>
+							<Playbar preview={track.preview_url} />
 						</Link>
 						<RecommendButtonBar trackId={trackId} />
 					</div>

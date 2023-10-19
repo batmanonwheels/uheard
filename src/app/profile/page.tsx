@@ -49,14 +49,14 @@ const Profile = async ({}: ProfileProps) => {
 					</div>
 				</div>
 			)}
-			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12 font-vcr'>
+			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
 				<h2 className='text-sm text-left text-green-500 font'>
 					EDIT PROFILE
 					<span className=' text-sm text-zinc-500 font-sans my-auto'>
 						{' (Coming Soon!)'}
 					</span>
+					<hr className='w-full mx-auto mt-2 border-green-500' />
 				</h2>
-				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
 			<UserRecommendationFeed id={session.user.id} />
 		</main>
