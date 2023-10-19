@@ -38,10 +38,10 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 	);
 
 	return (
-		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center lg:max-h-full relative'>
+		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center lg:max-h-full lg:relative'>
 			{recommendation && (
 				<>
-					<div className='z-10 flex w-full gap-1 lg:top-0 lg:left-0 lg:w-fit lg:p-4'>
+					<div className='z-10 flex w-full gap-1 lg:absolute lg:top-0 lg:left-0 lg:w-full lg:p-4'>
 						<h2 className='text-sm text-left text-green-500 font-vcr'>
 							RECOMMENDED BY
 						</h2>
