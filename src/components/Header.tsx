@@ -8,8 +8,8 @@ const Header = async ({}: HeaderProps) => {
 	const session = await getSession();
 
 	return (
-		<header className={`sticky top-0 z-20 bg-black`}>
-			<div className='flex items-center justify-between h-12 p-4 my-auto text-center md:text-left'>
+		<header className={`sticky top-0 z-20 bg-black px-4 sm:px-0`}>
+			<div className='flex items-center justify-between h-12 py-4 sm:p-4 my-auto text-center md:text-left'>
 				<Link href={`/`} className='text-xl text-green-500 font-vcr'>
 					UHEARD
 				</Link>
@@ -35,7 +35,7 @@ const Header = async ({}: HeaderProps) => {
 					</Link>
 				)}
 			</div>
-			<hr className='w-11/12 m-auto border-green-500 rounded-xl sm:w-full' />
+			<hr className='w-full m-auto border-green-500 rounded-xl sm:w-full' />
 		</header>
 	);
 };
