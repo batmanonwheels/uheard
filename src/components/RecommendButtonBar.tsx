@@ -36,17 +36,25 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
 	};
 
 	return (
-		<div className='flex w-full py-3 justify-evenly font-vcr '>
-			<button onClick={() => handleReturn()} className='text-green-600'>
-				RETURN
-			</button>
-			<button
-				onClick={() => handleRecommendation(trackId)}
-				className='text-green-500'
-			>
-				{isRecommended ? 'DONE!' : 'SHARE'}
-			</button>
-		</div>
+		<>
+			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
+				<h2 className='text-sm text-left text-green-500 font-vcr'>
+					CREATE RECOMMENDATION
+				</h2>
+				<hr className='w-full mx-auto mt-2 border-green-500' />
+			</div>
+			<div className='flex w-full py-3 justify-evenly font-vcr '>
+				<button
+					onClick={() => handleRecommendation(trackId)}
+					className='text-green-500'
+				>
+					{isRecommended ? 'DONE!' : 'SHARE'}
+				</button>
+				<button onClick={() => handleReturn()} className='text-green-600'>
+					RETURN
+				</button>
+			</div>
+		</>
 	);
 };
 
