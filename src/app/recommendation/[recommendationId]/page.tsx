@@ -43,7 +43,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 				<>
 					<div className='z-10 flex w-full gap-1 lg:absolute lg:top-0 lg:left-0 lg:w-full lg:p-4'>
 						<h2 className='text-sm text-left text-green-500 font-vcr'>
-							RECOMMENDED BY
+							HEARD BY
 						</h2>
 						<Link
 							href={recommendation.user.spotifyUri}
