@@ -24,8 +24,8 @@ export const spotifyAuth = spotify(auth, {
 	redirectUri: process.env.SPOTIFY_REDIRECT_URI ?? '',
 	scope: [
 		'user-read-private',
-		'playlist-modify-public',
-		'playlist-modify-private',
+		// 'playlist-modify-public',
+		// 'playlist-modify-private',
 		'user-read-email',
 		'user-read-currently-playing',
 		'user-read-playback-position',
