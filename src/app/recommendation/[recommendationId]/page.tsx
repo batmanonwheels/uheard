@@ -6,7 +6,7 @@ import Link from 'next/link';
 import TrackCard from '@/components/TrackCard';
 import { SpotifyTrack } from '@/types/spotify';
 import { getSession } from '@/utils/get-session';
-import { fetchRecommendationDetails } from '@/utils/fetch-recommendation-details';
+import { fetchRelatedTracks } from '@/utils/fetch-related-tracks';
 import Playbar from '@/components/Playbar';
 
 interface RecommendPageProps {
@@ -33,7 +33,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 
 	const recommendation = await fetchRecommendation(recommendationId);
 
-	const { related: relatedTracks } = await fetchRecommendationDetails(
+	const { related: relatedTracks } = await fetchRelatedTracks(
 		recommendation.trackId
 	);
 
@@ -60,7 +60,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 						</Link>
 					</div>
 					<div className='flex flex-col w-full lg:h-full lg:flex-row relative lg:justify-center'>
-						<div className='flex flex-col w-full lg:justify-center lg:items-center lg:h-full lg:m-auto lg:sticky lg:top-[0%]'>
+						<div className='flex flex-col w-full lg:justify-center lg:items-center lg:m-auto lg:py-10 lg:sticky lg:top-[0%]'>
 							<Image
 								height={300}
 								width={300}
