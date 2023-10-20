@@ -100,7 +100,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 									</span>
 								</a>
 							</div>
-							{relatedTracks && session && (
+							{relatedTracks && session ? (
 								<>
 									<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
 										<h2 className='text-sm text-left text-green-500 font-vcr'>
@@ -118,6 +118,18 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 											</li>
 										))}
 									</ul>
+								</>
+							) : (
+								<>
+									<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
+										<h2 className='text-sm text-left text-green-500 font-vcr'>
+											RELATED TRACKS
+										</h2>
+										<hr className='w-full mx-auto mt-2 border-green-500' />
+									</div>
+									<p className='h-full pt-4 m-auto text-base'>
+										Login to view more details!
+									</p>
 								</>
 							)}
 						</div>
