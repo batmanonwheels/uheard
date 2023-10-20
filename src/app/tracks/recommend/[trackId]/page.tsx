@@ -64,15 +64,15 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<hr className='w-full mx-auto mt-2 border-green-500' />
 							</div>
 							<div className='flex flex-row py-2 text-green-500 justify-evenly font-vcr'>
-								<Link className='pt-2 text-base' href={track.uri}>
+								<a className='pt-2 text-base' href={track.uri}>
 									SPOTIFY
-								</Link>
-								<Link className='pt-2 text-base' href={''}>
+								</a>
+								<a className='pt-2 text-base' href={''}>
 									APPLE MUSIC
 									<span className='my-auto font-sans text-sm text-zinc-500'>
 										{' (Coming Soon!)'}
 									</span>
-								</Link>
+								</a>
 							</div>
 							<RecommendButtonBar trackId={trackId} />
 						</div>
