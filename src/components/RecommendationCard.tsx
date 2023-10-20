@@ -35,7 +35,10 @@ const RecommendationCard = ({
 		<li
 			className={`flex w-full relative flex-row  gap-3 rounded-md py-2 text-left md:max-h-44 md:w-5/12`}
 		>
-			<Link href={url} className='w-3/12 h-full my-auto max-h-36 sm:w-auto '>
+			<Link
+				href={`/recommendation/${id}`}
+				className='w-3/12 h-full my-auto max-h-36 sm:w-auto '
+			>
 				<Image
 					height={300}
 					width={300}

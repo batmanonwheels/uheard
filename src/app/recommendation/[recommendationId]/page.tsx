@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import { fetchRecommendation } from '@/utils/fetch-recommendation';
-import Link from 'next/link';
+
 import TrackCard from '@/components/TrackCard';
 import { SpotifyTrack } from '@/types/spotify';
 import { getSession } from '@/utils/get-session';
@@ -45,7 +45,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 						<h2 className='text-sm text-left text-green-500 font-vcr'>
 							HEARD BY
 						</h2>
-						<Link
+						<a
 							href={recommendation.user.spotifyUri}
 							className='flex items-center gap-1 justify-evenly'
 						>
@@ -57,7 +57,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 							<p className='text-sm text-green-400 font-vcr'>
 								{recommendation.user.name.toUpperCase()}{' '}
 							</p>
-						</Link>
+						</a>
 					</div>
 					<div className='relative flex flex-col w-full lg:h-full lg:flex-row lg:justify-center'>
 						<div className='flex flex-col w-full lg:justify-center lg:items-center lg:m-auto lg:py-10 lg:sticky lg:top-[0%]'>
@@ -90,15 +90,15 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<hr className='w-full mx-auto mt-2 border-green-500' />
 							</div>
 							<div className='flex flex-row py-2 text-green-500 justify-evenly font-vcr'>
-								<Link className='pt-2 text-base' href={recommendation.trackUrl}>
+								<a className='pt-2 text-base' href={recommendation.trackUrl}>
 									SPOTIFY
-								</Link>
-								<Link className='pt-2 text-base' href={''}>
+								</a>
+								<a className='pt-2 text-base' href={''}>
 									APPLE MUSIC
 									<span className='my-auto font-sans text-sm text-zinc-500'>
 										{' (Coming Soon!)'}
 									</span>
-								</Link>
+								</a>
 							</div>
 							{relatedTracks && session && (
 								<>

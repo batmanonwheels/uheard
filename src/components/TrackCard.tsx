@@ -1,7 +1,6 @@
 import { SpotifyArtist, SpotifyTrack } from '@/types/spotify';
 import RecommendLink from './RecommendLink';
 import Image from 'next/image';
-import Link from 'next/link';
 import TrackProgressBar from './TrackProgressBar';
 
 interface TrackCardProps {
@@ -22,10 +21,10 @@ const TrackCard = ({ track, current }: TrackCardProps) => {
 				}  sm:w-auto sm:h-full `}
 				priority={!!current}
 			/>
-			<Link href={track.uri} className='flex flex-col flex-1 w-3/6 my-auto '>
+			<div className='flex flex-col flex-1 w-3/6 my-auto '>
 				{current && (
 					<>
-						<h2 className='text-xs text-green-400 text-opacity-75 font-vcr py-1'>
+						<h2 className='py-1 text-xs text-green-400 text-opacity-75 font-vcr'>
 							{'CURRENTLY PLAYING'}
 						</h2>
 						<TrackProgressBar
@@ -43,7 +42,7 @@ const TrackCard = ({ track, current }: TrackCardProps) => {
 						{track.album.name}
 					</p>
 				)}
-			</Link>
+			</div>
 			<RecommendLink trackId={track.id} />
 		</>
 	);
