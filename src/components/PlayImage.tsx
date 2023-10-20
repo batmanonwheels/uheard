@@ -84,6 +84,8 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 		handlePlay((percentage / 100) * player.duration);
 	};
 
+	console.log(currentTime);
+
 	return (
 		<div className='flex flex-col gap-2'>
 			<div
@@ -148,12 +150,18 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					id='playbar'
 				>
 					<hr
-						className={'border-green-500 border-4 rounded-bl-md z-10'}
+						className={`${
+							currentTime === '0%' ? 'border-zinc-700' : 'border-green-500'
+						} border-4 rounded-bl-md z-10`}
 						style={{
 							width: currentTime,
 						}}
 					/>
-					<hr className='z-10 flex-1 border-4 border-zinc-700 rounded-br-md' />
+					<hr
+						className={`${
+							currentTime === '100%' ? 'border-green-500' : 'border-zinc-700'
+						} z-10 flex-1 border-4 rounded-br-md`}
+					/>
 				</div>
 			</div>
 		</div>
