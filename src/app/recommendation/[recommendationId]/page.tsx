@@ -93,11 +93,11 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<a className='pt-2 text-base' href={recommendation.trackUrl}>
 									SPOTIFY
 								</a>
-								<a className='pt-2 text-base' href={''}>
+								<a
+									className='pt-2 text-base cursor-not-allowed text-zinc-500'
+									href={''}
+								>
 									APPLE MUSIC
-									<span className='my-auto font-sans text-sm text-zinc-500'>
-										{' (Coming Soon!)'}
-									</span>
 								</a>
 							</div>
 							{relatedTracks && session ? (
