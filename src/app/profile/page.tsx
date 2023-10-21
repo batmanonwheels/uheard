@@ -29,7 +29,7 @@ const Profile = async ({}: ProfileProps) => {
 					<img
 						src={session.user.picture}
 						alt={`${session.user.name}'s profile picture`}
-						className='w-5/12 h-auto max-h-40 rounded-sm md:w-auto  md:max-h-52'
+						className='w-5/12 h-auto rounded-sm max-h-40 md:w-auto md:max-h-52'
 					/>
 					<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2'>
 						<h1 className='text-xl'>{session.user.name}</h1>
@@ -50,11 +50,8 @@ const Profile = async ({}: ProfileProps) => {
 				</div>
 			)}
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
-				<h2 className='text-sm text-left text-green-500 font'>
+				<h2 className='text-sm text-left text-zinc-500 font-vcr'>
 					EDIT PROFILE
-					<span className=' text-sm text-zinc-500 font-sans my-auto'>
-						{' (Coming Soon!)'}
-					</span>
 					<hr className='w-full mx-auto mt-2 border-green-500' />
 				</h2>
 			</div>
