@@ -68,7 +68,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 									SPOTIFY
 								</a>
 								<a
-									className='pt-2 text-base cursor-not-allowed text-zinc-500'
+									className='pt-2 text-base cursor-not-allowed pointer-events-none text-zinc-500'
 									href={''}
 								>
 									APPLE MUSIC
