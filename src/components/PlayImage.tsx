@@ -43,7 +43,6 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 		if (player.paused && position !== 0) {
 			player.currentTime = position;
 			player.play();
-
 			playButton.style.display = 'none';
 			pauseButton.style.display = 'inline';
 			return;
@@ -55,10 +54,26 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 		pauseButton.style.display = 'inline';
 	};
 
+	const handleReset = (e: SyntheticEvent<HTMLAudioElement>) => {
+		const player: HTMLAudioElement | null = e.target as HTMLAudioElement;
+		const playButton: HTMLAudioElement | null =
+			document.querySelector('#playButton');
+		const pauseButton: HTMLAudioElement | null =
+			document.querySelector('#pauseButton');
+
+		if (!player || !playButton || !pauseButton) return;
+
+		player.currentTime = 0;
+
+		playButton.style.display = 'inline';
+		pauseButton.style.display = 'none';
+		return;
+	};
+
 	const handlePlayBar = (e: SyntheticEvent<HTMLAudioElement>) => {
+		if (currentTime === '100%') return setCurrentTime('0%');
 		const playbar = e.target as HTMLAudioElement;
 
-		if (!playbar) return;
 		if (!playbar.currentTime || !playbar.duration) return;
 
 		setCurrentTime(
@@ -83,8 +98,6 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 
 		handlePlay((percentage / 100) * player.duration);
 	};
-
-	console.log(currentTime);
 
 	return (
 		<div className='flex flex-col gap-2'>
@@ -137,12 +150,12 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 						</g>
 					</svg>
 				</div>
-
 				<audio
 					id='player'
 					src={preview}
 					className=''
 					onTimeUpdate={(e) => handlePlayBar(e)}
+					onEnded={(e) => handleReset(e)}
 				/>
 				<div
 					className='absolute bottom-0 z-20 flex flex-row w-full rounded-md cursor-pointer h-fit'
