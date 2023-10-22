@@ -165,9 +165,10 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					<hr
 						className={`${
 							currentTime === '0%' ? 'border-zinc-700' : 'border-green-500'
-						} border-4 rounded-bl-md z-10`}
+						} border-4 rounded-bl-md z-10 duration-1000`}
 						style={{
 							width: currentTime,
+							// transition: 'width .5s',
 						}}
 					/>
 					<hr
