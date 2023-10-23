@@ -158,14 +158,16 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					onEnded={(e) => handleReset(e)}
 				/>
 				<div
-					className='absolute bottom-0 z-10 flex flex-row w-full rounded-md cursor-pointer h-fit'
+					className='absolute bottom-0 z-10 flex flex-row w-full gap-0 rounded-md cursor-pointer h-fit bg-zinc-700'
 					onClick={(e) => handleSkip(e)}
 					id='playbar'
 				>
 					<hr
 						className={`${
-							currentTime === '0%' ? 'border-zinc-700' : 'border-green-500'
-						} border-4 rounded-bl-md z-10 duration-1000`}
+							currentTime === '0%'
+								? 'border-zinc-700 bg-zinc-700'
+								: 'border-green-500 bg-green-500'
+						} border-4 rounded-bl-md outline-none z-10 duration-1000`}
 						style={{
 							width: currentTime,
 							// transition: 'width .5s',
@@ -173,8 +175,10 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					/>
 					<hr
 						className={`${
-							currentTime === '100%' ? 'border-green-500' : 'border-zinc-700'
-						} z-10 flex-1 border-4 rounded-br-md`}
+							currentTime === '100%'
+								? 'border-green-500 bg-green-500'
+								: 'border-zinc-700 bg-zinc-700'
+						} z-10 flex-1 border-4 rounded-br-md outline-none duration-1000`}
 					/>
 				</div>
 			</div>
