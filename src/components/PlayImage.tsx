@@ -158,7 +158,7 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					onEnded={(e) => handleReset(e)}
 				/>
 				<div
-					className='absolute bottom-0 z-20 flex flex-row w-full rounded-md cursor-pointer h-fit'
+					className='absolute bottom-0 z-10 flex flex-row w-full rounded-md cursor-pointer h-fit'
 					onClick={(e) => handleSkip(e)}
 					id='playbar'
 				>
