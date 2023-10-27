@@ -63,8 +63,10 @@ const RecommendationCard = ({
 					<DeleteButton recommendationId={id} />
 				) : (
 					<div className='absolute flex gap-1 px-2 rounded-md -bottom-1 right-1'>
-						<p className='text-xs '>Heard by</p>
-						<Link
+						<h2 className='text-sm text-left text-green-500 font-vcr'>
+							HEARD BY
+						</h2>
+						<a
 							href={user.spotifyUri}
 							className='flex items-center gap-1 justify-evenly'
 						>
@@ -73,8 +75,10 @@ const RecommendationCard = ({
 								alt={`${user.name}'s profile picture`}
 								className='w-auto h-4 rounded-sm '
 							/>
-							<p className='text-xs text-green-400'>{user.name} </p>
-						</Link>
+							<p className='text-sm text-green-400 font-vcr'>
+								{user.name.toUpperCase()}{' '}
+							</p>
+						</a>
 					</div>
 				)}
 			</div>
