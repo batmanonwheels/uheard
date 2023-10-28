@@ -100,7 +100,7 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 	};
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<div className='flex flex-col gap-2 lg:w-9/12'>
 			<div
 				className={`w-full h-auto rounded-md sm:w-4/6 sm:m-auto relative lg:w-full`}
 			>
