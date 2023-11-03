@@ -42,7 +42,7 @@ const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
 						<ul className='flex flex-col items-center w-full gap-1 rounded-lg md:flex-row md:flex-wrap md:justify-center md:gap-6'>
 							{tracks.map((track: SpotifyTrack, t: number) => (
 								<li
-									className={`flex w-full flex-row gap-3 rounded-md p-2 text-left max-w-full md:max-h-44 md:w-5/12`}
+									className={`flex w-full flex-row gap-3 rounded-md p-2 text-left max-w-full md:max-h-44 md:w-5/12 lg:max-h-52`}
 									key={t}
 								>
 									<TrackCard track={track} current={false} />

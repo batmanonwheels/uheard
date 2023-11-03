@@ -11,7 +11,7 @@ const CurrentTrack = async ({}: CurrentTrackProps) => {
 	return (
 		track && (
 			<div
-				className={`border flex w-full flex-row gap-3 rounded-md border-green-400 p-2 text-left mb-2 sm:max-h-40 sm:w-8/12 md:w-7/12`}
+				className={`border flex w-full flex-row gap-3 rounded-md border-green-400 p-2 text-left mb-2 sm:max-h-40 sm:w-8/12 md:w-7/12 lg:max-h-56`}
 			>
 				<TrackCard track={track} current={true} />
 			</div>

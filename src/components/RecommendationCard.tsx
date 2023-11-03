@@ -50,37 +50,36 @@ const RecommendationCard = ({
 			<div className='flex flex-row items-stretch justify-between flex-1 my-auto'>
 				<Link
 					href={`/recommendation/${id}`}
-					className='flex flex-col flex-1 my-auto '
+					className='flex flex-col flex-1 my-auto h-full'
 				>
-					<h3 className='text-zinc-200 sm:text-lg'>{name}</h3>
+					<p className='text-xs text-zinc-500 sm:text-base'>{album}</p>
 					<p className='text-sm text-zinc-400 sm:text-lg'>
 						{artists.join(', ')}
 					</p>
-					<p className='text-xs text-zinc-500 sm:text-base'>{album}</p>
+					<h3 className='text-zinc-200 sm:text-lg'>{name}</h3>
+					{!profile && (
+						<div className='flex-1 flex gap-1 rounded-md'>
+							<h2 className='text-xs text-left text-green-500 font-vcr'>
+								HEARD BY
+							</h2>
+							<a
+								href={user.spotifyUri}
+								className='flex items-center gap-1 justify-evenly'
+							>
+								<img
+									src={user.picture}
+									alt={`${user.name}'s profile picture`}
+									className='w-auto h-4 rounded-sm '
+								/>
+								<p className='text-xs text-green-400 font-vcr'>
+									{user.name.toUpperCase()}{' '}
+								</p>
+							</a>
+						</div>
+					)}
 				</Link>
 
-				{profile ? (
-					<DeleteButton recommendationId={id} />
-				) : (
-					<div className='absolute flex gap-1 px-2 rounded-md -bottom-1 right-1'>
-						<h2 className='text-sm text-left text-green-500 font-vcr'>
-							HEARD BY
-						</h2>
-						<a
-							href={user.spotifyUri}
-							className='flex items-center gap-1 justify-evenly'
-						>
-							<img
-								src={user.picture}
-								alt={`${user.name}'s profile picture`}
-								className='w-auto h-4 rounded-sm '
-							/>
-							<p className='text-sm text-green-400 font-vcr'>
-								{user.name.toUpperCase()}{' '}
-							</p>
-						</a>
-					</div>
-				)}
+				{profile && <DeleteButton recommendationId={id} />}
 			</div>
 		</li>
 	);
