@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
+import PlayImage from './PlayImage';
 
 interface RecommendationCardProps {
 	id: number;
@@ -33,12 +34,32 @@ const RecommendationCard = ({
 }: RecommendationCardProps) => {
 	return (
 		<li
-			className={`flex w-full relative flex-row  gap-3 rounded-md py-2 text-left md:max-h-44 md:w-5/12`}
+			className={`flex w-full relative gap-3 rounded-md py-2 text-left md:max-h-44 md:w-5/12`}
 		>
-			<Link
-				href={`/recommendation/${id}`}
-				className='w-3/12 h-full my-auto max-h-36 sm:w-auto '
+			<div
+				// href={`/recommendation/${id}`}
+				className='w-3/12 h-full my-auto max-h-36 sm:w-auto flex flex-col gap-1'
 			>
+				{!profile && (
+					<div className='flex-1 flex gap-1 rounded-md'>
+						<h2 className='text-xs text-left text-green-500 font-vcr'>
+							HEARD BY
+						</h2>
+						<a
+							href={user.spotifyUri}
+							className='flex items-center gap-1 justify-evenly'
+						>
+							<img
+								src={user.picture}
+								alt={`${user.name}'s profile picture`}
+								className='w-auto h-4 rounded-sm '
+							/>
+							<p className='text-xs text-green-400 font-vcr'>
+								{user.name.toUpperCase()}{' '}
+							</p>
+						</a>
+					</div>
+				)}
 				<Image
 					height={300}
 					width={300}
@@ -46,7 +67,7 @@ const RecommendationCard = ({
 					alt={`${name} cover art`}
 					className={`w-full h-full my-auto max-h-36 sm:w-auto items-center rounded-md sm:h-full `}
 				/>
-			</Link>
+			</div>
 			<div className='flex flex-row items-stretch justify-between flex-1 my-auto'>
 				<Link
 					href={`/recommendation/${id}`}
@@ -57,28 +78,7 @@ const RecommendationCard = ({
 						{artists.join(', ')}
 					</p>
 					<h3 className='text-zinc-200 sm:text-lg'>{name}</h3>
-					{!profile && (
-						<div className='flex-1 flex gap-1 rounded-md'>
-							<h2 className='text-xs text-left text-green-500 font-vcr'>
-								HEARD BY
-							</h2>
-							<a
-								href={user.spotifyUri}
-								className='flex items-center gap-1 justify-evenly'
-							>
-								<img
-									src={user.picture}
-									alt={`${user.name}'s profile picture`}
-									className='w-auto h-4 rounded-sm '
-								/>
-								<p className='text-xs text-green-400 font-vcr'>
-									{user.name.toUpperCase()}{' '}
-								</p>
-							</a>
-						</div>
-					)}
 				</Link>
-
 				{profile && <DeleteButton recommendationId={id} />}
 			</div>
 		</li>
