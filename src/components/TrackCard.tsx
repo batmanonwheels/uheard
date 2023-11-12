@@ -33,14 +33,12 @@ const TrackCard = ({ track, current }: TrackCardProps) => {
 						/>
 					</>
 				)}
-				<h3 className='text-zinc-200 sm:text-xl'>{track.name}</h3>
-				<p className='text-sm text-zinc-400 sm:text-lg'>
+				<h3 className='text-zinc-100'>{track.name}</h3>
+				<p className='text-sm text-zinc-300 '>
 					{track.artists.map((artist: SpotifyArtist) => artist.name).join(', ')}
 				</p>
 				{track.album.total_tracks > 1 && (
-					<p className='text-xs text-zinc-500 sm:text-base'>
-						{track.album.name}
-					</p>
+					<p className='text-xs text-zinc-400'>{track.album.name}</p>
 				)}
 			</div>
 			<RecommendLink trackId={track.id} />

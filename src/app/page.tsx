@@ -4,8 +4,11 @@ import Form from '@/components/Form';
 import type { Metadata } from 'next';
 import { getSession } from '@/utils/get-session';
 import RecommendationFeed from '@/components/RecommendationFeed';
+import Modal from '@/components/Modal';
 
-interface HomeProps {}
+interface HomeProps {
+	searchParams: { modal: string | undefined };
+}
 
 export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
 	return {
@@ -13,11 +16,16 @@ export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
 	};
 };
 
-const Home = async () => {
+const Home = async ({ searchParams }: HomeProps) => {
 	const session = await getSession();
+
+	const { modal } = searchParams;
+
+	console.log(modal);
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
+			{modal && <Modal />}
 			{!session && (
 				<>
 					<h1 className='p-2 pb-3 text-xl'>
@@ -30,7 +38,7 @@ const Home = async () => {
 				</>
 			)}
 			{session && (
-				<div className='flex justify-center gap-3 pb-2'>
+				<div className='flex justify-center gap-3 pb-1'>
 					<img
 						height={300}
 						width={300}
@@ -47,6 +55,12 @@ const Home = async () => {
 							className='py-1 text-sm text-green-500 font-vcr'
 						>
 							<p>BROWSE TRACKS</p>
+						</Link>
+						<Link
+							href={'/?modal=true'}
+							className='py-1 text-sm text-green-500 font-vcr'
+						>
+							<p>{"WHAT'S NEW?"}</p>
 						</Link>
 						<Form action='/api/logout'>
 							<input
