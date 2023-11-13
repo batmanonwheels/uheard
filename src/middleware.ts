@@ -3,18 +3,10 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
 	if (!request.cookies.get('spotify_oauth_state')) {
-		return NextResponse.redirect(
-			new URL(
-				'/api/login/spotify' +
-					'?origin=' +
-					request.nextUrl.pathname +
-					request.nextUrl.search,
-				request.url
-			)
-		);
+		return NextResponse.redirect(new URL('/api/login/spotify'));
 	}
 }
 
 export const config = {
-	matcher: ['/tracks/:path*'],
+	matcher: ['/tracks'],
 };
