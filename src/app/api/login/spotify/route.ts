@@ -20,9 +20,7 @@ export const GET = async (request: NextRequest) => {
 	return new Response(null, {
 		status: 302,
 		headers: {
-			Location: request.url.split('origin=')[1]
-				? 'https://uheard.vercel.app' + request.url.split('origin=')[1]
-				: url.toString(),
+			Location: url.toString(),
 		},
 	});
 };

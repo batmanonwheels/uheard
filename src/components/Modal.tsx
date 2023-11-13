@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const Modal = () => {
@@ -25,20 +26,22 @@ const Modal = () => {
 						<div className=''>
 							<div className=' flex flex-col w-fulL'>
 								<h2 className='text-base text-left text-green-500 font-vcr'>
-									{"WHAT'S NEW? (SUNDAY, NOV 12 2023)"}
+									{"WHAT'S NEW? (MONDAY, NOV 12 2023)"}
 								</h2>
 								<hr className='w-full mx-auto mt-2 border-green-500' />
 							</div>
 							<div className='mt-2'>
-								<p className='text-xs text-gray-200 py-3'>
+								<p className='text-sm text-gray-200 py-3'>
 									{
 										"Install the 'Share on UHEARD!' iOS Shortcut to share your favorite tracks directly from the Spotify App!"
 									}
 								</p>
-								<img
+								<Image
 									src={
 										'https://utfs.io/f/110eda9f-012d-4ff8-be11-0730ad08b10d-1xbbz8.jpg'
 									}
+									width={300}
+									height={400}
 									className='w-full pt-3'
 									alt='Share on UHEARD sample image'
 								/>
