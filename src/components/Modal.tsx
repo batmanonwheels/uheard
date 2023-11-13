@@ -8,7 +8,7 @@ const Modal = () => {
 			role='dialog'
 			aria-modal='true'
 		>
-			<div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
+			<div className='flex items-end justify-center min-h-full pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
 				<Link
 					href={'/'}
 					className='fixed inset-0 bg-green-800 bg-opacity-75 transition-opacity cursor-default'
@@ -25,20 +25,23 @@ const Modal = () => {
 						<div className=''>
 							<div className=' flex flex-col w-fulL'>
 								<h2 className='text-base text-left text-green-500 font-vcr'>
-									{"WHAT'S NEW? (MONDAY, NOV 12 2023)"}
+									{"WHAT'S NEW? (SUNDAY, NOV 12 2023)"}
 								</h2>
 								<hr className='w-full mx-auto mt-2 border-green-500' />
 							</div>
 							<div className='mt-2'>
-								<p className='text-xs text-gray-200'>
+								<p className='text-xs text-gray-200 py-3'>
 									{
 										"Install the 'Share on UHEARD!' iOS Shortcut to share your favorite tracks directly from the Spotify App!"
 									}
 								</p>
-								{/* <p className='text-sm '>
-									INSTALL THE UHEARD iOS SHORTCUT TO SHARE YOUR FAVORITE TRACKS
-									DIRECTLY FROM THE SPOTIFY APP!
-								</p> */}
+								<img
+									src={
+										'https://utfs.io/f/110eda9f-012d-4ff8-be11-0730ad08b10d-1xbbz8.jpg'
+									}
+									className='w-full pt-3'
+									alt='Share on UHEARD sample image'
+								/>
 							</div>
 						</div>
 					</div>

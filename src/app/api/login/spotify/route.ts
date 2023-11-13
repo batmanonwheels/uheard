@@ -8,6 +8,7 @@ export const GET = async (request: NextRequest) => {
 	const [url, state] = await spotifyAuth.getAuthorizationUrl();
 
 	const cookieStore = cookies();
+
 	//store state
 	cookieStore.set('spotify_oauth_state', state, {
 		httpOnly: true,
@@ -20,7 +21,7 @@ export const GET = async (request: NextRequest) => {
 		status: 302,
 		headers: {
 			Location: request.url.split('origin=')[1]
-				? request.url.split('origin=')[1]
+				? 'https://uheard.vercel.app' + request.url.split('origin=')[1]
 				: url.toString(),
 		},
 	});
