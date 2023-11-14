@@ -16,7 +16,7 @@ const TrackCard = ({ track, current }: TrackCardProps) => {
 				width={track.album.images[0].width}
 				src={track.album.images[0].url}
 				alt={`${track.name} cover art`}
-				className={`my-auto h-full max-h-32 w-3/12  items-center rounded-md  ${
+				className={`my-auto h-full max-h-32 w-3/12 items-center rounded-md  ${
 					current ? 'md:max-h-36 lg:max-h-52' : 'md:max-h-32 lg:max-h-52'
 				}  sm:w-auto sm:h-full `}
 				priority={!!current}

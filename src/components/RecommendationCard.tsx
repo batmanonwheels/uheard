@@ -55,19 +55,14 @@ const RecommendationCard = ({
 							<h2 className='text-xs text-left text-green-500 font-vcr text-opacity-75'>
 								HEARD BY
 							</h2>
-							<a
-								href={user.spotifyUri}
-								className='flex items-center gap-1 justify-evenly'
-							>
-								<img
-									src={user.picture}
-									alt={`${user.name}'s profile picture`}
-									className='w-auto h-4 rounded-sm '
-								/>
-								<p className='text-xs text-green-400 font-vcr text-opacity-75'>
-									{user.name.toUpperCase()}{' '}
-								</p>
-							</a>
+							<img
+								src={user.picture}
+								alt={`${user.name}'s profile picture`}
+								className='w-auto h-4 rounded-sm '
+							/>
+							<p className='text-xs text-green-400 font-vcr text-opacity-75'>
+								{user.name.toUpperCase()}{' '}
+							</p>
 						</div>
 					)}
 					<h3 className='text-zinc-100 text-base'>{name}</h3>
