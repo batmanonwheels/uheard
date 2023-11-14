@@ -1,14 +1,14 @@
-import { SpotifyTrackResponse } from '@/types/spotify';
 import { getSession } from './get-session';
 import { refreshAccessToken } from './refresh-access-token';
 
-export const fetchTrack = async (id: string) => {
+export const fetchRelatedArtists = async (id: string) => {
 	const session = await getSession();
 
-	if (!session) return null;
+	if (!session) return { related: [] };
+
 	try {
-		const track: SpotifyTrackResponse = await fetch(
-			`https://api.spotify.com/v1/tracks/${id}`,
+		const { artists: related, error } = await fetch(
+			`https://api.spotify.com/v1/artists/${id}/related-artists`,
 			{
 				method: 'GET',
 				headers: {
@@ -18,18 +18,16 @@ export const fetchTrack = async (id: string) => {
 			}
 		).then((res) => res.json());
 
-		if (track.error) {
-			if (track.error.message === 'The access token expired') {
+		if (error) {
+			if (error.message === 'The access token expired') {
 				const updated = await refreshAccessToken();
-				if (updated) fetchTrack(id);
+				if (updated) fetchRelatedArtists(id);
 			} else {
-				throw new Error(track.error.message);
+				throw new Error(error.message);
 			}
 		}
 
-		if (!track) return null;
-
-		return track;
+		return { related: related.slice(0, 3) };
 	} catch (error: any) {
 		return error;
 	}

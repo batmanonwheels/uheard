@@ -26,7 +26,7 @@ const Modal = () => {
 						<div className=''>
 							<div className=' flex flex-col w-fulL'>
 								<h2 className='text-base text-left text-green-500 font-vcr'>
-									{"WHAT'S NEW? (MONDAY, NOV 12 2023)"}
+									{"WHAT'S NEW? (TUES, NOV 14 2023)"}
 								</h2>
 								<hr className='w-full mx-auto mt-2 border-green-500' />
 							</div>

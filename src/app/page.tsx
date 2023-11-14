@@ -21,8 +21,6 @@ const Home = async ({ searchParams }: HomeProps) => {
 
 	const { modal } = searchParams;
 
-	console.log(modal);
-
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
 			{modal && <Modal />}
