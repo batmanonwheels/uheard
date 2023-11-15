@@ -1,8 +1,12 @@
 import { SpotifyTrackResponse } from '@/types/spotify';
 import { getSession } from '@/utils/get-session';
 import { refreshAccessToken } from '@/utils/refresh-access-token';
+import { checkAccessToken } from './check-access-token';
 
 export const fetchCurrentTrack = async () => {
+	const isTokenExpired = await checkAccessToken();
+	if (isTokenExpired) await refreshAccessToken();
+
 	const session = await getSession();
 	if (!session) return null;
 	try {
@@ -23,14 +27,7 @@ export const fetchCurrentTrack = async () => {
 			.then((res) => (res === null ? null : res.json()))
 			.catch((res) => res);
 
-		if (error) {
-			if (error.message === 'The access token expired') {
-				const updated = await refreshAccessToken();
-				if (updated) fetchCurrentTrack();
-			} else {
-				throw new Error(error.message);
-			}
-		}
+		if (error) throw new Error(error.message);
 
 		if (!track) return null;
 

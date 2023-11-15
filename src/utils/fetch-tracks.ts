@@ -3,6 +3,8 @@ import { getSession } from '@/utils/get-session';
 import { SpotifySearchResponse, SpotifyTracksResponse } from '@/types/spotify';
 import { redirect } from 'next/navigation';
 import { Session } from 'lucia';
+import { refreshAccessToken } from './refresh-access-token';
+import { checkAccessToken } from './check-access-token';
 
 type FetchUrls = {
 	recent: string;
@@ -10,6 +12,9 @@ type FetchUrls = {
 };
 
 export const fetchTracks = async (limit = 10, type: string, query?: string) => {
+	const isTokenExpired = await checkAccessToken();
+	if (isTokenExpired) await refreshAccessToken();
+
 	const session: Session | null = await getSession();
 	if (!session) redirect('/login');
 
@@ -63,5 +68,7 @@ export const fetchTracks = async (limit = 10, type: string, query?: string) => {
 		if (error) throw new Error(error.message);
 
 		return tracks;
-	} catch (error: any) {}
+	} catch (error: any) {
+		return error;
+	}
 };

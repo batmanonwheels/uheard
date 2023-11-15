@@ -24,7 +24,6 @@ export const generateMetadata = async ({
 	const track: SpotifyTrack | null = await fetchTrack(trackId);
 
 	if (!track) return { title: 'Create Recommendation - UHEARD' };
-
 	return {
 		title: `${track.name} by ${track.artists[0].name} - UHEARD`,
 	};

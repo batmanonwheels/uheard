@@ -1,7 +1,11 @@
+import { checkAccessToken } from './check-access-token';
 import { getSession } from './get-session';
 import { refreshAccessToken } from './refresh-access-token';
 
 export const fetchRelatedArtists = async (id: string) => {
+	const isTokenExpired = await checkAccessToken();
+	if (isTokenExpired) await refreshAccessToken();
+
 	const session = await getSession();
 
 	if (!session) return { related: [] };
@@ -18,14 +22,7 @@ export const fetchRelatedArtists = async (id: string) => {
 			}
 		).then((res) => res.json());
 
-		if (error) {
-			if (error.message === 'The access token expired') {
-				const updated = await refreshAccessToken();
-				if (updated) fetchRelatedArtists(id);
-			} else {
-				throw new Error(error.message);
-			}
-		}
+		if (error) throw new Error(error.message);
 
 		return { related: related.slice(0, 3) };
 	} catch (error: any) {
