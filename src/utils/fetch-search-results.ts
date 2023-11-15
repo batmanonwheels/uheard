@@ -2,8 +2,13 @@ import { getSession } from '@/utils/get-session';
 import { SpotifySearchResponse } from '@/types/spotify';
 import { redirect } from 'next/navigation';
 import { Session } from 'lucia';
+import { checkAccessToken } from './check-access-token';
+import { refreshAccessToken } from './refresh-access-token';
 
 export const fetchSearchResults = async (limit = 10, query: string) => {
+	const isTokenExpired = await checkAccessToken();
+	if (isTokenExpired) await refreshAccessToken();
+
 	const session: Session | null = await getSession();
 	if (!session) redirect('/login');
 

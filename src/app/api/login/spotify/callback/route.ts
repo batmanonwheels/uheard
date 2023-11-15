@@ -30,6 +30,12 @@ export const GET = async (request: NextRequest) => {
 				},
 			});
 
+			//get timestamp for 1 hour from now to coincide with spotify access token exipration time
+			const currentTime = new Date();
+			const hourFromNow = new Date(
+				currentTime.setHours(currentTime.getHours() + 1)
+			);
+
 			if (existingUser) {
 				// update accessToken and profile picture on sign in
 				const updatedUser = await prisma.user.update({
@@ -43,6 +49,7 @@ export const GET = async (request: NextRequest) => {
 								: 'https://www.nicepng.com/png/full/933-9332131_profile-picture-default-png.png',
 						accessToken: spotifyTokens.accessToken,
 						tokenExpiresIn: spotifyTokens.accessTokenExpiresIn,
+						tokenExpiresAt: hourFromNow,
 						refreshToken: spotifyTokens.refreshToken,
 					},
 				});
@@ -62,6 +69,7 @@ export const GET = async (request: NextRequest) => {
 					spotifyUri: spotifyUser.uri,
 					accessToken: spotifyTokens.accessToken,
 					tokenExpiresIn: spotifyTokens.accessTokenExpiresIn,
+					tokenExpiresAt: hourFromNow,
 					refreshToken: spotifyTokens.refreshToken,
 				},
 			});

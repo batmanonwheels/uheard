@@ -21,6 +21,7 @@ model User {
   spotifyUri         String
   accessToken        String
   tokenExpiresIn     Int
+  tokenExpiresAt     DateTime @default(dbgenerated("NOW() + interval '1 hour'")) @db.Timestamp(6)
   refreshToken       String
   createdAt          DateTime @default(now()) @db.Timestamp(6)
   updatedAt          DateTime @updatedAt

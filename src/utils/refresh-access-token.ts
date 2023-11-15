@@ -6,7 +6,7 @@ export const refreshAccessToken = async () => {
 
 	if (!session) return null;
 
-	const user = await prisma.user.findUnique({
+	const user = await prisma.user.findUniqueOrThrow({
 		where: {
 			id: session.user.id,
 		},
@@ -36,12 +36,19 @@ export const refreshAccessToken = async () => {
 
 	if (!newAccessToken) return false;
 
+	//get timestamp for 1 hour from now to coincide with spotify access token exipration time
+	const currentTime = new Date();
+	const hourFromNow = new Date(
+		currentTime.setHours(currentTime.getHours() + 1)
+	);
+
 	const accessToken = await prisma.user.update({
 		where: {
 			id: user.id,
 		},
 		data: {
 			accessToken: newAccessToken,
+			tokenExpiresAt: hourFromNow,
 		},
 	});
 
