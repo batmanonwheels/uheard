@@ -10,7 +10,7 @@ const Header = async ({}: HeaderProps) => {
 	return (
 		<header className={`sticky top-0 z-20 bg-black px-4 sm:px-0`}>
 			<div className='flex items-center justify-between h-12 py-4 sm:p-4 my-auto text-center md:text-left'>
-				<Link href={`/`} className='text-xl text-green-500 font-vcr'>
+				<Link href={`/`} className='crt text-2xl text-green-500 font-vcr'>
 					UHEARD
 				</Link>
 				{session && (
