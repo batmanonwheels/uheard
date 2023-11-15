@@ -17,10 +17,5 @@ export const checkAccessToken = async () => {
 
 	const isTokenExpired = tokenExpiresAt < new Date(Date.now());
 
-	console.log(
-		{ token: tokenExpiresAt, now: new Date(Date.now()) },
-		tokenExpiresAt < new Date(Date.now())
-	);
-
 	return isTokenExpired;
 };
