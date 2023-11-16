@@ -159,11 +159,11 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 									{/* <ul className='flex flex-row w-full justify-center overflow-x-scroll snap-x snap-mandatory sm:flex-wrap md:w-10/12'> */}
 									<ul
 										className='flex flex-row items-center h-full w-full gap-1
-									overflow-x-scroll overflow-y-hidden md:flex-row md:flex-wrap md:justify-evenly md:items-start md:mt-1 md:my-0 snap-x snap-mandatory md:snap-normal md:overflow-x-visible md:snap-none tex'
+									overflow-x-scroll md:flex-row md:flex-wrap md:justify-evenly md:items-start md:mt-1 md:my-0 snap-x snap-mandatory md:snap-normal md:overflow-x-visible md:snap-none'
 									>
 										{relatedTracks.map((track: SpotifyTrack, t: number) => (
 											<li
-												className={`flex w-full flex-row gap-3 p-2 text-left min-w-[90%] h-28 snap-start md:h-auto md:snap-align-none md:w-5/12 md:min-w-0 md:flex-col `}
+												className={`flex w-full flex-row gap-3 p-2 text-left  items-center min-w-[92.5%] h-fit snap-start md:items-baseline md:h-auto md:snap-align-none md:w-5/12 md:min-w-0 md:flex-col `}
 												key={t}
 											>
 												<Image
@@ -171,7 +171,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 													width={track.album.images[0].width}
 													src={track.album.images[0].url}
 													alt={`${track.name} cover art`}
-													className={` h-full w-full rounded-md flex-1 md:flex-none `}
+													className={`h-auto w-4/12 rounded-md md:h-full md:w-full md:flex-none`}
 												/>
 												<section className='flex flex-row h-full w-full justify-between items-center md:flex-1'>
 													<div className='flex flex-col my-auto'>
