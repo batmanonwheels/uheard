@@ -28,13 +28,15 @@ const Profile = async ({}: ProfileProps) => {
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
 			{session && (
-				<div className='flex justify-around gap-3 pb-2'>
+				<div className='flex gap-3 pb-1'>
 					<img
+						height={300}
+						width={300}
 						src={session.user.picture}
 						alt={`${session.user.name}'s profile picture`}
-						className='w-5/12 h-auto rounded-sm max-h-40 md:w-auto md:max-h-52'
+						className='w-5/12 h-auto max-h-40 rounded-sm md:w-auto  md:max-h-52'
 					/>
-					<div className='flex flex-col items-start flex-1 gap-1 m-auto h-1/2'>
+					<div className='flex flex-col items-start flex-1 gap-1 m-auto '>
 						<h1 className='text-xl'>{session.user.name}</h1>
 						<Link
 							href={session.user.spotifyUri}
