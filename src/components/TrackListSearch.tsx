@@ -23,11 +23,6 @@ const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
 		<>
 			<SearchBar searchParams={searchParams} />
 			<section className='flex flex-col w-full pt-3 justify-center items-center'>
-				{!tracks && (
-					<p className='items-center h-full p-1 m-auto text-lg bg-black text-zinc-500 sm:text-lg'>
-						Try searching for a track!
-					</p>
-				)}
 				{tracks && query && (
 					<>
 						<p className='sticky z-0 p-1 text-sm bg-black top-20 text-zinc-400 sm:text-base md:top-12 md:p-2'>
