@@ -17,9 +17,9 @@ const LoadTracksButton = ({ limit, type, query }: LoadTracksButtonProps) => {
 	const router = useRouter();
 
 	const loadMoreTracks = (limit: number, query: string | undefined) => {
-		limit += 10;
+		limit += 12;
 
-		if (limit > 50)
+		if (limit > 48)
 			return router.replace(`/tracks?t=${type}&l=50`, { scroll: false });
 
 		if (query)
@@ -32,7 +32,7 @@ const LoadTracksButton = ({ limit, type, query }: LoadTracksButtonProps) => {
 
 	return (
 		<>
-			{limit < 50 && (
+			{limit < 48 && (
 				<button
 					onClick={() => loadMoreTracks(limit ? limit! : 10, query)}
 					className='py-2 text-green-500  font-vcr'

@@ -14,6 +14,9 @@ export const generateMetadata = async ({}: ProfileProps): Promise<Metadata> => {
 
 	return {
 		title: `${session.user.name}'s Profile - uheard`,
+		openGraph: {
+			images: session.user.picture,
+		},
 	};
 };
 
@@ -49,12 +52,6 @@ const Profile = async ({}: ProfileProps) => {
 					</div>
 				</div>
 			)}
-			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
-				<h2 className='text-sm text-left text-zinc-500 font-vcr'>
-					EDIT PROFILE
-					<hr className='w-full mx-auto mt-2 border-zinc-500' />
-				</h2>
-			</div>
 			<UserRecommendationFeed id={session.user.id} />
 		</main>
 	);

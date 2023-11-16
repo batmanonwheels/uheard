@@ -16,13 +16,13 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
 				className={`flex flex-col gap-3 rounded-md p-2 w-full h-full my-auto text-center`}
 			>
 				<Image
-					height={250}
-					width={250}
+					height={175}
+					width={175}
 					src={images[0].url}
 					alt={`${name}'s photo`}
-					className={`my-auto h-full aspect-square object-cover items-center rounded-md `}
+					className={`my-auto h-full  aspect-square object-cover items-center rounded-md `}
 				/>
-				<h3 className='text-zinc-300'>{name}</h3>
+				<h3 className='text-zinc-300 text-left'>{name}</h3>
 			</Link>
 		</li>
 	);

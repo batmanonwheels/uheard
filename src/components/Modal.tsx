@@ -12,7 +12,7 @@ const Modal = () => {
 			<div className='flex items-end justify-center min-h-full pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
 				<Link
 					href={'/'}
-					className='fixed inset-0 bg-green-800 bg-opacity-75 transition-opacity cursor-default'
+					className='fixed inset-0 bg-green-800 bg-opacity-75 transition-opacity cursor-default crt'
 					aria-hidden='true'
 				></Link>
 				<span
