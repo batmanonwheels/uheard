@@ -27,8 +27,11 @@ export const generateMetadata = async ({
 	if (!recommendation) return { title: 'Recommendation - UHEARD' };
 
 	return {
-		title: `${recommendation.trackTitle} - Recommended by ${recommendation.user.name} - UHEARD`,
+		title: `${recommendation.trackTitle} - Heard by ${recommendation.user.name} - UHEARD`,
 		openGraph: {
+			images: recommendation.trackImage,
+		},
+		twitter: {
 			images: recommendation.trackImage,
 		},
 	};

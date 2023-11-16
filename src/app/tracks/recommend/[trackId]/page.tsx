@@ -32,6 +32,9 @@ export const generateMetadata = async ({
 		openGraph: {
 			images: track.album.images[0].url,
 		},
+		twitter: {
+			images: track.album.images[0].url,
+		},
 	};
 };
 

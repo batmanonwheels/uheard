@@ -13,9 +13,6 @@ interface HomeProps {
 export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
 	return {
 		title: `Home - UHEARD`,
-		openGraph: {
-			images: [{ url: '../../public/images/metadata.jpg' }],
-		},
 	};
 };
 
