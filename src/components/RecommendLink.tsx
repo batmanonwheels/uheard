@@ -15,7 +15,7 @@ const RecommendLink = ({ trackId }: RecommendLinkProps) => {
 
 	return (
 		<button
-			className={'text-green-500  font-vcr'}
+			className={'text-green-500 font-vcr'}
 			onClick={() => handleLink(trackId)}
 		>
 			SHARE

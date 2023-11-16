@@ -13,6 +13,9 @@ interface HomeProps {
 export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
 	return {
 		title: `Home - UHEARD`,
+		openGraph: {
+			images: [{ url: '../../public/images/metadata.jpg' }],
+		},
 	};
 };
 
@@ -36,7 +39,7 @@ const Home = async ({ searchParams }: HomeProps) => {
 				</>
 			)}
 			{session && (
-				<div className='flex justify-center gap-3 pb-1'>
+				<div className='flex gap-3 pb-1'>
 					<img
 						height={300}
 						width={300}
@@ -49,7 +52,7 @@ const Home = async ({ searchParams }: HomeProps) => {
 							Welcome, {session.user.name.split(' ')[0]}!
 						</h1>
 						<Link
-							href={'/tracks?t=recent&l=10'}
+							href={'/tracks?t=recent&l=12'}
 							className='py-1 text-sm text-green-500 font-vcr'
 						>
 							<p>BROWSE TRACKS</p>

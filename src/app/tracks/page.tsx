@@ -48,7 +48,7 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
 	const type = searchParams.t;
 
 	if (!limit)
-		redirect('/tracks?' + new URLSearchParams({ t: type, l: 10 + '' }));
+		redirect('/tracks?' + new URLSearchParams({ t: type, l: 12 + '' }));
 
 	const trackListTypes: string[] = ['search', 'recent', 'liked'];
 

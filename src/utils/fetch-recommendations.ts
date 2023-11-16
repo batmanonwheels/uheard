@@ -1,8 +1,8 @@
 import { prisma } from '@/lib/prisma';
 
 export const fetchRecommendations = async () => {
-	// const todayMinusThreeDays = Date.now() - 72 * 60 * 60 * 1000;
-	// const threeDaysAgo = new Date(todayMinusThreeDays).toISOString();
+	// const todayMinusTwoWeeks = Date.now() - 168 * 60 * 60 * 1000 * 2;
+	// const twoWeeksAgo = new Date(todayMinusTwoWeeks).toISOString();
 	try {
 		return await prisma.recommendation.findMany({
 			include: {
@@ -18,13 +18,13 @@ export const fetchRecommendations = async () => {
 			},
 			// where: {
 			// 	createdAt: {
-			// 		gte: threeDaysAgo,
+			// 		gte: twoWeeksAgo,
 			// 	},
 			// },
 			orderBy: {
 				createdAt: 'desc',
 			},
-			take: 20,
+			take: 24,
 		});
 	} catch (error: any) {
 		return error;

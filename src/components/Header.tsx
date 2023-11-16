@@ -16,7 +16,7 @@ const Header = async ({}: HeaderProps) => {
 				{session && (
 					<Link
 						href={'/profile'}
-						className='flex items-center gap-2 justify-evenly font-vcr'
+						className='flex items-center gap-2 justify-evenly font-vcr z-[100]'
 					>
 						<img
 							src={session.user.picture}
