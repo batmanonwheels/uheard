@@ -76,26 +76,6 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
 					</div>
 				))}
 			</div>
-
-			{/* <div className='sticky z-0 flex flex-col w-full py-2 bg-black top-12 justify-evenly md:pt-0 md:z-10 md:top-3 md:w-5/6 md:bg-transparent'>
-				<div className='flex justify-between w-full'>
-					{trackListTypes.map((trackListType, i) => (
-						<Link
-							href={`/tracks?t=${trackListType}&l=${limit}&q=`}
-							scroll={false}
-							className={`text-left text-sm ${
-								type === `${trackListType}` ? 'text-green-500' : 'text-zinc-400'
-							}`}
-							replace
-							key={i}
-						>
-							{trackListType.toUpperCase()}
-						</Link>
-					))}
-				</div>
-				<hr className='w-full mx-auto my-2 border-green-500' />
-			</div> */}
-
 			{type === 'liked' || type === 'recent' ? (
 				<TrackList searchParams={searchParams} />
 			) : (
