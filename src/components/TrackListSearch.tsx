@@ -25,7 +25,7 @@ const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
 			<section className='flex flex-col w-full pt-3 justify-center items-center'>
 				{tracks && query && (
 					<>
-						<p className='sticky z-0 p-1 text-sm bg-black top-20 text-zinc-400 sm:text-base md:top-12 md:p-2'>
+						<p className='sticky z-0 p-1 text-sm w-full bg-black top-20 text-zinc-400 sm:text-base md:top-12 md:p-2'>
 							Showing results for <span className='italic'>{query}</span>
 						</p>
 						<ul className='flex flex-col w-full justify-center sm:flex-wrap sm:flex-row md:w-10/12'>

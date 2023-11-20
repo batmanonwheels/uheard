@@ -98,6 +98,23 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 
 		handlePlay((percentage / 100) * player.duration);
 	};
+	if (!preview) {
+		return (
+			<div className=' lg:w-9/12'>
+				<div
+					className={`w-full h-auto rounded-md sm:w-4/6 sm:m-auto relative lg:w-full`}
+				>
+					<Image
+						height={height}
+						width={width}
+						src={url}
+						alt={`${name} cover art`}
+						className='w-full h-full rounded-md cursor-pointer'
+					/>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='flex flex-col gap-2 lg:w-9/12'>
@@ -109,7 +126,7 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					width={width}
 					src={url}
 					alt={`${name} cover art`}
-					className='w-full h-full rounded-md cursor-pointer'
+					className='w-full h-full rounded-t-md cursor-pointer'
 				/>
 				<div
 					className='absolute top-0 z-10 flex items-center justify-center w-full h-full'
@@ -158,7 +175,7 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					onEnded={(e) => handleReset(e)}
 				/>
 				<div
-					className='absolute bottom-0 z-10 flex flex-row w-full gap-0 rounded-md cursor-pointer h-fit bg-zinc-700'
+					className='absolute -bottom-2 z-10 flex flex-row w-full gap-0 rounded-md cursor-pointer h-fit bg-zinc-700'
 					onClick={(e) => handleSkip(e)}
 					id='playbar'
 				>
