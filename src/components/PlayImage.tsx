@@ -98,6 +98,23 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 
 		handlePlay((percentage / 100) * player.duration);
 	};
+	if (!preview) {
+		return (
+			<div className=' lg:w-9/12'>
+				<div
+					className={`w-full h-auto rounded-md sm:w-4/6 sm:m-auto relative lg:w-full`}
+				>
+					<Image
+						height={height}
+						width={width}
+						src={url}
+						alt={`${name} cover art`}
+						className='w-full h-full rounded-md cursor-pointer'
+					/>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='flex flex-col gap-2 lg:w-9/12'>

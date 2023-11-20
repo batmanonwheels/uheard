@@ -35,7 +35,7 @@ const RecommendationCard = ({
 	if (profile) {
 		return (
 			<li
-				className={`flex flex-row h-32 w-full gap-3 rounded-md p-2 text-left justify-between sm:h-full sm:w-3/6 sm:flex-col md:w-4/12`}
+				className={`flex flex-row h-32 w-full gap-3 rounded-md p-2 text-left justify-between sm:h-full sm:w-3/6 sm:flex-col lg:w-4/12`}
 			>
 				<Image
 					height={300}
@@ -51,7 +51,7 @@ const RecommendationCard = ({
 					>
 						<h3 className='text-zinc-100 text-base'>{name}</h3>
 						<p className='text-sm text-zinc-300'>{artists.join(', ')}</p>
-						<p className='text-xs text-zinc-400'>{album}</p>
+						<p className='text-xs text-zinc-400 hidden md:block'>{album}</p>
 					</Link>
 					<DeleteButton recommendationId={id} />
 				</section>
@@ -87,7 +87,7 @@ const RecommendationCard = ({
 				</div>
 				<h3 className='text-zinc-100 text-base'>{name}</h3>
 				<p className='text-sm text-zinc-300'>{artists.join(', ')}</p>
-				<p className='text-xs text-zinc-400'>{album}</p>
+				{/* <p className='text-xs text-zinc-400'>{album}</p> */}
 			</section>
 		</Link>
 	);

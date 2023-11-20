@@ -27,7 +27,9 @@ const TrackCardSquare = ({ track }: TrackCardSquareProps) => {
 							.join(', ')}
 					</p>
 					{track.album.total_tracks > 1 && (
-						<p className='text-xs text-zinc-400'>{track.album.name}</p>
+						<p className='text-xs text-zinc-400  hidden md:block'>
+							{track.album.name}
+						</p>
 					)}
 				</div>
 				<RecommendLink trackId={track.id} />
