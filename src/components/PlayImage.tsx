@@ -109,7 +109,7 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					width={width}
 					src={url}
 					alt={`${name} cover art`}
-					className='w-full h-full rounded-md cursor-pointer'
+					className='w-full h-full rounded-t-md cursor-pointer'
 				/>
 				<div
 					className='absolute top-0 z-10 flex items-center justify-center w-full h-full'
@@ -158,7 +158,7 @@ const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {
 					onEnded={(e) => handleReset(e)}
 				/>
 				<div
-					className='absolute bottom-0 z-10 flex flex-row w-full gap-0 rounded-md cursor-pointer h-fit bg-zinc-700'
+					className='absolute -bottom-2 z-10 flex flex-row w-full gap-0 rounded-md cursor-pointer h-fit bg-zinc-700'
 					onClick={(e) => handleSkip(e)}
 					id='playbar'
 				>
