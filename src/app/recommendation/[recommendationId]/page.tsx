@@ -117,8 +117,8 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 									SPOTIFY
 								</a>
 								<a
-									className='pt-2 text-base cursor-not-allowed pointer-events-none text-zinc-500'
-									href={''}
+									className='pt-2 text-base'
+									href={'/api/tracks/apple-music?uri=' + track?.uri}
 								>
 									APPLE MUSIC
 								</a>
@@ -185,7 +185,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 																.join(', ')}
 														</p>
 														{track.album.total_tracks > 1 && (
-															<p className='text-xs text-zinc-400'>
+															<p className='text-xs text-zinc-400 hidden md:block'>
 																{track.album.name}
 															</p>
 														)}
