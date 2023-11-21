@@ -1,9 +1,9 @@
-import { SpotifyTrack } from '@/types/spotify';
+import { SongLinkResponse } from '@/types/spotify';
 import { getSession } from './get-session';
 import { refreshAccessToken } from './refresh-access-token';
 import { checkAccessToken } from './check-access-token';
 
-export const fetchTrack = async (id: string) => {
+export const fetchAppleMusicLink = async (uri: string) => {
 	const isTokenExpired = await checkAccessToken();
 	if (isTokenExpired) await refreshAccessToken();
 
@@ -11,20 +11,22 @@ export const fetchTrack = async (id: string) => {
 	if (!session) return null;
 
 	try {
-		const track: SpotifyTrack = await fetch(
-			`https://api.spotify.com/v1/tracks/${id}`,
+		const links: SongLinkResponse = await fetch(
+			'https://api.song.link/v1-alpha.1/links?url=' +
+				encodeURIComponent(uri) +
+				'&userCountry=US&platform=appleMusic',
 			{
 				method: 'GET',
-				headers: {
-					Authorization: 'Bearer ' + session.user.accessToken,
-				},
 				next: { revalidate: 86400 },
 			}
 		).then((res) => res.json());
 
-		if (track.error) throw new Error(track.error.message);
+		const { nativeAppUriMobile: appleMusicUri } =
+			links.linksByPlatform.appleMusic;
 
-		return track;
+		if (!appleMusicUri) return '';
+
+		return appleMusicUri;
 	} catch (error: any) {
 		return error;
 	}
