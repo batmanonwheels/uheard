@@ -1,0 +1,8 @@
+{
+	"crons": [
+		{
+			"path": "/api/cron/keep-server-alive.ts",
+			"schedule": "0 0 * * *"
+		}
+	]
+}
