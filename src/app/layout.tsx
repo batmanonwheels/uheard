@@ -9,6 +9,14 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
 	title: 'UHEARD',
 	description: 'Share your favorite Spotify Tracks!',
+	openGraph: {
+		images:
+			'https://res.cloudinary.com/dmmn0gqaf/image/upload/v1700528168/Screenshot_2023-11-20_at_7.54.06_PM_olcdnb.webp',
+	},
+	twitter: {
+		images:
+			'https://res.cloudinary.com/dmmn0gqaf/image/upload/v1700528168/Screenshot_2023-11-20_at_7.54.06_PM_olcdnb.webp',
+	},
 };
 
 export default function RootLayout({
@@ -21,7 +29,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body
-				className={(inter.className, 'min-w-screen flex min-h-screen flex-col')}
+				className={
+					(inter.className,
+					'min-w-screen flex min-h-screen flex-col overflow-auto')
+				}
 			>
 				<Header />
 				{children}
