@@ -8,12 +8,16 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'UHEARD',
-	description: 'Share your favorite Spotify Tracks!',
+	description: 'Share your favorite songs with the world!',
 	openGraph: {
+		title: 'UHEARD',
+		description: 'Share your favorite songs with the world!',
 		images:
 			'https://res.cloudinary.com/dmmn0gqaf/image/upload/v1700528168/Screenshot_2023-11-20_at_7.54.06_PM_olcdnb.webp',
 	},
 	twitter: {
+		title: 'UHEARD',
+		description: 'Share your favorite songs with the world!',
 		images:
 			'https://res.cloudinary.com/dmmn0gqaf/image/upload/v1700528168/Screenshot_2023-11-20_at_7.54.06_PM_olcdnb.webp',
 	},
