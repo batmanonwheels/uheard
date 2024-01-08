@@ -63,7 +63,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 							HEARD BY
 						</h2>
 						<a
-							href={recommendation.user.spotifyUri}
+							href={'/u/' + recommendation.user.id}
 							className='flex items-center gap-1 justify-evenly'
 						>
 							<img
