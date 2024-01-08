@@ -46,7 +46,7 @@ const RecommendationCard = ({
 				/>
 				<section className='flex flex-row gap-1 h-full w-full items-center'>
 					<Link
-						href={`/recommendation/${id}`}
+						href={`/rec/${id}`}
 						className='flex flex-col flex-1 h-full justify-center sm:justify-start'
 					>
 						<h3 className='text-zinc-100 text-base'>{name}</h3>
@@ -61,7 +61,7 @@ const RecommendationCard = ({
 
 	return (
 		<Link
-			href={`/recommendation/${id}`}
+			href={`/rec/${id}`}
 			className={`flex flex-row h-32 w-full gap-3 rounded-md p-2 text-left justify-between sm:h-full sm:w-3/6 sm:flex-col md:w-4/12`}
 		>
 			<Image

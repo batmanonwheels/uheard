@@ -26,7 +26,7 @@ export const POST = async (request: NextRequest) => {
 	return new Response(null, {
 		status: 302,
 		headers: {
-			Location: '/login', // redirect to login page
+			Location: '/', // redirect to login page
 		},
 	});
 };
