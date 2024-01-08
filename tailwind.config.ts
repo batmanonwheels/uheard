@@ -119,6 +119,9 @@ const config: Config = {
 				'99%': '99%',
 				'100%': '100%',
 			},
+			transitionProperty: {
+				height: 'height',
+			},
 		},
 	},
 	plugins: [],

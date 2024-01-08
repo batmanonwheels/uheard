@@ -35,7 +35,7 @@ export default function RootLayout({
 			<body
 				className={
 					(inter.className,
-					'min-w-screen flex min-h-screen flex-col overflow-auto')
+					' min-w-screen flex min-h-screen flex-col overflow-auto')
 				}
 			>
 				<Header />

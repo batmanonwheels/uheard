@@ -14,6 +14,7 @@ const Form = ({
 		<form
 			action={action}
 			method='post'
+			className='z-[105]'
 			onSubmit={async (e) => {
 				e.preventDefault();
 				const formData = new FormData(e.currentTarget);

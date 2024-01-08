@@ -3,16 +3,22 @@ import { fetchUserRecommendations } from '@/utils/fetch-user-recommendations';
 
 interface RecommendationFeedProps {
 	id: string;
+	name: string;
+	profile: boolean;
 }
 
-const RecommendationFeed = async ({ id }: RecommendationFeedProps) => {
+const RecommendationFeed = async ({
+	id,
+	name,
+	profile,
+}: RecommendationFeedProps) => {
 	const recommendations = await fetchUserRecommendations(id);
 
 	return (
 		<>
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
 				<h2 className='text-sm text-left text-green-500 font-vcr'>
-					YOUR RECOMMENDATIONS
+					{name + ' RECOMMENDATIONS'}
 				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
@@ -28,7 +34,7 @@ const RecommendationFeed = async ({ id }: RecommendationFeedProps) => {
 							url={recommendation.trackUrl}
 							preview={recommendation.trackPreviewUrl}
 							user={recommendation.user}
-							profile={true}
+							profile={profile}
 							key={i}
 						/>
 					)

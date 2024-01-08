@@ -19,7 +19,7 @@ const RecommendationFeed = async ({}: RecommendationFeedProps) => {
 
 	return (
 		<>
-			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
+			<div className='sticky z-10 flex flex-col w-full items-start pt-2 bg-black top-12'>
 				<h2 className='text-sm text-left text-green-500 font-vcr'>
 					LATEST RECOMMENDATIONS
 				</h2>

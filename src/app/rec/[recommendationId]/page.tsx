@@ -58,7 +58,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 		<main className='flex flex-col items-center flex-1 w-full gap-2 p-4 text-center lg:max-h-full lg:relative lg:justify-center'>
 			{recommendation && (
 				<>
-					<div className='z-10 flex w-full gap-1 lg:absolute lg:top-0 lg:left-0 lg:w-full lg:p-4'>
+					<div className='z-10 flex w-full gap-1 lg:absolute lg:top-0 lg:w-full lg:p-4'>
 						<h2 className='text-sm text-left text-green-500 font-vcr'>
 							HEARD BY
 						</h2>
@@ -77,7 +77,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 						</a>
 					</div>
 					<div className='relative flex flex-col w-full lg:h-full lg:flex-row lg:justify-center'>
-						<div className='flex flex-col w-full lg:items-center lg:h-full lg:py-10 lg:sticky lg:top-[10%]'>
+						<div className='flex flex-col w-full lg:items-center lg:h-full lg:py-10 lg:sticky lg:top-[5%]'>
 							<PlayImage
 								height={300}
 								width={300}
@@ -97,12 +97,14 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 								<p className='text-lg text-zinc-500'>
 									{recommendation.trackAlbum}
 								</p>
-								<p className='text-sm text-zinc-500'>
-									{await getDate(
-										track?.album.release_date!,
-										track?.album.release_date_precision!
-									)}
-								</p>
+								{session && (
+									<p className='text-sm text-zinc-500'>
+										{await getDate(
+											track?.album.release_date!,
+											track?.album.release_date_precision!
+										)}
+									</p>
+								)}
 							</div>
 						</div>
 						<div className='flex flex-col w-full'>
