@@ -15,7 +15,8 @@ export const generateMetadata = async ({
 }: UserPageProps): Promise<Metadata> => {
 	const { userId } = params;
 	const user = await fetchUserProfile(userId);
-	if (!user) return { title: 'User Profile - UHEARD' };
+	if (!user || !user.name || !user.picture)
+		return { title: 'User Profile - UHEARD' };
 
 	return {
 		title: `${user.name}'s Profile - UHEARD`,
