@@ -5,6 +5,9 @@ import type { Metadata } from 'next';
 import { getSession } from '@/utils/get-session';
 import UserRecommendationFeed from '@/components/UserRecommendationFeed';
 import { fetchUserProfile } from '@/utils/fetch-user-profile';
+import { redirect } from 'next/navigation';
+import { Router } from 'next/router';
+import { User } from '@prisma/client';
 
 interface UserPageProps {
 	params: { userId: string };
@@ -15,8 +18,7 @@ export const generateMetadata = async ({
 }: UserPageProps): Promise<Metadata> => {
 	const { userId } = params;
 	const user = await fetchUserProfile(userId);
-	if (!user || !user.name || !user.picture)
-		return { title: 'User Profile - UHEARD' };
+	if (!user) return { title: 'User Profile - UHEARD' };
 
 	return {
 		title: `${user.name}'s Profile - UHEARD`,
@@ -28,7 +30,9 @@ export const generateMetadata = async ({
 
 const UserPage = async ({ params }: UserPageProps) => {
 	const { userId } = params;
-	const user = await fetchUserProfile(userId);
+	const user: UserPersonalData = await fetchUserProfile(userId);
+
+	if (!user) redirect('/');
 
 	const session = await getSession();
 

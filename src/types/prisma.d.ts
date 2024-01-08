@@ -6,3 +6,11 @@ const recommendationIncludeUser =
 type RecommendationWithUser = Prisma.RecommendationGetPayload<{
 	include: typeof recommendationIncludeUser;
 }>;
+
+const userPersonalData = Prisma.validator<Prisma.UserDefaultArgs>()({
+	select: { name: true, picture: true, spotifyUri: true },
+});
+
+type UserPersonalData = Prisma.UserGetPayload<{
+	include: typeof userPersonalData;
+}>;

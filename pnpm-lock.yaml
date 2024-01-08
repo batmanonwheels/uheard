@@ -7,13 +7,13 @@ settings:
 dependencies:
   '@lucia-auth/adapter-prisma':
     specifier: ^3.0.1
-    version: 3.0.1(@prisma/client@5.2.0)(lucia@2.5.0)
+    version: 3.0.1(@prisma/client@5.7.1)(lucia@2.5.0)
   '@lucia-auth/oauth':
     specifier: ^3.1.0
     version: 3.1.0(lucia@2.5.0)
   '@prisma/client':
-    specifier: 5.2.0
-    version: 5.2.0(prisma@5.2.0)
+    specifier: ^5.7.1
+    version: 5.7.1(prisma@5.2.0)
   '@types/node':
     specifier: 20.6.0
     version: 20.6.0
@@ -174,13 +174,13 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
-  /@lucia-auth/adapter-prisma@3.0.1(@prisma/client@5.2.0)(lucia@2.5.0):
+  /@lucia-auth/adapter-prisma@3.0.1(@prisma/client@5.7.1)(lucia@2.5.0):
     resolution: {integrity: sha512-JZNl+721M5ApjtNiH+WUYstiC8cffcI/Y9IzKsa0uUhQMIHl2ObCrgO0R3fgHnjWHBjhQoK36g/r/iSJIDppBA==}
     peerDependencies:
       '@prisma/client': ^4.2.0 || ^5.0.0
       lucia: ^2.0.0
     dependencies:
-      '@prisma/client': 5.2.0(prisma@5.2.0)
+      '@prisma/client': 5.7.1(prisma@5.2.0)
       lucia: 2.5.0
     dev: false
 
@@ -304,8 +304,8 @@ packages:
       fastq: 1.15.0
     dev: false
 
-  /@prisma/client@5.2.0(prisma@5.2.0):
-    resolution: {integrity: sha512-AiTjJwR4J5Rh6Z/9ZKrBBLel3/5DzUNntMohOy7yObVnVoTNVFi2kvpLZlFuKO50d7yDspOtW6XBpiAd0BVXbQ==}
+  /@prisma/client@5.7.1(prisma@5.2.0):
+    resolution: {integrity: sha512-TUSa4nUcC4nf/e7X3jyO1pEd6XcI/TLRCA0KjkA46RDIpxUaRsBYEOqITwXRW2c0bMFyKcCRXrH4f7h4q9oOlg==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -314,12 +314,7 @@ packages:
       prisma:
         optional: true
     dependencies:
-      '@prisma/engines-version': 5.2.0-25.2804dc98259d2ea960602aca6b8e7fdc03c1758f
       prisma: 5.2.0
-    dev: false
-
-  /@prisma/engines-version@5.2.0-25.2804dc98259d2ea960602aca6b8e7fdc03c1758f:
-    resolution: {integrity: sha512-jsnKT5JIDIE01lAeCj2ghY9IwxkedhKNvxQeoyLs6dr4ZXynetD0vTy7u6wMJt8vVPv8I5DPy/I4CFaoXAgbtg==}
     dev: false
 
   /@prisma/engines@5.2.0:
