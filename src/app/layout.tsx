@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'UHEARD',
+	icons: './favicon.ico',
 	description: 'Share your favorite songs with the world!',
 	openGraph: {
 		title: 'UHEARD',

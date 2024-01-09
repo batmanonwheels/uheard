@@ -79,7 +79,7 @@ const RecommendationCard = ({
 					<img
 						src={user.picture}
 						alt={`${user.name}'s profile picture`}
-						className='w-auto h-4 rounded-sm '
+						className='w-auto h-4 rounded-sm aspect-square object-cover'
 					/>
 					<p className='text-xs text-green-400 font-vcr text-opacity-75'>
 						{user.name.toUpperCase()}{' '}

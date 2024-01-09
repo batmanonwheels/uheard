@@ -2,14 +2,15 @@ import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 
 export const fetchUserProfile = async (
-	userId: string
+	username: string
 ): Promise<UserPersonalData | null> => {
 	try {
 		const user: UserPersonalData = await prisma.user.findUnique({
 			where: {
-				id: userId,
+				username,
 			},
 			select: {
+				id: true,
 				name: true,
 				picture: true,
 				spotifyUri: true,

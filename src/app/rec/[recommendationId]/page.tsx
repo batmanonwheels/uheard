@@ -28,6 +28,7 @@ export const generateMetadata = async ({
 
 	return {
 		title: `${recommendation.trackTitle} - Heard by ${recommendation.user.name} - UHEARD`,
+
 		openGraph: {
 			images: recommendation.trackImage,
 		},
@@ -63,7 +64,7 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 							HEARD BY
 						</h2>
 						<a
-							href={'/u/' + recommendation.user.id}
+							href={'/u/' + recommendation.user.username}
 							className='flex items-center gap-1 justify-evenly'
 						>
 							<img

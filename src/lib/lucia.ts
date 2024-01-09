@@ -5,7 +5,7 @@ import { spotify } from '@lucia-auth/oauth/providers';
 import { nextjs } from 'lucia/middleware';
 
 export const auth = lucia({
-	env: 'DEV', // "PROD" if deployed to HTTPS
+	env: process.env.NODE_ENV !== 'production' ? 'DEV' : 'PROD', // "PROD" if deployed to HTTPS
 	middleware: nextjs(),
 	adapter: prisma(client),
 	sessionCookie: {
