@@ -7,11 +7,13 @@ interface EditUsernameFormProps {
 }
 
 const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
-	const [newUsername, setNewUsername] = useState<string>(currentUsername);
+	const [newUsername, setNewUsername] = useState<string>('');
 	const router = useRouter();
 
 	const handleValidateUsername = async (val: string) => {
 		setNewUsername(val);
+
+		if (val === currentUsername) return;
 
 		if (val.length < 5) {
 			updateTextStatus(
@@ -105,8 +107,7 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 					<button
 						type='reset'
 						className='font-vcr text-green-600'
-						onClick={(e) => handleValidateUsername(currentUsername)}
-						disabled
+						onClick={(e) => handleValidateUsername('')}
 					>
 						CANCEL
 					</button>
