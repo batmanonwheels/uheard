@@ -65,6 +65,7 @@ export const GET = async (request: NextRequest) => {
 						spotifyUser.images.length > 0
 							? spotifyUser.images[spotifyUser.images.length - 1].url
 							: 'https://www.nicepng.com/png/full/933-9332131_profile-picture-default-png.png',
+					username: spotifyUser.id,
 					spotifyProfileLink: spotifyUser.href,
 					spotifyUri: spotifyUser.uri,
 					accessToken: spotifyTokens.accessToken,
@@ -81,7 +82,9 @@ export const GET = async (request: NextRequest) => {
 
 		const session = await auth.createSession({
 			userId: user.id,
-			attributes: {},
+			attributes: {
+				username: user.username,
+			},
 		});
 
 		const authRequest = auth.handleRequest({ request, cookies });

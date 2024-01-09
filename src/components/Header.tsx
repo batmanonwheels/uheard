@@ -11,7 +11,7 @@ const Header = async ({}: HeaderProps) => {
 	const session = await getSession();
 
 	return (
-		<header className={`sticky top-0 z-[105] sm:z-20 bg-black px-4 sm:px-0 `}>
+		<header className={`sticky top-0 z-[110] sm:z-20 bg-black px-4 sm:px-0 `}>
 			<div
 				className='flex items-center justify-between h-12 py-4 sm:p-4 my-auto text-center md:text-left'
 				id='navbar'
@@ -28,15 +28,15 @@ const Header = async ({}: HeaderProps) => {
 							>
 								<p>TRACKS</p>
 							</Link>
-							<div className='flex flex-row gap-2'>
+							<div className='flex flex-row gap-2 items-center'>
 								<Link
-									href={'/u/' + session.user.id}
+									href={'/u/' + session.user.username}
 									className='flex items-center gap-2 justify-evenly font-vcr z-[100]'
 								>
 									<img
 										src={session.user.picture}
 										alt={`${session.user.name}'s profile picture`}
-										className='w-auto h-6 rounded-sm'
+										className='w-auto h-8 rounded-sm aspect-square object-cover'
 									/>
 									<p className='text-sm text-green-500 '>
 										{session.user.name.toUpperCase()}

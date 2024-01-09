@@ -6,18 +6,18 @@ import { getSession } from '@/utils/get-session';
 import UserRecommendationFeed from '@/components/UserRecommendationFeed';
 import { fetchUserProfile } from '@/utils/fetch-user-profile';
 import { redirect } from 'next/navigation';
-import { Router } from 'next/router';
-import { User } from '@prisma/client';
+import EditUsernameForm from '@/components/EditUsernameForm';
+import { EditUsernameToggle } from '@/components/EditUsernameToggle';
 
 interface UserPageProps {
-	params: { userId: string };
+	params: { username: string };
 }
 
 export const generateMetadata = async ({
 	params,
 }: UserPageProps): Promise<Metadata> => {
-	const { userId } = params;
-	const user = await fetchUserProfile(userId);
+	const { username } = params;
+	const user: UserPersonalData = await fetchUserProfile(username);
 	if (!user) return { title: 'User Profile - UHEARD' };
 
 	return {
@@ -29,12 +29,13 @@ export const generateMetadata = async ({
 };
 
 const UserPage = async ({ params }: UserPageProps) => {
-	const { userId } = params;
-	const user: UserPersonalData = await fetchUserProfile(userId);
+	const { username } = params;
+	const user: UserPersonalData = await fetchUserProfile(username);
 
 	if (!user) redirect('/');
 
 	const session = await getSession();
+	const isUser = session && session.user.id === user.id;
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
@@ -45,7 +46,7 @@ const UserPage = async ({ params }: UserPageProps) => {
 						width={300}
 						src={user.picture}
 						alt={`${user.name}'s profile picture`}
-						className='w-5/12 h-auto max-h-40 rounded-sm md:w-auto  md:max-h-52'
+						className=' w-auto max-h-40 rounded-sm md:w-auto  md:max-h-52 aspect-square object-cover'
 					/>
 					<div className='flex flex-col items-start flex-1 gap-1 m-auto '>
 						<h1 className='text-xl'>{user.name}</h1>
@@ -55,7 +56,7 @@ const UserPage = async ({ params }: UserPageProps) => {
 						>
 							SPOTIFY PROFILE
 						</Link>
-						{session && session.user.id === userId && (
+						{isUser && (
 							<Form action='/api/logout'>
 								<input
 									type='submit'
@@ -67,14 +68,15 @@ const UserPage = async ({ params }: UserPageProps) => {
 					</div>
 				</div>
 			)}
+			{isUser && <EditUsernameForm currentUsername={username} />}
 			<UserRecommendationFeed
-				id={userId}
+				id={user.id}
 				name={
-					session && session.user.id === userId
+					session && session.user.id === user.id
 						? 'YOUR'
 						: user.name.toUpperCase() + "'S"
 				}
-				profile={session && session.user.id === userId ? true : false}
+				profile={session && session.user.id === user.id ? true : false}
 			/>
 		</main>
 	);

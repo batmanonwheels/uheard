@@ -23,6 +23,8 @@ export const POST = async (request: NextRequest) => {
 
 	// delete session cookie
 	authRequest.setSession(null);
+	// delete dead sessions if they still exist
+	await auth.deleteDeadUserSessions(session.user.id);
 	return new Response(null, {
 		status: 302,
 		headers: {

@@ -12,6 +12,7 @@ export const fetchRecommendations = async () => {
 						name: true,
 						picture: true,
 						spotifyUri: true,
+						username: true,
 					},
 				},
 				likes: true,
