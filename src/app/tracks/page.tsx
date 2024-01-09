@@ -54,7 +54,7 @@ const TrackPage = async ({ searchParams }: TrackPageProps) => {
 
 	return (
 		<main className='relative flex flex-col items-center flex-1 w-full p-4 pt-3 text-center '>
-			<CurrentTrack />
+			<CurrentTrack id={session.user.id} />
 			<div className='sticky z-0 flex flex-row w-full py-2  bg-black top-12 justify-evenly md:pt-0 md:z-20 md:top-3 md:w-5/6 md:bg-transparent'>
 				{trackListTypes.map((trackListType, i) => (
 					<div key={i}>

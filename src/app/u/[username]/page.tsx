@@ -73,7 +73,7 @@ const UserPage = async ({ params }: UserPageProps) => {
 					</div>
 				</div>
 			)}
-			<CurrentTrack />
+			<CurrentTrack id={user.id} />
 			{isUser && (
 				<>
 					<EditNameForm currentName={user.name} />

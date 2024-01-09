@@ -2,13 +2,24 @@ import { SpotifyTrackResponse } from '@/types/spotify';
 import { getSession } from '@/utils/get-session';
 import { refreshAccessToken } from '@/utils/refresh-access-token';
 import { checkAccessToken } from './check-access-token';
+import { prisma } from '@/lib/prisma';
 
-export const fetchCurrentTrack = async () => {
-	const isTokenExpired = await checkAccessToken();
-	if (isTokenExpired) await refreshAccessToken();
+export const fetchCurrentTrack = async (id: string) => {
+	const isTokenExpired = await checkAccessToken(id);
+	if (isTokenExpired) await refreshAccessToken(id);
 
 	const session = await getSession();
 	if (!session) return null;
+
+	const { accessToken } = await prisma.user.findUniqueOrThrow({
+		where: {
+			id,
+		},
+		select: {
+			accessToken: true,
+		},
+	});
+
 	try {
 		const {
 			item: track,
@@ -19,7 +30,7 @@ export const fetchCurrentTrack = async () => {
 			{
 				method: 'GET',
 				headers: {
-					Authorization: 'Bearer ' + session.user.accessToken,
+					Authorization: 'Bearer ' + accessToken,
 				},
 				cache: 'no-store',
 			}
