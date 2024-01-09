@@ -1,14 +1,14 @@
 import { prisma } from '@/lib/prisma';
 import { getSession } from './get-session';
 
-export const refreshAccessToken = async () => {
+export const refreshAccessToken = async (id?: string) => {
 	const session = await getSession();
 
 	if (!session) return null;
 
 	const user = await prisma.user.findUniqueOrThrow({
 		where: {
-			id: session.user.id,
+			id: id ? id : session.user.id,
 		},
 	});
 

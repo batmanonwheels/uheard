@@ -1,14 +1,14 @@
 import { prisma } from '@/lib/prisma';
 import { getSession } from './get-session';
 
-export const checkAccessToken = async () => {
+export const checkAccessToken = async (id?: string) => {
 	const session = await getSession();
 
 	if (!session) return null;
 
 	const { tokenExpiresAt } = await prisma.user.findUniqueOrThrow({
 		where: {
-			id: session.user.id,
+			id: id ? id : session.user.id,
 		},
 		select: {
 			tokenExpiresAt: true,

@@ -5,11 +5,13 @@ import TrackProgressBar from './TrackProgressBar';
 import RecommendLink from './RecommendLink';
 import Image from 'next/image';
 
-interface CurrentTrackProps {}
+interface CurrentTrackProps {
+	id: string;
+}
 
-const CurrentTrack = async ({}: CurrentTrackProps) => {
+const CurrentTrack = async ({ id }: CurrentTrackProps) => {
 	//current track
-	const track: SpotifyTrack | null | undefined = await fetchCurrentTrack();
+	const track: SpotifyTrack | null | undefined = await fetchCurrentTrack(id);
 
 	return (
 		track && (
