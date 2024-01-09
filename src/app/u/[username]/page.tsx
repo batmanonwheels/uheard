@@ -7,7 +7,6 @@ import UserRecommendationFeed from '@/components/UserRecommendationFeed';
 import { fetchUserProfile } from '@/utils/fetch-user-profile';
 import { redirect } from 'next/navigation';
 import EditUsernameForm from '@/components/EditUsernameForm';
-import { EditUsernameToggle } from '@/components/EditUsernameToggle';
 
 interface UserPageProps {
 	params: { username: string };
@@ -17,7 +16,8 @@ export const generateMetadata = async ({
 	params,
 }: UserPageProps): Promise<Metadata> => {
 	const { username } = params;
-	const user: UserPersonalData = await fetchUserProfile(username);
+	const user: UserPersonalData | null = await fetchUserProfile(username);
+
 	if (!user) return { title: 'User Profile - UHEARD' };
 
 	return {
@@ -25,12 +25,15 @@ export const generateMetadata = async ({
 		openGraph: {
 			images: user.picture,
 		},
+		twitter: {
+			images: user.picture,
+		},
 	};
 };
 
 const UserPage = async ({ params }: UserPageProps) => {
 	const { username } = params;
-	const user: UserPersonalData = await fetchUserProfile(username);
+	const user: UserPersonalData | null = await fetchUserProfile(username);
 
 	if (!user) redirect('/');
 
