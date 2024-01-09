@@ -7,6 +7,8 @@ import UserRecommendationFeed from '@/components/UserRecommendationFeed';
 import { fetchUserProfile } from '@/utils/fetch-user-profile';
 import { redirect } from 'next/navigation';
 import EditUsernameForm from '@/components/EditUsernameForm';
+import EditNameForm from '@/components/EditNameForm';
+import CurrentTrack from '@/components/CurrentTrack';
 
 interface UserPageProps {
 	params: { username: string };
@@ -43,7 +45,7 @@ const UserPage = async ({ params }: UserPageProps) => {
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-center'>
 			{user && (
-				<div className='flex gap-3 pb-1'>
+				<div className='flex gap-3 pb-2'>
 					<img
 						height={300}
 						width={300}
@@ -71,7 +73,13 @@ const UserPage = async ({ params }: UserPageProps) => {
 					</div>
 				</div>
 			)}
-			{isUser && <EditUsernameForm currentUsername={username} />}
+			<CurrentTrack />
+			{isUser && (
+				<>
+					<EditNameForm currentName={user.name} />
+					<EditUsernameForm currentUsername={username} />
+				</>
+			)}
 			<UserRecommendationFeed
 				id={user.id}
 				name={

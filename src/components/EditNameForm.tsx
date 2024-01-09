@@ -2,51 +2,48 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-interface EditUsernameFormProps {
-	currentUsername: string;
+interface EditNameFormProps {
+	currentName: string;
 }
 
-const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
-	const [newUsername, setNewUsername] = useState<string>('');
+const EditNameForm = ({ currentName }: EditNameFormProps) => {
+	const [newName, setNewName] = useState<string>('');
 	const router = useRouter();
 
-	const handleValidateUsername = async (val: string) => {
-		setNewUsername(val);
+	const handleValidateName = async (val: string) => {
+		setNewName(val);
 
-		if (val === currentUsername) return;
+		if (val === currentName) return;
 
-		if (val.length < 5 || val.length > 20) {
-			updateTextStatus(
-				false,
-				'YOUR USERNAME MUST BE BETWEEN 5-20 CHARACTERS LONG'
-			);
+		if (val.length < 3 || val.length > 12) {
+			updateTextStatus(false, 'YOUR NAME MUST BE BETWEEN 3-12 CHARACTERS LONG');
 			return;
 		}
 
-		const { ok, text } = await fetch('/api/user/check-username', {
-			method: 'PATCH',
-			body: JSON.stringify({ username: val }),
-		}).then((res) => res.json());
+		// const { ok, text } = await fetch('/api/user/name', {
+		// 	method: 'PATCH',
+		// 	body: JSON.stringify({ username: val }),
+		// }).then((res) => res.json());
 
-		updateTextStatus(ok, text);
+		updateTextStatus(true, '');
 	};
 
-	const handleUpdateUsername = async () => {
-		const { ok, url } = await fetch('/api/user/username', {
+	const handleUpdateName = async () => {
+		const { ok } = await fetch('/api/user/name', {
 			method: 'PATCH',
-			body: JSON.stringify({ username: newUsername }),
+			body: JSON.stringify({ name: newName }),
 		}).then((res) => res.json());
 
 		ok && updateTextStatus(true, 'SUCCESS');
-		ok && router.replace(url);
-		setNewUsername('');
+		ok && router.refresh();
+		setNewName('');
 	};
 
 	const updateTextStatus = async (ok: boolean, text: string) => {
 		//grab text status element
-		const statusText = document.querySelector('#username-status-text');
+		const statusText = document.querySelector('#name-status-text');
 
-		const submitBtn = document.querySelector('#username-submit');
+		const submitBtn = document.querySelector('#name-submit');
 
 		//confirm its non-nullness
 		if (!statusText || !submitBtn) return;
@@ -61,9 +58,6 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 				submitBtn.classList.remove('text-green-500');
 				submitBtn.classList.add('text-zinc-700');
 			}
-			setTimeout(() => {
-				statusText.classList.add('hidden');
-			}, 4000);
 		}
 
 		if (ok) {
@@ -74,52 +68,52 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 				submitBtn.classList.remove('text-zinc-700');
 				submitBtn.classList.add('text-green-500');
 			}
-			setTimeout(() => {
-				statusText.classList.add('hidden');
-			}, 2000);
 		}
+
+		setTimeout(() => {
+			statusText.classList.add('hidden');
+		}, 2000);
 	};
 
 	return (
 		<>
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
 				<h2 className='text-sm text-left text-green-500 font-vcr'>
-					{'CHANGE USERNAME'}
+					{'CHANGE NAME'}
 				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
 			<div className='w-full md:flex md:flex-col md:items-center md:gap-2 md:max-w-4xl'>
 				<form className='flex w-full justify-between items-center gap-2 py-3'>
 					<input
-						placeholder={currentUsername}
+						placeholder={currentName}
 						className='flex-1 text-base p-2 rounded-md outline-none bg-zinc-900 text-green-500 focus:border-none focus:outline-green-500'
 						type='text'
-						value={newUsername}
-						onChange={(e) => handleValidateUsername(e.target.value)}
+						value={newName}
+						onChange={(e) => handleValidateName(e.target.value)}
 					/>
 					<button
 						type='button'
-						id='username-submit'
+						id='name-submit'
 						className='font-vcr text-zinc-700'
-						onClick={() => handleUpdateUsername()}
-						disabled
+						onClick={() => handleUpdateName()}
 					>
 						SUBMIT
 					</button>
 					<button
 						type='reset'
 						className='font-vcr text-green-600'
-						onClick={() => handleValidateUsername('')}
+						onClick={(e) => handleValidateName('')}
 					>
 						CANCEL
 					</button>
 				</form>
 				<p
 					className='hidden text-xs font-vcr text-green-500 md:text-sm'
-					id='username-status-text'
+					id='name-status-text'
 				></p>
 			</div>
 		</>
 	);
 };
-export default EditUsernameForm;
+export default EditNameForm;
