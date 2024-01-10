@@ -6,6 +6,10 @@ import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
+export const viewport: Viewport = {
+	themeColor: '#22C55E',
+};
+
 export const metadata: Metadata = {
 	title: 'UHEARD',
 	appleWebApp: {
