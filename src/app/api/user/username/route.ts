@@ -23,7 +23,7 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
 		});
 
 		return NextResponse.json(
-			{ ok: true, url: `/u/${username}` },
+			{ ok: true, url: `/u/${username}/edit` },
 			{ status: 200 }
 		);
 	} catch (error) {

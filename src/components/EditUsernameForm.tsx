@@ -13,13 +13,13 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 	const handleValidateUsername = async (val: string) => {
 		setNewUsername(val);
 
-		if (val === currentUsername) return;
+		if (val === currentUsername) return toggleSubmit(false);
 
 		if (val.length < 5 || val.length > 20) {
-			updateTextStatus(
-				false,
+			showValidationStatus(
 				'YOUR USERNAME MUST BE BETWEEN 5-20 CHARACTERS LONG'
 			);
+			toggleSubmit(false);
 			return;
 		}
 
@@ -28,56 +28,48 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 			body: JSON.stringify({ username: val }),
 		}).then((res) => res.json());
 
-		updateTextStatus(ok, text);
+		showValidationStatus(text);
+		toggleSubmit(true);
 	};
 
-	const handleUpdateUsername = async () => {
+	const showValidationStatus = (text: string) => {
+		const statusText = document.querySelector('#username-status-text');
+		if (!statusText) return;
+
+		statusText.classList.remove('hidden');
+		statusText.innerHTML = text.toUpperCase();
+
+		setTimeout(() => {
+			statusText.classList.add('hidden');
+		}, 2000);
+	};
+
+	const toggleSubmit = async (ok: boolean) => {
+		const submitBtn = document.querySelector('#username-submit');
+		if (!submitBtn) return;
+
+		//enable submit button if input is valid and disable if not
+		ok
+			? submitBtn.removeAttribute('disabled')
+			: submitBtn.setAttribute('disabled', 'enabled');
+	};
+
+	const handleUpdateUsername = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
 		const { ok, url } = await fetch('/api/user/username', {
 			method: 'PATCH',
 			body: JSON.stringify({ username: newUsername }),
 		}).then((res) => res.json());
 
-		ok && updateTextStatus(true, 'SUCCESS');
-		ok && router.replace(url);
+		if (!ok) return;
+
+		showValidationStatus('SUCCESS');
+		toggleSubmit(false);
+
 		setNewUsername('');
-	};
 
-	const updateTextStatus = async (ok: boolean, text: string) => {
-		//grab text status element
-		const statusText = document.querySelector('#username-status-text');
-
-		const submitBtn = document.querySelector('#username-submit');
-
-		//confirm its non-nullness
-		if (!statusText || !submitBtn) return;
-
-		//toggle visibility for 3 seconds
-		statusText.classList.remove('hidden');
-
-		if (!ok) {
-			statusText.innerHTML = text.toUpperCase();
-			submitBtn.toggleAttribute('disabled');
-			if (submitBtn.classList.contains('text-green-500')) {
-				submitBtn.classList.remove('text-green-500');
-				submitBtn.classList.add('text-zinc-700');
-			}
-			setTimeout(() => {
-				statusText.classList.add('hidden');
-			}, 4000);
-		}
-
-		if (ok) {
-			statusText.innerHTML = text.toUpperCase();
-			submitBtn.hasAttribute('disabled') &&
-				submitBtn.toggleAttribute('disabled');
-			if (submitBtn.classList.contains('text-zinc-700')) {
-				submitBtn.classList.remove('text-zinc-700');
-				submitBtn.classList.add('text-green-500');
-			}
-			setTimeout(() => {
-				statusText.classList.add('hidden');
-			}, 2000);
-		}
+		router.replace(url);
 	};
 
 	return (
@@ -89,8 +81,14 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
 			<div className='w-full md:flex md:flex-col md:items-center md:gap-2 md:max-w-4xl'>
-				<form className='flex w-full justify-between items-center gap-2 py-3'>
+				<form
+					className='flex w-full justify-between items-center gap-2 py-3'
+					onSubmit={(e) => handleUpdateUsername(e)}
+				>
 					<input
+						required
+						minLength={5}
+						maxLength={20}
 						placeholder={currentUsername}
 						className='flex-1 text-base p-2 rounded-md outline-none bg-zinc-900 text-green-500 focus:border-none focus:outline-green-500'
 						type='text'
@@ -98,10 +96,9 @@ const EditUsernameForm = ({ currentUsername }: EditUsernameFormProps) => {
 						onChange={(e) => handleValidateUsername(e.target.value)}
 					/>
 					<button
-						type='button'
+						type='submit'
 						id='username-submit'
-						className='font-vcr text-zinc-700'
-						onClick={() => handleUpdateUsername()}
+						className='font-vcr text-green-500 disabled:text-zinc-700'
 						disabled
 					>
 						SUBMIT

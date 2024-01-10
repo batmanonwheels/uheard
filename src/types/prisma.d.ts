@@ -8,7 +8,13 @@ type RecommendationWithUser = Prisma.RecommendationGetPayload<{
 }>;
 
 const userPersonalData = Prisma.validator<Prisma.UserDefaultArgs>()({
-	select: { id: true, name: true, picture: true, spotifyUri: true },
+	select: {
+		id: true,
+		name: true,
+		picture: true,
+		spotifyUri: true,
+		username: true,
+	},
 });
 
 type UserPersonalData = Prisma.UserGetPayload<{

@@ -14,6 +14,7 @@ export const fetchUserProfile = async (
 				name: true,
 				picture: true,
 				spotifyUri: true,
+				username: true,
 			},
 		});
 

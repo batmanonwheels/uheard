@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
 import PlayImage from './PlayImage';
+import HeardBy from './HeardBy';
 
 interface RecommendationCardProps {
 	id: number;
@@ -12,12 +13,7 @@ interface RecommendationCardProps {
 	album: string;
 	url: string;
 	preview: string;
-	user: {
-		id: string;
-		name: string;
-		picture: string;
-		spotifyUri: string;
-	};
+	user: UserPersonalData;
 	profile: boolean;
 }
 
@@ -43,6 +39,7 @@ const RecommendationCard = ({
 					src={image}
 					alt={`${name} cover art`}
 					className={` h-full w-auto sm:w-full rounded-md`}
+					loading='lazy'
 				/>
 				<section className='flex flex-row gap-1 h-full w-full items-center'>
 					<Link
@@ -70,25 +67,16 @@ const RecommendationCard = ({
 				src={image}
 				alt={`${name} cover art`}
 				className={`my-auto h-full w-auto sm:w-full rounded-md`}
+				loading='lazy'
 			/>
-			<section className='flex flex-col flex-1 h-full justify-center sm:justify-start'>
-				<div className=' flex gap-1 rounded-md'>
-					<h2 className='text-xs text-left text-green-500 font-vcr text-opacity-75'>
-						HEARD BY
-					</h2>
-					<img
-						src={user.picture}
-						alt={`${user.name}'s profile picture`}
-						className='w-auto h-4 rounded-sm aspect-square object-cover'
-					/>
-					<p className='text-xs text-green-400 font-vcr text-opacity-75'>
-						{user.name.toUpperCase()}{' '}
-					</p>
+			{user && (
+				<div className='flex flex-col flex-1 h-full justify-center sm:justify-start'>
+					<HeardBy user={user} feed={true} />
+					<h3 className='text-zinc-100 text-base'>{name}</h3>
+					<p className='text-sm text-zinc-300'>{artists.join(', ')}</p>
+					{/* <p className='text-xs text-zinc-400'>{album}</p> */}
 				</div>
-				<h3 className='text-zinc-100 text-base'>{name}</h3>
-				<p className='text-sm text-zinc-300'>{artists.join(', ')}</p>
-				{/* <p className='text-xs text-zinc-400'>{album}</p> */}
-			</section>
+			)}
 		</Link>
 	);
 };
