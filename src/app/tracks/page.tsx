@@ -22,20 +22,20 @@ export const generateMetadata = async ({
 	const session = await getSession();
 	const { t: type } = searchParams;
 
-	if (!session) return { title: 'Your Spotify Tracks - UHEARD' };
+	if (!session) return { title: 'Your Spotify Tracks | UHEARD' };
 
 	switch (type) {
 		case 'search':
 			return {
-				title: `Search - UHEARD`,
+				title: `Search | UHEARD`,
 			};
 		case 'liked':
 			return {
-				title: `${session.user.name.split(' ')[0]}'s Liked Tracks - UHEARD`,
+				title: `${session.user.name.split(' ')[0]}'s Liked Tracks | UHEARD`,
 			};
 		default:
 			return {
-				title: `${session.user.name.split(' ')[0]}'s Recent Tracks - UHEARD`,
+				title: `${session.user.name.split(' ')[0]}'s Recent Tracks | UHEARD`,
 			};
 	}
 };

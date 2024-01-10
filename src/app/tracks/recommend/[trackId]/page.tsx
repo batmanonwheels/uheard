@@ -26,9 +26,9 @@ export const generateMetadata = async ({
 	const { trackId } = params;
 	const track: SpotifyTrack | null = await fetchTrack(trackId);
 
-	if (!track) return { title: 'Create Recommendation - UHEARD' };
+	if (!track) return { title: 'Create Recommendation | UHEARD' };
 	return {
-		title: `${track.name} by ${track.artists[0].name} - UHEARD`,
+		title: `${track.name} by ${track.artists[0].name} | UHEARD`,
 		openGraph: {
 			images: track.album.images[0].url,
 		},

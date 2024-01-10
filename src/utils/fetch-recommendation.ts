@@ -9,7 +9,15 @@ export const fetchRecommendation = async (id: string) => {
 					id: parseInt(id),
 				},
 				include: {
-					user: true,
+					user: {
+						select: {
+							id: true,
+							name: true,
+							picture: true,
+							spotifyUri: true,
+							username: true,
+						},
+					},
 					likes: true,
 				},
 			});

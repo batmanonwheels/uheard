@@ -9,7 +9,7 @@ interface HomeProps {
 
 export const generateMetadata = async ({}: HomeProps): Promise<Metadata> => {
 	return {
-		title: `Home - UHEARD`,
+		title: `Home | UHEARD`,
 	};
 };
 
@@ -19,7 +19,7 @@ const Home = async ({ searchParams }: HomeProps) => {
 	const { modal } = searchParams;
 
 	return (
-		<main className='flex flex-col items-center flex-1 w-full pt-0 p-4 text-center'>
+		<main className='flex flex-col items-center flex-1 w-full pt-0 p-4 text-left'>
 			<RecommendationFeed />
 		</main>
 	);

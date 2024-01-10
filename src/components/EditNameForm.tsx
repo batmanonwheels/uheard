@@ -13,79 +13,73 @@ const EditNameForm = ({ currentName }: EditNameFormProps) => {
 	const handleValidateName = async (val: string) => {
 		setNewName(val);
 
-		if (val === currentName) return;
+		if (val === currentName) return toggleSubmit(false);
 
 		if (val.length < 3 || val.length > 12) {
-			updateTextStatus(false, 'YOUR NAME MUST BE BETWEEN 3-12 CHARACTERS LONG');
+			showValidationStatus('YOUR NAME MUST BE BETWEEN 3-12 CHARACTERS LONG');
+			toggleSubmit(false);
 			return;
 		}
 
-		// const { ok, text } = await fetch('/api/user/name', {
-		// 	method: 'PATCH',
-		// 	body: JSON.stringify({ username: val }),
-		// }).then((res) => res.json());
-
-		updateTextStatus(true, '');
+		toggleSubmit(true);
 	};
 
-	const handleUpdateName = async () => {
-		const { ok } = await fetch('/api/user/name', {
-			method: 'PATCH',
-			body: JSON.stringify({ name: newName }),
-		}).then((res) => res.json());
-
-		ok && updateTextStatus(true, 'SUCCESS');
-		ok && router.refresh();
-		setNewName('');
-	};
-
-	const updateTextStatus = async (ok: boolean, text: string) => {
-		//grab text status element
+	const showValidationStatus = (text: string) => {
 		const statusText = document.querySelector('#name-status-text');
+		if (!statusText) return;
 
-		const submitBtn = document.querySelector('#name-submit');
-
-		//confirm its non-nullness
-		if (!statusText || !submitBtn) return;
-
-		//toggle visibility for 3 seconds
 		statusText.classList.remove('hidden');
-
-		if (!ok) {
-			statusText.innerHTML = text.toUpperCase();
-			submitBtn.toggleAttribute('disabled');
-			if (submitBtn.classList.contains('text-green-500')) {
-				submitBtn.classList.remove('text-green-500');
-				submitBtn.classList.add('text-zinc-700');
-			}
-		}
-
-		if (ok) {
-			statusText.innerHTML = text.toUpperCase();
-			submitBtn.hasAttribute('disabled') &&
-				submitBtn.toggleAttribute('disabled');
-			if (submitBtn.classList.contains('text-zinc-700')) {
-				submitBtn.classList.remove('text-zinc-700');
-				submitBtn.classList.add('text-green-500');
-			}
-		}
+		statusText.innerHTML = text.toUpperCase();
 
 		setTimeout(() => {
 			statusText.classList.add('hidden');
 		}, 2000);
 	};
 
+	const toggleSubmit = async (ok: boolean) => {
+		const submitBtn = document.querySelector('#name-submit');
+		if (!submitBtn) return;
+
+		//enable submit button if input is valid and disable if not
+		ok
+			? submitBtn.removeAttribute('disabled')
+			: !submitBtn.hasAttribute('disabled') &&
+			  submitBtn.toggleAttribute('disabled');
+	};
+
+	const handleUpdateName = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		const { ok } = await fetch('/api/user/name', {
+			method: 'PATCH',
+			body: JSON.stringify({ name: newName }),
+		}).then((res) => res.json());
+
+		showValidationStatus('SUCCESS');
+		toggleSubmit(false);
+
+		setNewName('');
+
+		router.refresh();
+	};
+
 	return (
 		<>
 			<div className='sticky z-10 flex flex-col w-full pt-2 bg-black top-12'>
 				<h2 className='text-sm text-left text-green-500 font-vcr'>
-					{'CHANGE NAME'}
+					{'CHANGE DISPLAY NAME'}
 				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
 			<div className='w-full md:flex md:flex-col md:items-center md:gap-2 md:max-w-4xl'>
-				<form className='flex w-full justify-between items-center gap-2 py-3'>
+				<form
+					className='flex w-full justify-between items-center gap-2 py-3'
+					onClick={(e) => handleUpdateName(e)}
+				>
 					<input
+						required
+						minLength={3}
+						maxLength={12}
 						placeholder={currentName}
 						className='flex-1 text-base p-2 rounded-md outline-none bg-zinc-900 text-green-500 focus:border-none focus:outline-green-500'
 						type='text'
@@ -93,10 +87,10 @@ const EditNameForm = ({ currentName }: EditNameFormProps) => {
 						onChange={(e) => handleValidateName(e.target.value)}
 					/>
 					<button
-						type='button'
+						type='submit'
 						id='name-submit'
-						className='font-vcr text-zinc-700'
-						onClick={() => handleUpdateName()}
+						className='font-vcr  text-green-500 disabled:text-zinc-700'
+						disabled
 					>
 						SUBMIT
 					</button>

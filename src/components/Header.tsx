@@ -65,7 +65,7 @@ const Header = async ({}: HeaderProps) => {
 				)}
 			</div>
 			<NavDrawer />
-			<hr className='w-full m-auto border-green-500 rounded-xl sm:w-full' />
+			<hr className='w-full m-auto border-green-500 sm:w-full' />
 		</header>
 	);
 };
