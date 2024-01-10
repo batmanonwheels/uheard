@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const viewport: Viewport = {
-	themeColor: '#22C55E ',
+	themeColor: '#22C55E',
 };
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 	appleWebApp: {
 		capable: true,
 		title: 'UHEARD',
-		statusBarStyle: 'black-translucent',
+		statusBarStyle: 'black',
 		startupImage:
 			'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
 	},
