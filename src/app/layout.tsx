@@ -12,13 +12,13 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
 	title: 'UHEARD',
-	appleWebApp: {
-		capable: true,
-		title: 'UHEARD',
-		statusBarStyle: 'black',
-		startupImage:
-			'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
-	},
+	// appleWebApp: {
+	// 	capable: true,
+	// 	title: 'UHEARD',
+	// 	statusBarStyle: 'black',
+	// 	startupImage:
+	// 		'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
+	// },
 	icons: 'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
 	description: 'Share your favorite songs with the world!',
 	openGraph: {
