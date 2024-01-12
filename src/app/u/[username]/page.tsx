@@ -43,44 +43,46 @@ const UserPage = async ({ params }: UserPageProps) => {
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-left'>
-			{user && (
-				<div className='flex w-full gap-3 pb-2'>
-					<img
-						height={300}
-						width={300}
-						src={user.picture}
-						alt={`${user.name}'s profile picture`}
-						className=' w-auto max-h-36 rounded-sm  md:max-h-52 aspect-square object-cover'
-					/>
-					<div className='flex flex-col items-start flex-1 gap-1 m-auto text-left'>
-						<h1 className='text-xl'>{user.name}</h1>
-						<Link
-							href={user.spotifyUri}
-							className='py-1 text-sm text-green-500 font-vcr'
-						>
-							SPOTIFY PROFILE
-						</Link>
-						{isUser && (
-							<>
-								<Link
-									href={'/u/' + user.username + '/edit'}
-									className='py-1 text-sm text-green-500 font-vcr'
-								>
-									EDIT PROFILE
-								</Link>
-								<Form action='/api/logout'>
-									<input
-										type='submit'
-										value='LOGOUT'
-										className='text-sm text-green-600 font-vcr hover:cursor-pointer'
-									/>
-								</Form>
-							</>
-						)}
+			<div className='flex flex-col items-center justify-between md:flex-row md:w-full md:gap-2'>
+				{user && (
+					<div className='flex w-full gap-3 pb-2 md:w-auto '>
+						<img
+							height={300}
+							width={300}
+							src={user.picture}
+							alt={`${user.name}'s profile picture`}
+							className=' w-auto max-h-36 rounded-sm  md:max-h-52 aspect-square object-cover'
+						/>
+						<div className='flex flex-col items-start flex-1 gap-1 m-auto text-left'>
+							<h1 className='text-xl'>{user.name}</h1>
+							<Link
+								href={user.spotifyUri}
+								className='py-1 text-sm text-green-500 font-vcr'
+							>
+								SPOTIFY PROFILE
+							</Link>
+							{isUser && (
+								<>
+									<Link
+										href={'/u/' + user.username + '/edit'}
+										className='py-1 text-sm text-green-500 font-vcr'
+									>
+										EDIT PROFILE
+									</Link>
+									<Form action='/api/logout'>
+										<input
+											type='submit'
+											value='LOGOUT'
+											className='text-sm text-green-600 font-vcr hover:cursor-pointer'
+										/>
+									</Form>
+								</>
+							)}
+						</div>
 					</div>
-				</div>
-			)}
-			<CurrentTrack id={user.id} />
+				)}
+				<CurrentTrack id={user.id} />
+			</div>
 			<UserRecommendationFeed
 				id={user.id}
 				name={
