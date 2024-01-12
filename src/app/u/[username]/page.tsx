@@ -43,9 +43,9 @@ const UserPage = async ({ params }: UserPageProps) => {
 
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-left'>
-			<div className='flex flex-col items-center justify-between md:flex-row md:w-full md:gap-2'>
+			<div className='flex flex-col w-full items-center gap-2 md:justify-between md:flex-row'>
 				{user && (
-					<div className='flex w-full gap-3 pb-2 md:w-auto '>
+					<div className='flex w-full gap-4 pb-2 md:w-auto '>
 						<img
 							height={300}
 							width={300}
