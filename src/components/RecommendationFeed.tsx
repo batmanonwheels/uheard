@@ -1,33 +1,53 @@
-import { fetchRecommendations } from '@/utils/fetch-recommendations';
+import { fetchTrackRecommendations } from '@/utils/fetch-track-recommendations';
 import RecommendationCard from './RecommendationCard';
 import { getSession } from '@/utils/get-session';
-import { Session } from 'lucia';
+import { fetchAlbumRecommendations } from '@/utils/fetch-album-recommendations';
+import {
+	AlbumRecommendationWithUser,
+	TrackRecommendationWithUser,
+} from '@/types/prisma';
 
 interface RecommendationFeedProps {}
 
 const RecommendationFeed = async ({}: RecommendationFeedProps) => {
-	const recommendations = await fetchRecommendations();
+	const trackRecommendations = await fetchTrackRecommendations();
+	const albumRecommendations = await fetchAlbumRecommendations();
 	const session = await getSession();
-
-	const checkIfOwned = (recUserId: string) => {
-		if (session === null) return false;
-
-		if (session.user.id === recUserId) return true;
-
-		return false;
-	};
 
 	return (
 		<>
 			<div className='sticky z-10 flex flex-col w-full items-start pt-2 bg-black top-12'>
 				<h2 className='text-sm text-left text-green-500 font-vcr'>
-					LATEST RECOMMENDATIONS
+					LATEST ALBUM RECOMMENDATIONS
 				</h2>
 				<hr className='w-full mx-auto mt-2 border-green-500' />
 			</div>
 			<ul className='flex flex-col w-full justify-center sm:flex-wrap sm:flex-row md:w-10/12'>
-				{recommendations.map(
-					(recommendation: RecommendationWithUser, i: number) => (
+				{albumRecommendations.map(
+					(recommendation: AlbumRecommendationWithUser, i: number) => (
+						<RecommendationCard
+							id={recommendation.id}
+							image={recommendation.albumImage}
+							artists={recommendation.albumArtist}
+							name={recommendation.albumTitle}
+							url={recommendation.albumUrl}
+							user={recommendation.user}
+							profile={false}
+							type={'album'}
+							key={i}
+						/>
+					)
+				)}
+			</ul>
+			<div className='sticky z-10 flex flex-col w-full items-start pt-2 bg-black top-12'>
+				<h2 className='text-sm text-left text-green-500 font-vcr'>
+					LATEST TRACK RECOMMENDATIONS
+				</h2>
+				<hr className='w-full mx-auto mt-2 border-green-500' />
+			</div>
+			<ul className='flex flex-col w-full justify-center sm:flex-wrap sm:flex-row md:w-10/12'>
+				{trackRecommendations.map(
+					(recommendation: TrackRecommendationWithUser, i: number) => (
 						<RecommendationCard
 							id={recommendation.id}
 							image={recommendation.trackImage}
@@ -38,6 +58,7 @@ const RecommendationFeed = async ({}: RecommendationFeedProps) => {
 							preview={recommendation.trackPreviewUrl}
 							user={recommendation.user}
 							profile={false}
+							type={'track'}
 							key={i}
 						/>
 					)

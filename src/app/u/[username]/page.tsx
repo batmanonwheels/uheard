@@ -3,11 +3,11 @@ import Link from 'next/link';
 import Form from '@/components/Form';
 import type { Metadata } from 'next';
 import { getSession } from '@/utils/get-session';
-import UserRecommendationFeed from '@/components/UserRecommendationFeed';
 import { fetchUserProfile } from '@/utils/fetch-user-profile';
 import { redirect } from 'next/navigation';
-
 import CurrentTrack from '@/components/CurrentTrack';
+import UserTrackRecommendationFeed from '@/components/UserRecommendationFeed';
+import { UserPersonalData } from '@/types/prisma';
 
 interface UserPageProps {
 	params: { username: string };
@@ -81,9 +81,9 @@ const UserPage = async ({ params }: UserPageProps) => {
 						</div>
 					</div>
 				)}
-				<CurrentTrack id={user.id} />
+				<CurrentTrack id={user.id} type='profile' />
 			</div>
-			<UserRecommendationFeed
+			<UserTrackRecommendationFeed
 				id={user.id}
 				name={
 					session && session.user.id === user.id

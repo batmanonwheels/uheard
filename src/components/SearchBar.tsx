@@ -8,9 +8,10 @@ interface SearchBarProps {
 		l: string;
 		q: string;
 	};
+	type: 'tracks' | 'albums';
 }
 
-const SearchBar = ({ searchParams }: SearchBarProps) => {
+const SearchBar = ({ searchParams, type }: SearchBarProps) => {
 	const router = useRouter();
 
 	const limit = parseInt(searchParams.l);
@@ -20,7 +21,15 @@ const SearchBar = ({ searchParams }: SearchBarProps) => {
 
 	const handleSearchQuery = async (value: string) => {
 		setSearchQuery(value);
-		router.push(`/tracks?t=search&l=${limit}&q=${value}`);
+		router.replace(`/${type}?t=search&l=${limit}&q=${value}`);
+	};
+
+	const handleClearSearch = async (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		e.preventDefault();
+
+		router.replace(`/${type}?t=liked&l=12`);
 	};
 
 	return (
@@ -35,7 +44,7 @@ const SearchBar = ({ searchParams }: SearchBarProps) => {
 				/>
 				<button
 					className='absolute inset-y-0 right-1 m-auto grid h-[1.35rem] place-items-center pr-2 text-sm text-zinc-200 font-vcr'
-					onClick={(e) => handleSearchQuery('')}
+					onClick={(e) => handleClearSearch(e)}
 				>
 					CLEAR
 				</button>

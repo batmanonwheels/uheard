@@ -1,10 +1,10 @@
 import { prisma } from '@/lib/prisma';
 
-export const fetchRecommendations = async () => {
+export const fetchAlbumRecommendations = async () => {
 	// const todayMinusTwoWeeks = Date.now() - 168 * 60 * 60 * 1000 * 2;
 	// const twoWeeksAgo = new Date(todayMinusTwoWeeks).toISOString();
 	try {
-		return await prisma.recommendation.findMany({
+		return await prisma.albumRecommendation.findMany({
 			include: {
 				user: {
 					select: {
@@ -25,7 +25,7 @@ export const fetchRecommendations = async () => {
 			orderBy: {
 				createdAt: 'desc',
 			},
-			take: 24,
+			take: 16,
 		});
 	} catch (error: any) {
 		return error;

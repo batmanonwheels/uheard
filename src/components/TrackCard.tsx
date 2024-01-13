@@ -1,7 +1,6 @@
 import { SpotifyArtist, SpotifyTrack } from '@/types/spotify';
 import RecommendLink from './RecommendLink';
 import Image from 'next/image';
-import TrackProgressBar from './TrackProgressBar';
 
 interface TrackCardProps {
 	track: SpotifyTrack;

@@ -1,11 +1,11 @@
 import { prisma } from '@/lib/prisma';
-import { User } from '@prisma/client';
+import { UserPersonalData } from '@/types/prisma';
 
 export const fetchUserProfile = async (
 	username: string
 ): Promise<UserPersonalData | null> => {
 	try {
-		const user: UserPersonalData = await prisma.user.findUnique({
+		const user: UserPersonalData | null = await prisma.user.findUnique({
 			where: {
 				username,
 			},

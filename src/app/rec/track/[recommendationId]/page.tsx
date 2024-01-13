@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
-import { fetchRecommendation } from '@/utils/fetch-recommendation';
-import TrackCard from '@/components/TrackCard';
+import { fetchTrackRecommendation } from '@/utils/fetch-track-recommendation';
 import { SpotifyTrack, SpotifyArtist } from '@/types/spotify';
 import { getSession } from '@/utils/get-session';
 import { fetchRelatedTracks } from '@/utils/fetch-related-tracks';
@@ -13,17 +12,19 @@ import { getDate } from '@/utils/get-date';
 import Image from 'next/image';
 import RecommendLink from '@/components/RecommendLink';
 import HeardBy from '@/components/HeardBy';
+import { TrackRecommendationWithUser } from '@/types/prisma';
+import { redirect } from 'next/navigation';
 
-interface RecommendPageProps {
+interface TrackRecommendationPageProps {
 	params: { recommendationId: string };
 }
 
 export const generateMetadata = async ({
 	params,
-}: RecommendPageProps): Promise<Metadata> => {
+}: TrackRecommendationPageProps): Promise<Metadata> => {
 	const { recommendationId } = params;
-	const recommendation: RecommendationWithUser | null =
-		await fetchRecommendation(recommendationId);
+	const recommendation: TrackRecommendationWithUser | null =
+		await fetchTrackRecommendation(recommendationId);
 
 	if (!recommendation) return { title: 'Recommendation | UHEARD' };
 
@@ -39,12 +40,16 @@ export const generateMetadata = async ({
 	};
 };
 
-const RecommendPage = async ({ params }: RecommendPageProps) => {
+const TrackRecommendationPage = async ({
+	params,
+}: TrackRecommendationPageProps) => {
 	const session = await getSession();
 	const { recommendationId } = params;
 
-	const recommendation: RecommendationWithUser | null =
-		await fetchRecommendation(recommendationId);
+	const recommendation: TrackRecommendationWithUser | null =
+		await fetchTrackRecommendation(recommendationId);
+
+	if (!recommendation) redirect('/');
 
 	const { related: relatedTracks } = await fetchRelatedTracks(
 		recommendation.trackId
@@ -204,4 +209,4 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 	);
 };
 
-export default RecommendPage;
+export default TrackRecommendationPage;

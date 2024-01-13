@@ -1,10 +1,10 @@
 import { prisma } from '@/lib/prisma';
-import { Recommendation } from '@prisma/client';
+import { TrackRecommendationWithUser } from '@/types/prisma';
 
-export const fetchRecommendation = async (id: string) => {
+export const fetchTrackRecommendation = async (id: string) => {
 	try {
-		const recommendation: Recommendation | null =
-			await prisma.recommendation.findUnique({
+		const recommendation: TrackRecommendationWithUser | null =
+			await prisma.trackRecommendation.findUnique({
 				where: {
 					id: parseInt(id),
 				},
@@ -18,7 +18,6 @@ export const fetchRecommendation = async (id: string) => {
 							username: true,
 						},
 					},
-					likes: true,
 				},
 			});
 		if (!recommendation) return null;

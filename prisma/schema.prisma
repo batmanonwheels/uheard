@@ -9,23 +9,24 @@ datasource db {
 }
 
 model User {
-  id                 String           @id @unique
-  name               String
-  email              String           @unique
-  picture            String?
-  spotifyUser        Boolean          @default(true)
-  spotifyProfileLink String
-  spotifyUri         String
-  accessToken        String
-  tokenExpiresIn     Int
-  refreshToken       String
-  createdAt          DateTime         @default(now()) @db.Timestamp(6)
-  updatedAt          DateTime         @updatedAt
-  tokenExpiresAt     DateTime         @default(dbgenerated("(now() + '01:00:00'::interval)")) @db.Timestamp(6)
-  username           String           @unique
-  likes              Like[]
-  recommendations    Recommendation[]
-  session            Session[]
+  id                  String                @id @unique
+  name                String
+  email               String                @unique
+  picture             String
+  spotifyUser         Boolean               @default(true)
+  spotifyProfileLink  String
+  spotifyUri          String
+  accessToken         String
+  tokenExpiresIn      Int
+  refreshToken        String
+  createdAt           DateTime              @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime              @updatedAt
+  tokenExpiresAt      DateTime              @default(dbgenerated("(now() + '01:00:00'::interval)")) @db.Timestamp(6)
+  username            String                @unique
+  albumRecommendation AlbumRecommendation[]
+  likes               Like[]
+  session             Session[]
+  TrackRecommendation TrackRecommendation[]
 }
 
 model Session {
@@ -39,8 +40,32 @@ model Session {
   @@index([user_id])
 }
 
-model Recommendation {
-  id              Int      @id @default(autoincrement())
+model AlbumRecommendation {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  albumId     String
+  userId      String
+  albumTitle  String
+  albumUrl    String
+  albumImage  String
+  albumArtist String[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes       Like[]
+}
+
+model Like {
+  id                    Int                  @id @default(autoincrement())
+  createdAt             DateTime             @default(now()) @db.Timestamp(6)
+  userId                String
+  albumRecommendationId Int?
+  albumRecommendation   AlbumRecommendation? @relation(fields: [albumRecommendationId], references: [id])
+  trackRecommendationId Int?
+  TrackRecommendation   TrackRecommendation? @relation(fields: [trackRecommendationId], references: [id], onDelete: Cascade)
+  user                  User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TrackRecommendation {
+  id              Int      @id(map: "Recommendation_pkey") @default(autoincrement())
   createdAt       DateTime @default(now()) @db.Timestamp(6)
   trackId         String
   userId          String
@@ -53,13 +78,4 @@ model Recommendation {
   trackArtist     String[]
   likes           Like[]
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Like {
-  id               Int            @id @default(autoincrement())
-  createdAt        DateTime       @default(now()) @db.Timestamp(6)
-  userId           String
-  recommendationId Int
-  recommendation   Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
-  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

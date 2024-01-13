@@ -29,7 +29,7 @@ const TrackList = async ({ searchParams }: TrackListProps) => {
 						<TrackCardSquare track={track.track} key={t} />
 					))}
 			</ul>
-			{tracks && <LoadTracksButton limit={limit} type={type} />}
+			{tracks && <LoadTracksButton limit={limit} type={type} tracks={true} />}
 		</>
 	);
 };

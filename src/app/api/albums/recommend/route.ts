@@ -1,39 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { SpotifyTrack } from '@/types/spotify';
-import { fetchTrack } from '@/utils/fetch-track';
+import { SpotifyAlbum } from '@/types/spotify';
 import { getServerSession } from '@/utils/get-server-session';
-import { addTrackToPlaylist } from '@/utils/add-track-to-playlist';
+import { fetchAlbum } from '@/utils/fetch-album';
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
-	const trackId: string = req.nextUrl.searchParams.get('track')!;
+	const albumId: string = req.nextUrl.searchParams.get('album')!;
+	console.log(albumId);
 
 	const session = await getServerSession(req);
 	if (!session) throw new Error('User is not signed in ');
 
-	const track: SpotifyTrack = await fetchTrack(trackId);
+	const album: SpotifyAlbum = await fetchAlbum(albumId);
 
-	if (!track) throw new Error('Track does not exist.');
+	if (!album) throw new Error('Track does not exist.');
 
 	try {
-		const recommendation = await prisma.trackRecommendation.create({
+		const recommendation = await prisma.albumRecommendation.create({
 			data: {
 				userId: session.user.id,
-				trackId: track.id,
-				trackTitle: track.name,
-				trackAlbum: track.album.name,
-				trackArtist: track.artists.map((artist) => artist.name),
-				trackImage: track.album.images[0].url,
-				trackPreviewUrl: track.preview_url,
-				trackUrl: track.uri,
-				trackISRC: track.external_ids.isrc,
+				albumId: album.id,
+				albumTitle: album.name,
+				albumArtist: album.artists.map((artist) => artist.name),
+				albumImage: album.images[0].url,
+				albumUrl: album.uri,
 			},
 		});
 
-		// await addTrackToPlaylist(track.uri);
+		console.log(recommendation);
+
+		if (!recommendation) throw new Error('An error has occured.');
 
 		return NextResponse.json({ recommendation, ok: true });
 	} catch (error: any) {
+		console.log(error);
 		return new NextResponse(error.message, { status: error.status });
 	}
 };
@@ -47,7 +47,7 @@ export const DELETE = async (req: NextRequest, res: NextResponse) => {
 	if (!session) throw new Error('User is not signed in ');
 
 	try {
-		const recommendation = await prisma.trackRecommendation.delete({
+		const recommendation = await prisma.albumRecommendation.delete({
 			where: { id: parseInt(id) },
 		});
 

@@ -1,22 +1,57 @@
-const recommendationIncludeUser =
-	Prisma.validator<Prisma.RecommendationInclude>()({
-		user: true,
+import { Prisma } from '@prisma/client';
+
+const trackRecommendationIncludeUser =
+	Prisma.validator<Prisma.TrackRecommendationInclude>()({
+		user: {
+			select: {
+				id: true,
+				name: true,
+				picture: true,
+				spotifyUri: true,
+				username: true,
+			},
+		},
 	});
 
-type RecommendationWithUser = Prisma.RecommendationGetPayload<{
-	include: typeof recommendationIncludeUser;
+export type TrackRecommendationWithUser = Prisma.TrackRecommendationGetPayload<{
+	include: typeof trackRecommendationIncludeUser;
 }>;
 
-const userPersonalData = Prisma.validator<Prisma.UserDefaultArgs>()({
-	select: {
-		id: true,
-		name: true,
-		picture: true,
-		spotifyUri: true,
-		username: true,
-	},
-});
+const albumRecommendationIncludeUser =
+	Prisma.validator<Prisma.AlbumRecommendationInclude>()({
+		user: {
+			select: {
+				id: true,
+				name: true,
+				picture: true,
+				spotifyUri: true,
+				username: true,
+			},
+		},
+	});
 
-type UserPersonalData = Prisma.UserGetPayload<{
-	include: typeof userPersonalData;
+export type AlbumRecommendationWithUser = Prisma.AlbumRecommendationGetPayload<{
+	include: typeof albumRecommendationIncludeUser;
 }>;
+
+export type UserPersonalData = {
+	id: string;
+	name: string;
+	picture: string;
+	spotifyUri: string;
+	username: string;
+};
+
+// const userPersonalData = Prisma.validator<Prisma.UserDefaultArgs>()({
+// 	select: {
+// 		id: true,
+// 		name: true,
+// 		picture: true,
+// 		spotifyUri: true,
+// 		username: true,
+// 	},
+// });
+
+// type UserPersonalData = Prisma.UserGetPayload<{
+// 	include: typeof userPersonalData;
+// }>;

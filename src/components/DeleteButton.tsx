@@ -3,24 +3,44 @@
 import { useRouter } from 'next/navigation';
 
 interface DeleteButtonProps {
-	recommendationId: number;
+	trackRecommendationId?: number;
+	albumRecommendationId?: number;
 }
 
-const DeleteButton = ({ recommendationId }: DeleteButtonProps) => {
+const DeleteButton = ({
+	trackRecommendationId,
+	albumRecommendationId,
+}: DeleteButtonProps) => {
 	const router = useRouter();
 
 	const handleDeleteRecommendation = async () => {
-		const { ok } = await fetch(
-			'/api/recommendations?' +
-				new URLSearchParams({
-					recommendation: recommendationId.toString(),
-				}),
-			{
-				method: 'DELETE',
-			}
-		);
+		if (trackRecommendationId) {
+			const { ok } = await fetch(
+				'/api/tracks/recommend?' +
+					new URLSearchParams({
+						recommendation: trackRecommendationId.toString(),
+					}),
+				{
+					method: 'DELETE',
+				}
+			);
 
-		if (!ok) return;
+			if (!ok) return;
+		}
+
+		if (albumRecommendationId) {
+			const { ok } = await fetch(
+				'/api/albums/recommend?' +
+					new URLSearchParams({
+						recommendation: albumRecommendationId.toString(),
+					}),
+				{
+					method: 'DELETE',
+				}
+			);
+
+			if (!ok) return;
+		}
 
 		router.refresh();
 		return;

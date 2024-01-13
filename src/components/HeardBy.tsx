@@ -1,3 +1,4 @@
+import { UserPersonalData } from '@/types/prisma';
 import Link from 'next/link';
 
 interface HeardByProps {
