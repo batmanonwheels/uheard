@@ -3,11 +3,11 @@ import Link from 'next/link';
 import Form from '@/components/Form';
 import type { Metadata } from 'next';
 import { getSession } from '@/utils/get-session';
-import UserRecommendationFeed from '@/components/UserRecommendationFeed';
 import { fetchUserProfile } from '@/utils/fetch-user-profile';
 import { redirect } from 'next/navigation';
-
 import CurrentTrack from '@/components/CurrentTrack';
+import UserTrackRecommendationFeed from '@/components/UserRecommendationFeed';
+import { UserPersonalData } from '@/types/prisma';
 
 interface UserPageProps {
 	params: { username: string };
@@ -24,10 +24,14 @@ export const generateMetadata = async ({
 	return {
 		title: `${user.name}'s Profile | UHEARD`,
 		openGraph: {
-			images: user.picture,
+			images:
+				user.picture ||
+				'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
 		},
 		twitter: {
-			images: user.picture,
+			images:
+				user.picture ||
+				'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
 		},
 	};
 };
@@ -49,7 +53,7 @@ const UserPage = async ({ params }: UserPageProps) => {
 						<img
 							height={300}
 							width={300}
-							src={user.picture}
+							src={user.picture ? user.picture : undefined}
 							alt={`${user.name}'s profile picture`}
 							className=' w-auto max-h-36 rounded-sm  md:max-h-52 aspect-square object-cover'
 						/>
@@ -81,9 +85,9 @@ const UserPage = async ({ params }: UserPageProps) => {
 						</div>
 					</div>
 				)}
-				<CurrentTrack id={user.id} />
+				<CurrentTrack id={user.id} type='profile' />
 			</div>
-			<UserRecommendationFeed
+			<UserTrackRecommendationFeed
 				id={user.id}
 				name={
 					session && session.user.id === user.id

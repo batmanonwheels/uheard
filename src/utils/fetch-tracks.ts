@@ -1,6 +1,6 @@
 import { getSession } from '@/utils/get-session';
 
-import { SpotifySearchResponse, SpotifyTracksResponse } from '@/types/spotify';
+import { SpotifyTracksResponse } from '@/types/spotify';
 import { redirect } from 'next/navigation';
 import { Session } from 'lucia';
 import { refreshAccessToken } from './refresh-access-token';
@@ -20,34 +20,6 @@ export const fetchTracks = async (limit = 10, type: string, query?: string) => {
 
 	const baseUrl = 'https://api.spotify.com/v1/';
 
-	if (type === 'search' && query) {
-		try {
-			const { tracks: results, error }: SpotifySearchResponse = await fetch(
-				baseUrl +
-					`search?` +
-					new URLSearchParams({
-						q: query,
-						type: 'track',
-						limit: limit.toString(),
-					}),
-				{
-					method: 'GET',
-					headers: {
-						Authorization: 'Bearer ' + session.user.accessToken,
-					},
-					cache: 'no-store',
-				}
-			).then((res) => res.json());
-
-			if (error) {
-				throw new Error(error.message);
-			}
-
-			return results.items;
-		} catch (error: any) {
-			return error;
-		}
-	}
 	try {
 		const trackFetchUrls: FetchUrls = {
 			recent: baseUrl + `me/player/recently-played?limit=${limit + ''}`,

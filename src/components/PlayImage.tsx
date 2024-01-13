@@ -9,7 +9,7 @@ interface PlayImageProps {
 	width: number;
 	url: string;
 	name: string;
-	preview: string;
+	preview?: string;
 }
 
 const PlayImage = ({ height, width, url, name, preview }: PlayImageProps) => {

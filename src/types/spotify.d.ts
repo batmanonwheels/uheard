@@ -5,6 +5,7 @@ export type SpotifyTrackResponse = {
 	limit: number;
 	next: string;
 	href: string;
+	is_playing: boolean;
 	progress_ms: number;
 };
 
@@ -14,7 +15,7 @@ export type SpotifyTrackResponse = {
 	cursors: { before: number; after: number };
 };
 
-export type SpotifySearchResponse = {
+export type SpotifyTrackSearchResponse = {
 	error?: { status: number; message: string };
 	tracks: {
 		href: string;
@@ -69,6 +70,7 @@ export type SpotifyArtist = {
 };
 
 export type SpotifyTrack = {
+	is_playing: boolean;
 	error?: { status: number; message: string };
 	album: {
 		album_type: string;
@@ -139,6 +141,130 @@ export type SpotifyTracks = {
 	track: SpotifyTrack;
 	played_at: string;
 	context?: any;
+};
+
+export type SpotifyAlbum = {
+	error?: { status: number; message: string };
+	album_type: string;
+	total_tracks: number;
+	available_markets: string[];
+	external_urls: {
+		spotify: string;
+	};
+	href: string;
+	id: string;
+	images: [
+		{
+			url: string;
+			height: number;
+			width: number;
+		},
+	];
+	name: string;
+	release_date: string;
+	release_date_precision: string;
+	restrictions: {
+		reason: string;
+	};
+	type: string;
+	uri: string;
+	artists: [
+		{
+			external_urls: {
+				spotify: string;
+			};
+			href: string;
+			id: string;
+			name: string;
+			type: artist;
+			uri: string;
+		},
+	];
+	tracks: {
+		href: string;
+		limit: number;
+		next: string;
+		offset: number;
+		previous: string;
+		total: number;
+		items: [
+			{
+				artists: [
+					{
+						external_urls: {
+							spotify: string;
+						};
+						href: string;
+						id: string;
+						name: string;
+						type: string;
+						uri: string;
+					},
+				];
+				available_markets: string[];
+				disc_number: number;
+				duration_ms: number;
+				explicit: boolean;
+				external_urls: {
+					spotify: string;
+				};
+				href: string;
+				id: string;
+				is_playable: boolean;
+				linked_from: {
+					external_urls: {
+						spotify: string;
+					};
+					href: string;
+					id: string;
+					type: string;
+					uri: string;
+				};
+				restrictions: {
+					reason: string;
+				};
+				name: string;
+				preview_url: string;
+				track_number: number;
+				type: string;
+				uri: string;
+				is_local: boolean;
+			},
+		];
+	};
+	copyrights: [
+		{
+			text: string;
+			type: string;
+		},
+	];
+	external_ids: {
+		isrc: string;
+		ean: string;
+		upc: string;
+	};
+	genres: string[];
+	label: string;
+	popularity: number;
+};
+
+export type SpotifyAlbums = {
+	added_at: string;
+	album: SpotifyAlbum;
+};
+
+export type SpotifyAlbumSearchResponse = {
+	error?: { status: number; message: string };
+	albums: { items: SpotifyAlbum[] };
+};
+
+export type SpotifyAlbumsResponse = {
+	error?: { status: number; message: string };
+	items: SpotifyAlbums[];
+	cursors: { before: number; after: number };
+	limit: number;
+	next: string;
+	href: string;
 };
 
 export type SongLinkResponse = {

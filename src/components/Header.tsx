@@ -4,11 +4,17 @@ import Link from 'next/link';
 import NavDrawer from './NavDrawer';
 import Form from './Form';
 import DrawerToggle from './DrawerToggle';
+// import { headers } from 'next/headers';
 
 interface HeaderProps {}
 
+export const dynamic = 'force-dynamic';
+
 const Header = async ({}: HeaderProps) => {
 	const session = await getSession();
+
+	// const path = headers().get('x-pathname');
+	// console.log(path);
 
 	return (
 		<header className={`sticky top-0 z-[110] sm:z-20 bg-black px-4 sm:px-0 `}>
@@ -22,12 +28,38 @@ const Header = async ({}: HeaderProps) => {
 				{session ? (
 					<>
 						<div className='hidden sm:flex w-full pl-8 justify-between items-center'>
-							<Link
-								href={'/tracks?t=recent&l=12'}
-								className='py-1 text-sm text-green-500 font-vcr z-[100]'
-							>
-								<p>TRACKS</p>
-							</Link>
+							<div className='flex gap-4'>
+								<Link
+									href={'/tracks?t=recent&l=12'}
+									className='py-1 text-sm text-green-500 font-vcr z-[100]'
+								>
+									<p>TRACKS</p>
+								</Link>
+								<Link
+									href={'/albums?t=liked&l=12'}
+									className='py-1 text-sm text-green-500 font-vcr z-[100]'
+								>
+									<p>ALBUMS</p>
+								</Link>
+								{/* <Link
+									href={'/tracks?t=recent&l=12'}
+									className='py-1 text-sm text-green-500 font-vcr z-[100]'
+								>
+									<p>TRACKS</p>
+									{path === `/tracks` && (
+										<hr className='w-full mt-1 border-green-500 rounded-xl' />
+									)}
+								</Link>
+								<Link
+									href={'/albums?t=liked&l=12'}
+									className='py-1 text-sm text-green-500 font-vcr z-[100]'
+								>
+									<p>ALBUMS</p>
+									{path === `/albums` && (
+										<hr className='w-full mt-1 border-green-500 rounded-xl' />
+									)}
+								</Link> */}
+							</div>
 							<div className='flex flex-row gap-2 items-center'>
 								<Link
 									href={'/u/' + session.user.username}

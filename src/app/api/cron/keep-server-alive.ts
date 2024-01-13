@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchRecommendations } from '@/utils/fetch-recommendations';
+import { fetchRecommendations } from '@/utils/fetch-track-recommendations';
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
 	try {

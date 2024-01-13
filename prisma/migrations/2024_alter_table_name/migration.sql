@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS "Recommendation" RENAME TO "TrackRecommendation";

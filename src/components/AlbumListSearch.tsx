@@ -1,10 +1,10 @@
-import { SpotifyTrack } from '@/types/spotify';
+import { SpotifyAlbum } from '@/types/spotify';
 import SearchBar from './SearchBar';
 import LoadTracksButton from './LoadTracksButton';
-import { fetchTrackSearchResults } from '@/utils/fetch-track-search-results';
-import TrackCardSquare from './TrackCardSquare';
+import { fetchAlbumSearchResults } from '@/utils/fetch-album-search-results';
+import AlbumCardSquare from './AlbumCardSquare';
 
-interface TrackListSearchProps {
+interface AlbumListSearchProps {
 	searchParams: {
 		t: string;
 		l: string;
@@ -12,28 +12,27 @@ interface TrackListSearchProps {
 	};
 }
 
-const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
+const AlbumListSearch = async ({ searchParams }: AlbumListSearchProps) => {
 	const limit = parseInt(searchParams.l);
 	const { t: type, q: query } = searchParams;
 
-	const tracks: SpotifyTrack[] | null = await fetchTrackSearchResults(
+	const albums: SpotifyAlbum[] | null = await fetchAlbumSearchResults(
 		limit,
 		query
 	);
-	console.log(tracks);
 
 	return (
 		<>
-			<SearchBar searchParams={searchParams} type='tracks' />
+			<SearchBar searchParams={searchParams} type='albums' />
 			<section className='flex flex-col w-full pt-3 justify-center items-center'>
-				{tracks && query && (
+				{albums && query && (
 					<>
 						<p className='sticky z-0 p-1 text-sm w-full bg-black top-20 text-zinc-400 sm:text-base md:top-12 md:p-2'>
 							Showing results for <span className='italic'>{query}</span>
 						</p>
 						<ul className='flex flex-col w-full justify-center sm:flex-wrap sm:flex-row md:w-10/12'>
-							{tracks.map((track: SpotifyTrack, t: number) => (
-								<TrackCardSquare track={track} key={t} />
+							{albums.map((album: SpotifyAlbum, t: number) => (
+								<AlbumCardSquare album={album} key={t} />
 							))}
 						</ul>
 						<LoadTracksButton limit={limit} type={type} query={query} />
@@ -44,4 +43,4 @@ const TrackListSearch = async ({ searchParams }: TrackListSearchProps) => {
 	);
 };
 
-export default TrackListSearch;
+export default AlbumListSearch;

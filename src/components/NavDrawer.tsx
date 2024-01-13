@@ -3,11 +3,15 @@ import Link from 'next/link';
 import Form from '@/components/Form';
 import { getSession } from '@/utils/get-session';
 import InteractionBlocker from './InteractionBlocker';
+// import { headers } from 'next/headers';
 
 interface NavDrawerProps {}
 
 const NavDrawer = async ({}: NavDrawerProps) => {
 	const session = await getSession();
+
+	// const path = headers().get('x-pathname');
+	// console.log(path);
 
 	return (
 		<div
@@ -18,10 +22,33 @@ const NavDrawer = async ({}: NavDrawerProps) => {
 				<div className='flex flex-wrap justify-between items-center z-[105] gap-2'>
 					<Link
 						href={'/tracks?t=recent&l=12'}
-						className='py-1 text-sm flex-1 text-green-500 font-vcr z-[105]'
+						className={`py-1 text-sm flex-1 font-vcr text-green-500 z-[105] `}
 					>
 						<p>TRACKS</p>
 					</Link>
+					<Link
+						href={'/albums?t=liked&l=12'}
+						className={`py-1 text-sm flex-1 font-vcr text-green-500 z-[105]`}
+					>
+						<p>ALBUMS</p>
+					</Link>
+					{/* <Link
+						href={'tracks?t=recent&l=12'}
+						className={`py-1 text-sm flex-1 font-vcr z-[105] ${
+							path === '/tracks' ? 'bg-green-500 text-black' : 'text-green-500'
+						}`}
+					>
+						<p>TRACKS</p>
+					</Link>
+					<Link
+						href={'albums?t=liked&l=12'}
+						className={`py-1 text-sm flex-1 font-vcr z-[105] ${
+							path === '/albums' ? 'bg-green-500 text-black' : 'text-green-500'
+						}`}
+					>
+						<p>ALBUMS</p>
+					</Link> */}
+
 					<div className='flex flex-row gap-2 items-center'>
 						<Link
 							href={'/u/' + session.user.username}

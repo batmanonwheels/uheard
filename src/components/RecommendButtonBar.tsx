@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface RecommendButtonBarProps {
-	trackId: string;
+	trackId?: string;
+	albumId?: string;
 }
 
-const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
+const RecommendButtonBar = ({ trackId, albumId }: RecommendButtonBarProps) => {
 	const [isRecommended, setIsRecommended] = useState<boolean>(false);
 
 	const router = useRouter();
@@ -16,18 +17,34 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
 		router.back();
 	};
 
-	const handleRecommendation = async (trackId: string) => {
-		const { ok } = await fetch(
-			'/api/tracks/recommend?' +
-				new URLSearchParams({
-					track: trackId,
-				}),
-			{
-				method: 'POST',
-			}
-		);
+	const handleRecommendation = async (trackId?: string, albumId?: string) => {
+		if (trackId) {
+			const { ok } = await fetch(
+				'/api/tracks/recommend?' +
+					new URLSearchParams({
+						track: trackId,
+					}),
+				{
+					method: 'POST',
+				}
+			);
 
-		if (!ok) return;
+			if (!ok) return;
+		}
+
+		if (albumId) {
+			const { ok } = await fetch(
+				'/api/albums/recommend?' +
+					new URLSearchParams({
+						album: albumId,
+					}),
+				{
+					method: 'POST',
+				}
+			);
+
+			if (!ok) return;
+		}
 
 		setIsRecommended(true);
 		router.push('/');
@@ -45,7 +62,7 @@ const RecommendButtonBar = ({ trackId }: RecommendButtonBarProps) => {
 			</div>
 			<div className='flex w-full py-3 justify-evenly font-vcr '>
 				<button
-					onClick={() => handleRecommendation(trackId)}
+					onClick={() => handleRecommendation(trackId, albumId)}
 					className='text-green-500'
 				>
 					{isRecommended ? 'DONE!' : 'SHARE'}

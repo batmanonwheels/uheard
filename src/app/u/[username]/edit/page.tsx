@@ -7,19 +7,12 @@ import { redirect } from 'next/navigation';
 import Form from '@/components/Form';
 import Link from 'next/link';
 import CurrentTrack from '@/components/CurrentTrack';
+import { UserPersonalData } from '@/types/prisma';
 
 interface EditProfileProps {}
 
 export const generateMetadata =
 	async ({}: EditProfileProps): Promise<Metadata> => {
-		const session = await getSession();
-
-		if (!session) return { title: 'Edit Profile | UHEARD' };
-
-		const user: UserPersonalData | null = await fetchUserProfile(
-			session.user.username
-		);
-
 		return {
 			title: `Edit Profile | UHEARD`,
 		};
@@ -32,6 +25,8 @@ const EditProfile = async ({}: EditProfileProps) => {
 	const user: UserPersonalData | null = await fetchUserProfile(
 		session.user.username
 	);
+	if (!user) redirect('/');
+
 	return (
 		<main className='flex flex-col items-center flex-1 w-full p-4 text-left'>
 			<div className='flex flex-col w-full items-center gap-2 md:justify-between md:flex-row'>
@@ -69,7 +64,7 @@ const EditProfile = async ({}: EditProfileProps) => {
 						</div>
 					</div>
 				)}
-				<CurrentTrack id={user.id} />
+				<CurrentTrack id={user.id} type='profile' />
 			</div>
 			{user && (
 				<>

@@ -25,6 +25,7 @@ export const fetchCurrentTrack = async (id: string) => {
 			item: track,
 			error,
 			progress_ms,
+			is_playing,
 		}: SpotifyTrackResponse = await fetch(
 			`https://api.spotify.com/v1/me/player/currently-playing`,
 			{
@@ -32,7 +33,7 @@ export const fetchCurrentTrack = async (id: string) => {
 				headers: {
 					Authorization: 'Bearer ' + accessToken,
 				},
-				cache: 'no-store',
+				next: { revalidate: 0 },
 			}
 		)
 			.then((res) => (res === null ? null : res.json()))
@@ -44,11 +45,12 @@ export const fetchCurrentTrack = async (id: string) => {
 
 		track.progress_ms = progress_ms;
 
+		track.is_playing = is_playing;
+
 		track.current_time_ms = Date.now();
 
 		track.percent_complete =
 			Math.round((progress_ms / track.duration_ms) * 100) + '% ';
-
 		return track;
 	} catch (error: any) {
 		return error;

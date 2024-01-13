@@ -1,5 +1,4 @@
 import { auth } from '@/lib/lucia';
-import { Session } from 'lucia';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 

@@ -9,12 +9,11 @@ import { fetchTrack } from '@/utils/fetch-track';
 import PlayImage from '@/components/PlayImage';
 import { getDate } from '@/utils/get-date';
 import ArtistCard from '@/components/ArtistCard';
-import TrackCard from '@/components/TrackCard';
 import { fetchRelatedArtists } from '@/utils/fetch-related-artists';
 import { fetchRelatedTracks } from '@/utils/fetch-related-tracks';
-import TrackCardSquare from '@/components/TrackCardSquare';
 import Image from 'next/image';
 import RecommendLink from '@/components/RecommendLink';
+import Link from 'next/link';
 
 interface RecommendPageProps {
 	params: { trackId: string };
@@ -68,7 +67,12 @@ const RecommendPage = async ({ params }: RecommendPageProps) => {
 										.map((artist: SpotifyTrackArtist) => artist.name)
 										.join(', ')}
 								</p>
-								<p className='text-lg text-zinc-500'>{track.album.name}</p>
+								<Link
+									href={'/albums/recommend/' + track.album.id}
+									className='text-lg  text-green-500'
+								>
+									{track.album.name}
+								</Link>
 								<p className='text-sm text-zinc-500'>
 									{await getDate(
 										track.album.release_date,
