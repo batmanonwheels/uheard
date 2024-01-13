@@ -24,14 +24,10 @@ export const generateMetadata = async ({
 	return {
 		title: `${user.name}'s Profile | UHEARD`,
 		openGraph: {
-			images:
-				user.picture ||
-				'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
+			images: user.picture,
 		},
 		twitter: {
-			images:
-				user.picture ||
-				'https://utfs.io/f/53a19ca9-1130-4f99-9e27-95e3c2f8ca0c-hru0oc.png',
+			images: user.picture,
 		},
 	};
 };
@@ -53,7 +49,7 @@ const UserPage = async ({ params }: UserPageProps) => {
 						<img
 							height={300}
 							width={300}
-							src={user.picture ? user.picture : undefined}
+							src={user.picture}
 							alt={`${user.name}'s profile picture`}
 							className=' w-auto max-h-36 rounded-sm  md:max-h-52 aspect-square object-cover'
 						/>

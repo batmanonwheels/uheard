@@ -37,7 +37,7 @@ export type AlbumRecommendationWithUser = Prisma.AlbumRecommendationGetPayload<{
 export type UserPersonalData = {
 	id: string;
 	name: string;
-	picture: string | null;
+	picture: string;
 	spotifyUri: string;
 	username: string;
 };

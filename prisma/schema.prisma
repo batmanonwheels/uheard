@@ -12,7 +12,7 @@ model User {
   id                  String                @id @unique
   name                String
   email               String                @unique
-  picture             String?
+  picture             String
   spotifyUser         Boolean               @default(true)
   spotifyProfileLink  String
   spotifyUri          String

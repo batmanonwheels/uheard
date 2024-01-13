@@ -14,7 +14,7 @@ const HeardBy = async ({ user, feed }: HeardByProps) => {
 					HEARD BY
 				</h2>
 				<img
-					src={user.picture || undefined}
+					src={user.picture}
 					alt={`${user.name}'s profile picture`}
 					className='w-auto h-4 rounded-sm aspect-square object-cover'
 				/>
@@ -32,7 +32,7 @@ const HeardBy = async ({ user, feed }: HeardByProps) => {
 				className='flex items-center gap-1 justify-evenly'
 			>
 				<img
-					src={user.picture || undefined}
+					src={user.picture}
 					alt={`${user.name}'s profile picture`}
 					className='w-auto h-4 rounded-sm '
 				/>
