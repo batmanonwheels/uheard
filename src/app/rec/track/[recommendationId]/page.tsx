@@ -14,6 +14,7 @@ import RecommendLink from '@/components/RecommendLink';
 import HeardBy from '@/components/HeardBy';
 import { TrackRecommendationWithUser } from '@/types/prisma';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 interface TrackRecommendationPageProps {
 	params: { recommendationId: string };
@@ -84,9 +85,18 @@ const TrackRecommendationPage = async ({
 										.map((artist: string) => artist)
 										.join(', ')}
 								</p>
-								<p className='text-lg text-zinc-500'>
-									{recommendation.trackAlbum}
-								</p>
+								{track ? (
+									<Link
+										href={'/albums/recommend/' + track.album.id}
+										className='text-lg  text-green-500'
+									>
+										{track.album.name}
+									</Link>
+								) : (
+									<p className='text-lg text-zinc-500'>
+										{recommendation.trackAlbum}
+									</p>
+								)}
 								{session && (
 									<p className='text-sm text-zinc-500'>
 										{await getDate(
