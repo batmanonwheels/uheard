@@ -25,7 +25,7 @@ const ConfirmDeleteModal = ({
 			<div className='flex items-center justify-center min-h-full w-full text-center sm:p-0'>
 				<div className='bg-black border-green-500 border p-5 text-left rounded-md shadow-md shadow-black sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6'>
 					<div className='flex flex-col w-full mt-1'>
-						<h2 className='text-base text-left text-green-500 font-vcr'>
+						<h2 className='text-xs text-left sm:text-base text-green-500 font-vcr'>
 							{'ARE YOU SURE YOU WANT TO DELETE THIS?'}
 						</h2>
 						<hr className='w-full mx-auto mt-2 border-green-500' />

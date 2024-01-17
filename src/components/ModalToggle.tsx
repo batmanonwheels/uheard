@@ -59,7 +59,7 @@ const ModalToggle = ({
 	return (
 		<button
 			onClick={() => toggleDeleteRecommendationPrompt()}
-			className='text-green-500 font-vcr '
+			className='text-xs sm:text-base text-green-500 font-vcr '
 		>
 			{text}
 		</button>
