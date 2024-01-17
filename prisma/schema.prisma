@@ -49,6 +49,7 @@ model AlbumRecommendation {
   albumUrl    String
   albumImage  String
   albumArtist String[]
+  rating      Int      @default(0)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes       Like[]
 }
@@ -76,6 +77,7 @@ model TrackRecommendation {
   trackISRC       String
   trackImage      String
   trackArtist     String[]
+  rating          Int      @default(0)
   likes           Like[]
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -51,7 +51,7 @@ const DeleteButton = ({
 			onClick={() => handleDeleteRecommendation()}
 			className='text-green-500 font-vcr '
 		>
-			DELETE
+			CONFIRM
 		</button>
 	);
 };
