@@ -34,6 +34,7 @@ export const generateMetadata = async ({
 
 const UserPage = async ({ params }: UserPageProps) => {
 	const { username } = params;
+
 	const user: UserPersonalData | null = await fetchUserProfile(username);
 
 	if (!user) redirect('/');
