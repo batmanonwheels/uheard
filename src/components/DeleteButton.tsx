@@ -49,7 +49,7 @@ const DeleteButton = ({
 	return (
 		<button
 			onClick={() => handleDeleteRecommendation()}
-			className='text-green-500 font-vcr '
+			className='text-xs sm:text-base text-green-500 font-vcr '
 		>
 			CONFIRM
 		</button>
